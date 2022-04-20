@@ -1,6 +1,6 @@
-const path = require('path');
+const path = require("path");
 
-const isProd = ['production', 'prod', 'test', 'pre'].includes(process.env.NODE_ENV);
+const isProd = ["production", "prod", "test", "pre"].includes(process.env.NODE_ENV);
 
 module.exports = {
   root: true,
@@ -9,7 +9,7 @@ module.exports = {
     node: true,
     browser: true,
     jest: true,
-    es6: true,
+    es6: true
   },
 
   globals: {
@@ -17,25 +17,25 @@ module.exports = {
   },
 
   // 解析器
-  parser: '@typescript-eslint/parser', 
+  parser: "@typescript-eslint/parser",
 
   parserOptions: {
-    project: path.resolve(__dirname, './tsconfig.json'),
+    project: path.resolve(__dirname, "./tsconfig.json"),
     tsconfigRootDir: __dirname,
     ecmaVersion: 6, // 2020, // Allows for the parsing of modern ECMAScript features
-    sourceType: 'module', // Allows for the use of imports
+    sourceType: "module", // Allows for the use of imports
     ecmaFeatures: {
-      jsx: true, // Allows for the parsing of JSX
+      jsx: true // Allows for the parsing of JSX
     },
-    createDefaultProgram: true,
+    parser: "@typescript-eslint/parser",
+    createDefaultProgram: true
   },
 
   // 继承的规则 [扩展]
   extends: [
     // Uses the recommended rules from the @typescript-eslint/eslint-plugin
-    'plugin:@typescript-eslint/recommended',
+    "plugin:@typescript-eslint/recommended",
     // 'react-app',
-    'plugin:prettier/recommended',
     // 'prettier',
     // 'plugin:jsx-control-statements/recommended',
     // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
@@ -92,23 +92,23 @@ module.exports = {
     "eqeqeq": ['warn', 'always'],
     "prefer-const": ['error', {"destructuring": "all", "ignoreReadBeforeAssign": true}],
   },
-  
+
   settings: {
     react: {
-      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
+      version: "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
     },
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
     },
-    'import/resolver': {
+    "import/resolver": {
       // webpack: {
       //   config: './config/webpack.base.js',
       // },
       typescript: {
         alwaysTryTypes: true, // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
-        directory: './tsconfig.json',
-      },
+        directory: "./tsconfig.json"
+      }
     },
-    'import/ignore': ['types'], // Weirdly eslint cannot resolve exports in types folder (try removing this later)
-  },
+    "import/ignore": ["types"] // Weirdly eslint cannot resolve exports in types folder (try removing this later)
+  }
 };
