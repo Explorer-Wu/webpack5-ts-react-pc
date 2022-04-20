@@ -12,6 +12,10 @@ module.exports = {
     es6: true,
   },
 
+  globals: {
+    $: true
+  },
+
   // 解析器
   parser: '@typescript-eslint/parser', 
 
@@ -23,7 +27,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true, // Allows for the parsing of JSX
     },
-    // createDefaultProgram: true,
+    createDefaultProgram: true,
   },
 
   // 继承的规则 [扩展]
@@ -33,15 +37,20 @@ module.exports = {
     // 'react-app',
     'plugin:prettier/recommended',
     // 'prettier',
+    // 'plugin:jsx-control-statements/recommended',
+    // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+    'prettier/@typescript-eslint',
+    // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+    'plugin:prettier/recommended',
+    'prettier/react'
   ],
 
   // 插件
-  plugins: ['prettier', 'react', 'react-hooks', 'jsx-a11y', '@typescript-eslint'],
+  plugins: ['prettier', 'react', 'react-hooks', 'jsx-a11y', '@typescript-eslint'], // 'jsx-control-statements',
 
   // 规则
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
-    // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-var-requires': 'off',
@@ -49,13 +58,23 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+
+    '@typescript-eslint/indent': ['error', 4, { VariableDeclarator: 4, SwitchCase: 1 }],
+    "@typescript-eslint/interface-name-prefix": 'off',
+    "@typescript-eslint/explicit-member-accessibility": 'off',
+    "@typescript-eslint/no-triple-slash-reference": 'off',
+    "@typescript-eslint/ban-ts-ignore": 'off',
+    "@typescript-eslint/no-this-alias": 'off',
+    "@typescript-eslint/triple-slash-reference": ['error', { "path": "always", "types": "never", "lib": "never" }],
+    
     'import/no-dynamic-require': 'off',
     // These rules don't add much value, are better covered by TypeScript and good definition files
+
+    // React相关校验规则
     'react/no-direct-mutation-state': 'off',
     'react/no-deprecated': 'off',
     'react/no-string-refs': 'off',
     'react/require-render-return': 'off',
-
     'react/jsx-filename-extension': [
         'warn',
         {
@@ -63,7 +82,15 @@ module.exports = {
         },
     ], // also want to use with ".tsx"
     'react/prop-types': 'off', // Is this incompatible with TS props type?
+    "react/jsx-indent": [2, 4],
+    "react/jsx-no-undef": [2, { allowGlobals: true }],
+    // "jsx-control-statements/jsx-use-if-tag": 'off',
+
+    'prettier/prettier': 1,
     'no-debugger': isProd ? 'warn' : 'off',
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    "eqeqeq": ['warn', 'always'],
+    "prefer-const": ['error', {"destructuring": "all", "ignoreReadBeforeAssign": true}],
   },
   
   settings: {
