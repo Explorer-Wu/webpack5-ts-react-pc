@@ -45,7 +45,7 @@ module.exports = {
     'prettier/react'
   ],
 
-  // 插件
+  // 拓展和支持相关能力的插件库
   plugins: ['prettier', 'react', 'react-hooks', 'jsx-a11y', '@typescript-eslint'], // 'jsx-control-statements',
 
   // 规则
