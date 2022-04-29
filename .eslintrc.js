@@ -18,7 +18,7 @@ module.exports = {
 
   // 解析器
   parser: "@typescript-eslint/parser",
-
+  // 配置解析选项
   parserOptions: {
     project: path.resolve(__dirname, "./tsconfig.json"),
     tsconfigRootDir: __dirname,
