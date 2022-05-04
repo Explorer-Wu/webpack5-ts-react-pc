@@ -2,21 +2,21 @@ import React, { Suspense, useState } from "react";
 import { ConfigProvider, Layout } from "antd";
 import zhCN from "antd/es/locale/zh_CN";
 import { Outlet, Link, useRoutes, useParams } from "react-router-dom";
-import routes from "@@router/routesConfig";
+import routes from "@@router/index";
 
 import Header from "./Header";
 import MenuNav from "./Nav";
-import Loading from "./Loading";
+import Loading from "@@/components/Loading";
 // import Footer from './Footer';
 
 const { Content, Sider } = Layout;
 
-let routeElement = useRoutes(routes);
+const routeElement = useRoutes(routes);
 
 function MainLayout(props) {
   // const { match } = props;
   const [collapsed, setCollapsed] = useState(false);
-  const toggleMenu = (bool) => {
+  const toggleMenu = bool => {
     setCollapsed(bool);
   };
   console.log("lay-router:", props);
@@ -32,12 +32,10 @@ function MainLayout(props) {
             style={{
               height: "calc(100vh - 50px)",
               overflow: "auto",
-              padding: 16,
+              padding: 16
             }}
           >
-            <Suspense fallback={<Loading isLoad="Loading..." />}>
-              {routeElement}
-            </Suspense>
+            <Suspense fallback={<Loading isLoad="Loading..." />}>{routeElement}</Suspense>
           </Content>
         </Layout>
       </Layout>

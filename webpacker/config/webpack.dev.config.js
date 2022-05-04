@@ -1,10 +1,12 @@
 const webpack = require("webpack");
-const utils = require("./utils");
-const config = require("./index");
 const merge = require("webpack-merge");
 const path = require("path");
+const config = require("./index");
 const baseWebpackConfig = require("./webpack.base.config");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { copyPlugin, dllReferencePlugin } = require("../plugins");
+const rules = require("../rules");
+const utils = require("../utils");
+
 
 const HOST = process.env.HOST;
 const PORT = process.env.PORT && Number(process.env.PORT);
@@ -16,47 +18,9 @@ const devConfig = {
   dependencies: ["vendor"],
   module: {
     rules: [
-      {
-        test: /\.(js|mjs|jsx|ts|tsx)$/,
-        exclude: /\/node_modules\//,
-        include: [
-          utils.resolve("src"),
-          utils.resolve("libs"),
-          utils.resolve("test"),
-        ],
-        //resolve('node_modules/webpack-dev-server/client')  path.join(__dirname, 'src')
-        // use: ['babel-loader?cacheDirectory=true'], 之前是使用这种方式直接使用 loader
-        // 现在用下面的方式替换成 happypack/loader，并使用 id 指定创建的 HappyPack 插件
-        use: "happypack/loader?id=babel", // use: 'happypack/loader?id=jsx'
-        // use: [{
-        //     loader: 'babel-loader',
-        //     /*cacheDirectory是用来缓存编译结果，下次编译加速*/
-        //     options: {
-        //         cacheDirectory: true,
-        //         // cacheCompression: isEnvProduction,
-        //         // compact: isEnvProduction,
-        //         plugins: ['syntax-dynamic-import'],
-        //         presets: [
-        //             [
-        //                 '@babel/preset-env',
-        //                 {
-        //                     modules: false
-        //                 }
-        //             ]
-        //         ]
-        //     }
-        // }],
-      },
-      {
-        test: /\.(css|less)$/,
-        // 现在用下面的方式替换成 happypack/loader，并使用 id 指定创建的 HappyPack 插件
-        use: ["happypack/loader?id=styles"],
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        // use: [...utils.styleLoaders({ usePostCSS: false })]
-        use: ["happypack/loader?id=sass"],
-      },
+      rules.tsJsRules,
+      rules.mixCssLessRules,
+      rules.mixCssSassRules,
     ],
   },
   optimization: {
@@ -72,39 +36,28 @@ const devConfig = {
   plugins: [
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.HotModuleReplacementPlugin(),
+
     // 自动加载模块，而不必到处 import 或 require. 开发模式下optimization.concatenateModules设为false，可使用ProvidePlugin
     // new webpack.ProvidePlugin({
     //   _: "lodash",
     //   //只获取 lodash 中提供的 join 方法。 与 tree shaking 配合，将 lodash library 中的其余没有用到的导出去除
     // //   join: ['lodash', 'join'],
     // }),
+    
     //开发环境使用dll分割代码
-    new webpack.DllReferencePlugin({
-      //content (optional): 请求到模块 id 的映射 (默认值为 manifest.content)
-      context: utils.resolve("libs"), //(绝对路径) manifest (或者是内容属性)中请求的上下文
-      manifest: utils.resolve("libs/vendor-dll-manifest.json"), //包含 content 和 name 的对象，或者在编译时(compilation)的一个用于加载的 JSON manifest 绝对路径
-      //dll 暴露的地方的名称 (默认值为 manifest.name) (可参考 externals)
-      name: "./libs/vendor.dll.js", // 当前Dll的所有内容都会存放在这个参数指定变量名的一个全局变量下，注意与DllPlugin的name参数保持一致
-      // dll 是如何暴露的 (libraryTarget)
-      sourceType: "umd", //对应 dll.config 中的 libraryTarget: 'umd'  //sourceType: "commonsjs",
-      scope: "vendor", //dll 中内容的前缀
-    }),
+    dllReferencePlugin,
     // copy custom static assets
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: utils.resolve("public/static"),
-          to: config.dev.assetsSubDirectory,
-        },
-      ],
-      options: {
-        concurrency: 100,
-      },
-    }),
+    copyPlugin
   ],
   // these devServer options should be customized in /config/index.js
   devServer: {
+    // static: {
+    //   publicPath: '/',
+    // },
     clientLogLevel: "warning",
+    // client: {
+    //   overlay: false,
+    // },
     historyApiFallback: {
       rewrites: [
         {

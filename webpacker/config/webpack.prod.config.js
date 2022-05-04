@@ -1,17 +1,15 @@
 
 const path = require('path')
-const webpack = require('webpack')
-const utils = require('./utils')
-const config = require('./index')
 const merge = require('webpack-merge')
+const config = require('./index')
 const baseWebpackConfig = require('./webpack.base.config')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const WebpackCdnPlugin = require('webpack-cdn-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { cleanPlugin, cdnPlugin,  htmlPlugin, miniCssExtractPlugin, copyPlugin } = require("../plugins");
+const rules = require("../rules");
+const utils = require('../utils')
+
+
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('./test.env')
@@ -33,23 +31,11 @@ const prodConfig = {
             config.dev.assetsPublicPath
     },
     module: {
-        rules: [{
-          test: /\.(js|mjs|jsx|ts|tsx)$/,
-          exclude: /\/node_modules\//,
-          include: [utils.resolve('src'), utils.resolve('test')], //path.join(__dirname, 'src')
-          use: 'happypack/loader?id=babel'
-        },{
-          test: /\.(css|less)$/,
-          use: [MiniCssExtractPlugin.loader, 'happypack/loader?id=styles'],
-        },{
-          test: /\.(s[ac]ss)$/,
-          use: [MiniCssExtractPlugin.loader, 'happypack/loader?id=sass'],
-        }],
-        // rules: utils.styleLoaders({
-        //     sourceMap: config.build.productionSourceMap,
-        //     extract: true,
-        //     usePostCSS: true
-        // })
+      rules: [
+        rules.tsJsRules,
+        rules.mixCssLessRules,
+        rules.mixCssSassRules,
+      ],
     },
     optimization: {
         // 在production模式，minimize默认为true，效果就是压缩混淆js代码。
@@ -104,74 +90,49 @@ const prodConfig = {
             // },
           }),
         ],
+        // 移除 optimization.moduleIds 和 optimization.chunkIds, 使用默认值会更合适，因为默认值会在 production 模式 下支持长效缓存且可以在 development 模式下进行调试。
+        // chunkIds: 'total-size',
+        // moduleIds: 'size',
+
         // Automatically split vendor and commons
         // https://twitter.com/wSokra/status/969633336732905474
         // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
         splitChunks: {
           chunks: 'all',
+          // 拆分 chunk 的名称。设为 false 将保持 chunk 的相同名称，因此不会不必要地更改名称。这是生产环境下构建的建议值。
           name: false,
         },
         // Keep the runtime chunk separated to enable long term caching
         runtimeChunk: true,
-        // occurrenceOrder 只在Mode: production下设置为true
-        occurrenceOrder: true,
         concatenateModules: true,
     },
     // 插件配置
     plugins: [
-        new CleanWebpackPlugin(), // 每次打包前清空
-        new MiniCssExtractPlugin({
-          filename: utils.assetsPath('css/[name].[contenthash].css'),
-          chunkFilename: "static/css/[id].[contenthash].css"
-        }),
-        new HtmlWebpackPlugin({
-            // title: 'title',
-            // cdnModule: 'react',
-            filename: process.env.NODE_ENV === 'testing'
-              ? 'index.html'
-              : config.build.index,
-            template: './public/index.html', //resolve('/public/index.html'),
-            inject: true,
-            minify: {
-              removeComments: true,
-              collapseWhitespace: true,
-              removeAttributeQuotes: true
-              // more options:  https://github.com/kangax/html-minifier#options-quick-reference
-            },
-            // chunks: ['main', 'vendors'],
-            chunksSortMode: 'dependency',
-            favicon: utils.resolve('/public/favicon.ico'),
-        }),
-        new WebpackCdnPlugin({
-            modules: [
-                { name: 'react', var: 'React', path: `umd/react.${process.env.NODE_ENV}.min.js` },
-                { name: 'react-dom', var: 'ReactDOM', path: `umd/react-dom.${process.env.NODE_ENV}.min.js` },
-                { name: 'react-router-dom', var: 'react-router-dom', path: 'umd/react-router-dom.min.js' },
-                { name: 'react-router-config', var: 'react-router-config', path: 'umd/react-router-config.min.js'},
-                { name: 'redux', var: 'redux', path: 'dist/redux.min.js' },
-                { name: 'react-redux', var: 'react-redux', path: 'dist/react-redux.min.js'}
-            ],
-            publicPath: '/node_modules'
-       }),
-        // keep module.id stable when vender modules does not change
-        new webpack.HashedModuleIdsPlugin(),
+      cleanPlugin, // 每次打包前清空
+      miniCssExtractPlugin,
+      htmlPlugin,
+        // new HtmlWebpackPlugin({
+        //     // title: 'title',
+        //     // cdnModule: 'react',
+        //     filename: process.env.NODE_ENV === 'testing'
+        //       ? 'index.html'
+        //       : config.build.index,
+        //     template: './public/index.html', //resolve('/public/index.html'),
+        //     inject: true,
+        //     minify: {
+        //       removeComments: true,
+        //       collapseWhitespace: true,
+        //       removeAttributeQuotes: true
+        //       // more options:  https://github.com/kangax/html-minifier#options-quick-reference
+        //     },
+        //     // chunks: ['main', 'vendors'],
+        //     chunksSortMode: 'dependency',
+        //     favicon: utils.resolve('/public/favicon.ico'),
+        // }),
+        cdnPlugin,
         // enable scope hoisting
         // new webpack.optimize.ModuleConcatenationPlugin(),
-
-        // copy custom static assets
-        new CopyWebpackPlugin([
-          {
-            patterns: [
-              {
-                from: utils.resolve("public/static"),
-                to: config.dev.assetsSubDirectory,
-              },
-            ],
-            options: {
-              concurrency: 100,
-            },
-          }
-        ])
+        copyPlugin,
     ],
     // externals: { React: 'React', 'react-dom': 'react-dom' },
     // library 需要一个名为 lodash 的依赖，这个依赖在 consumer 环境中必须存在且可用

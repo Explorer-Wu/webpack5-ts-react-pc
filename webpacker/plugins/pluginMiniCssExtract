@@ -1,0 +1,11 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { assetsPath } = require("../utils/index");
+
+const config = {
+    // Options similar to the same options in webpackOptions.output
+    // both options are optional
+    filename: assetsPath('css/[name].[contenthash].css'),
+    chunkFilename: "static/css/[id].[contenthash].css"
+};
+
+exports.miniCssExtractPlugin = new MiniCssExtractPlugin(config);

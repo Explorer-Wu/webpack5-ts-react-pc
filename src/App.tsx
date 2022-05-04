@@ -4,11 +4,11 @@ import {
   Routes,
   // Switch,
   Route,
-  Navigate, // Redirect,
+  Navigate // Redirect,
 } from "react-router-dom";
 // import HistoryNav from '@@router/history';
-import LayoutScreen from "@@components/Visualscreen/LayoutScreen";
-import MainLayout from "@@components/LayoutTemp";
+// import LayoutScreen from "@@components/Visualscreen/LayoutScreen";
+import MainLayout from "@@layouts/LayoutTemp";
 // import OverView from "@@views/Overview/index";
 import "@@assets/styles/antd-custom.less";
 import "@@assets/styles/main/base.scss";
@@ -20,10 +20,10 @@ import "@@assets/styles/components/general.scss";
 const App: FC<any> = () => (
   // <BrowserRouter forceRefresh={!supportsHistory}>
   <BrowserRouter>
-      <Routes>
-      <Route path="/screenfull" element={<LayoutScreen />} />
+    <Routes>
+      {/* <Route path="/screenfull" element={<LayoutScreen />} /> */}
       <Route path="/views" element={<MainLayout />} />
-      <Navigate to="/screenfull" replace />
+      <Navigate to="/views" replace />
       {/* <Route path="/*" element={<Navigate to="/" replace />} /> */}
     </Routes>
   </BrowserRouter>

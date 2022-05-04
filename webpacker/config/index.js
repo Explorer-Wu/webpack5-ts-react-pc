@@ -1,14 +1,23 @@
 const path = require("path");
+const httpProxyTarget = {
+  port: 3681, // 80
+  protocol: 'http',
+};
+
+const httpsProxyTarget = {
+  port: 3683, // 443
+  protocol: 'https',
+};
 
 module.exports = {
   dev: {
     env: require("./dev.env"),
     // Paths
     assetsSubDirectory: "static",
-    assetsPublicPath: "/", //   `//localhost:3603/`,
+    assetsPublicPath: "/", // `//localhost:3603/`,
     proxyTable: {
       "/api/": {
-        target: "http://172.0.0.1:3681",
+        target: `${httpProxyTarget.protocol}://172.0.0.1:${httpProxyTarget.port}`,
         secure: false,
         changeOrigin: true,
         pathRewrite: {
@@ -21,7 +30,7 @@ module.exports = {
         // }
       },
       "/auth": {
-        target: "http://172.0.0.1:3683",
+        target: `${httpsProxyTarget.protocol}://172.0.0.1:${httpsProxyTarget.port}`,
         changeOrigin: true,
         pathRewrite: {
           "^/auth": "/auth"

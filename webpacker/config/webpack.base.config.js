@@ -1,12 +1,10 @@
 "use strict";
-const path = require("path");
-const webpack = require("webpack"); //访问内置的插件
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ManifestPlugin = require("webpack-manifest-plugin");
-// const postcssNormalize = require('postcss-normalize');
-const HappyPackPlugin = require("./happypack.plugin");
-
-const utils = require("./utils");
+// const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { manifestPlugin, htmlPlugin } = require("../plugins");
+const rules = require("../rules");
+const alias = require("./alias");
+const externals = require("./externals");
+const utils = require("../utils");
 const config = require("./index");
 const packageName = require("../../package.json").name;
 
@@ -17,103 +15,53 @@ module.exports = {
   entry: {
     app: [
       // '@babel/polyfill',
-      "./src/main.js", //resolve('/src/main.js')
+      "./src/main.ts", //resolve('/src/main.js')
     ],
   },
 
   output: {
     path: config.build.assetsRoot, //path: resolve('/dist'),
-    filename: "[name].[hash]js",
+    filename: "[name].[contenthash]js",
     chunkFilename: "[name].[chunkhash].js", //决定 non-entry chunk(非入口 chunk) 的名称
     //publicPath: "/"
     publicPath:
       process.env.NODE_ENV === "production"
         ? config.build.assetsPublicPath
         : config.dev.assetsPublicPath,
-    library: `${packageName}-[name]`,
-    libraryTarget: "umd",
-    jsonpFunction: `webpackJsonp_${packageName}`,
-    globalObject: "window",
+    library: {
+      type: "umd", // 通用模块定义 libraryTarget: "umd"
+      // the type of the exported library
+      name: `${packageName}-[name]`, // string | string[] // the name of the exported library
+      /* Advanced output.library configuration */
+      // export: "default", // string | string[]
+    },
   },
 
   module: {
     // noParse: /lodash/, // 忽略未采用模块化的文件，因此jquery或lodash将不会被下面的loaders解析
-    rules: [
+    rules: utils.arrFilterEmpty([
       // Disable require.ensure as it's not a standard language feature.
-      { parser: { requireEnsure: false } },
+      { parser: { requireEnsure: false } }, // 禁用 require.ensure
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
-      {
-        test: /.(js|jsx)$/,
-        enforce: "pre",
-        exclude: /\/node_modules\//,
-        include: [
-          utils.resolve("src"),
-          utils.resolve("libs"),
-          utils.resolve("test"),
-        ],
-        use: "happypack/loader?id=eslint",
-      },
-      {
-        test: /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/,
-        loader: "url-loader",
-        options: {
-          limit: 10000,
-          name: utils.assetsPath("images/[name].[hash:7].[ext]"),
-        },
-      },
-      {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: "url-loader",
-        options: {
-          limit: 10000,
-          name: utils.assetsPath("media/[name].[hash:7].[ext]"),
-        },
-      },
-      {
-        test: /\.(woff2?|eot|ttf|TTF|otf)(\?.*)?$/,
-        loader: "url-loader",
-        options: {
-          limit: 10000,
-          name: utils.assetsPath("fonts/[name].[hash:7].[ext]"),
-        },
-      },
-    ],
+      rules.javascriptPreRule,
+      // rules.javascriptRule,
+      // rules.typescriptRule,
+      rules.htmlRule,
+      rules.imagesRule,
+      rules.fontsRule,
+      // rules.cssRule,
+      // ...rules.lessRules,
+      // ...rules.sassRules,
+      ...rules.svgRules,
+    ]),
   },
 
   plugins: [
-    new webpack.ProgressPlugin(),
-    new ManifestPlugin({
-      fileName: "asset-manifest.json",
-      // publicPath: '/',
-      basePath: config.build.assetsRoot,
-      publicPath:
-        process.env.NODE_ENV === "production"
-          ? config.build.assetsPublicPath
-          : config.dev.assetsPublicPath,
-      generate: (seed, files) => {
-        const manifestFiles = files.reduce(function (manifest, file) {
-          manifest[file.name] = file.path;
-          return manifest;
-        }, seed);
-
-        return {
-          files: manifestFiles,
-        };
-      },
-    }),
+    // new webpack.ProgressPlugin(), // 废弃 自定义编译过程中的进度报告 
+    manifestPlugin,
     //自动生成html文件
-    new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: "./public/index.html", //resolve('/public/index.html'),
-      inject: true,
-      hash: true,
-      cache: true,
-      // chunks: ['main', 'vendors'],
-      chunksSortMode: "dependency",
-      favicon: utils.resolve("public/static/images/favicon.ico"),
-    }),
-    ...HappyPackPlugin,
+    htmlPlugin
   ],
 
   optimization: {
@@ -141,8 +89,9 @@ module.exports = {
           priority: -20, // 优先级， 该配置项是设置处理的优先级，数值越大越优先处理
           reuseExistingChunk: true, // 是否复用存在的chunk，默认使用已有的模块，
         },
-        vendors: {
-          name: "vendor",
+        defaultVendors: {
+          idHint: 'vendors',
+          // name: "vendor",
           chunks: "initial",
           priority: -10,
           reuseExistingChunk: false,
@@ -160,10 +109,8 @@ module.exports = {
         },
       },
     },
-    // occurrenceOrder 只在Mode: production下设置为true
-    occurrenceOrder: false, // To keep filename consistent between different modes (for example building only)
-    // noEmitOnErrors默认为true,在编译出错时是否不生成资源，使用 optimization.noEmitOnErrors 来跳过生成阶段(emitting phase)。这可以确保没有生成出错误资源。而 stats 中所有 assets 中的 emitted 标记都是 false
-    noEmitOnErrors: true,
+    // emitOnErrors默认为true,在编译出错时是否生成资源，使用 optimization.emitOnErrors 来跳过生成阶段(emitting phase)。这可以确保没有生成出错误资源。而 stats 中所有 assets 中的 emitted 标记都是 false
+    emitOnErrors: true,
 
     // concatenateModules 告知 webpack 去寻找模块类型中的片段，哪些是可以安全地被合并到单一模块中。这取决于 optimization.providedExports 和 optimization.usedExports。
     //“作用域提升(scope hoisting)”, 仅适用于由 webpack 直接处理的 ES6 模块。在使用转译器(transpiler)时，你需要禁用对模块的处理（例如 Babel 中的 modules 选项）。
@@ -173,10 +120,7 @@ module.exports = {
     providedExports: true,
   },
   
-  externals: {
-    'BaiduMap': 'BMap',
-    'BaiduMapGL': 'BMapGL'
-  },
+  externals,
   // 配置模块如何解析
   // 请求重定向，显示指出依赖查找路径  resolve.alias 配置路径映射，减少文件递归解析
   resolve: {
@@ -206,23 +150,8 @@ module.exports = {
       "jpeg",
       "gif",
     ],
-    //配置别名，在项目中可缩减引用路径
-    alias: {
-      public: utils.resolve("/public"), //path.join(__dirname, '../public'),
-      "@@views": utils.resolve("/src/views"),
-      "@@router": utils.resolve("/src/router"),
-      "@@components": utils.resolve("/src/components"),
-      // '@@containers': utils.resolve('/src/reduxstore/containers'),
-      // '@@actions': utils.resolve('/src/reduxstore/actions'),
-      // '@@reducers': utils.resolve('/src/reduxstore/reducers'),
-      // '@@store': utils.resolve('/src/reduxstore/store'),
-      "@@utils": utils.resolve("/src/utils"),
-      "@@assets": utils.resolve("/src/assets"),
-      "@@api": utils.resolve("/src/api"),
-      "@@": utils.resolve("/src"),
-      // 'static': utils.resolve('static'),
-      // 'mockserver': utils.resolve('/mockserver'),
-    },
+    //配置别名
+    alias
   },
   //配置是否 polyfill 或 mock 某些 Node.js 全局变量和模块
   //配置是否 polyfill 或 mock 某些 Node.js 全局变量和模块
@@ -236,7 +165,6 @@ module.exports = {
     // prevent webpack from injecting useless setImmediate polyfill
     // because source contains it (although only uses it if it's native).
     setImmediate: true, //boolean | "mock" | "empty"
-    process: true, //boolean | "mock"
     // prevent webpack from injecting mocks to Node native modules
     // that does not make sense for the client
     module: "empty",

@@ -17,43 +17,42 @@
     "@babel/preset-typescript"
   ],
   "plugins": [
-    [
-      // "@babel/plugin-syntax-dynamic-import",
-      // "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-class-properties",
       // "@babel/plugin-proposal-export-namespace-from",
       // "@babel/plugin-proposal-throw-expressions",
       // "@babel/proposal-object-rest-spread",
-      "@babel/plugin-transform-runtime",
-			// "@babel/plugin-transform-async-to-generator",
+      // "@babel/plugin-transform-async-to-generator",
 		  // "@babel/plugin-transform-arrow-functions",
+    [
+      "@babel/plugin-transform-runtime",
       {
         "corejs": {
           "version": 3,
           "proposals": true
         },
         "useESModules": true
+      }
+    ],
+    //只需从 antd 引入模块即可，无需单独引入样式. babel-plugin-import 会帮助你加载 JS 和 CSS
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es", // default: lib
+        "style": true // "css" // `style: true` 会加载 less 文件
       },
-      //只需从 antd 引入模块即可，无需单独引入样式. babel-plugin-import 会帮助你加载 JS 和 CSS
-      [
-        "import",
-        {
-          "libraryName": "antd",
-          "libraryDirectory": "es", // default: lib
-          "style": true // "css" // `style: true` 会加载 less 文件
-        },
-        "antd"
-      ],
-      [
-        "styled-jsx/babel", { 
-          "plugins": ["styled-jsx-plugin-sass"] 
-        }
-      ]
-      // ["@babel/plugin-proposal-decorators", { "legacy": true }],
-      // ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }]
-
-      // Applies the react-refresh Babel plugin on non-production modes only
-      // mode !== "production" && "react-refresh/babel",
-    ]
+      "antd"
+    ],
+    [
+      "styled-jsx/babel", { 
+        "plugins": ["styled-jsx-plugin-sass"] 
+      }
+    ],
+    // ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }]
+    // Applies the react-refresh Babel plugin on non-production modes only
+    // mode !== "production" && "react-refresh/babel",
   ],
   "ignore": []
 }
