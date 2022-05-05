@@ -15,7 +15,6 @@ module.exports = {
       "react",
       "react-dom",
       "react-router-dom",
-      "react-router-config",
       "redux",
       "react-redux",
       "immer",

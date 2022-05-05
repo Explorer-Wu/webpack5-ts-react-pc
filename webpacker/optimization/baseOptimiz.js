@@ -1,10 +1,10 @@
 exports.baseOptimiz = {
   // runtimeChunk 默认为false,runtime相关的代码(各个模块之间的引用和加载的逻辑)内嵌入每个entry
   // ‘single’: 会生成一个唯一单独的runtime.js文件，就是manifest
-  // name:{}：自定义runtime文件的name
-  // true：对于每个entry会生成runtime~${entrypoint.name}的文件
+  // { name: 'runtime', }：自定义runtime文件的name
   // multiple：和true一致。
-  runtimeChunk: true,
+  // 最小化 entry chunk, 为运行时代码创建一个额外的 chunk，减少 entry chunk 体积，提高性能。
+  runtimeChunk: true, // 对于每个entry会生成runtime~${entrypoint.name}的文件
   //splitChunks（代码分割）主要就是根据不同的策略来分割打包出来的bundle。对应废弃插件：CommonsChunkPlugin
   splitChunks: {
     chunks: "async", // 默认‘async’。共有三个值可选：initial(初始模块)、async(按需加载模块)和all(全部模块)
@@ -31,13 +31,18 @@ exports.baseOptimiz = {
         reuseExistingChunk: false,
         test: /[\\/]node_modules[\\/]/,
       },
+      // commons: {
+      //   test: /[\\/]node_modules[\\/]/,
+      //   name: 'vendor',
+      //   chunks: 'initial',
+      // },
       manifest: {
         name: "manifest",
         chunks: "initial",
       },
       styles: {
         name: "styles",
-        test: /\.scss|less|css$/,
+        test: /\.((c|le|sa|sc)ss)$/i,
         chunks: "all", // merge all the css chunk to one file
         enforce: true,
       },
@@ -52,4 +57,10 @@ exports.baseOptimiz = {
   concatenateModules: false, //对应废弃插件：ModuleConcatenationPlugin
   //告知 webpack 去确定那些由模块提供的导出内容，为 export * from ... 生成更多高效的代码。 默认 optimization.providedExports 会被启用。
   providedExports: true,
+
+   // 压缩输出结果，usedExports开启后会移除未被使用的成员
+   // minimize: true,
+
+  // 尽可能合并每一个模块到一个函数中（Scop Hosting）
+  concatenateModules: true,
 };
