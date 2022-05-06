@@ -270,12 +270,20 @@ exports.tsLoader = {
   },
 }
 
+/**
+ * js兼容性处理：babel-loader @babel/core 
+    1. 基本js兼容性处理 --> @babel/preset-env
+      问题：只能转换基本语法，如promise高级语法不能转换
+    2. 全部js兼容性处理 --> @babel/polyfill  
+      问题：只要解决部分兼容性问题，但是将所有兼容性代码全部引入，体积太大了~
+    3. 需要做兼容性处理的就做：按需加载  --> core-js
+**/
 exports.babelLoader = {
     loader: 'babel-loader', // 代码换成ES5 的代码来做浏览器兼容
     options: {
       configFile: resolve('/.babelrc'),
       /*cacheDirectory是用来缓存编译结果，下次编译加速*/
-      cacheDirectory: true,
+      cacheDirectory: true, // 开启babel缓存， 第二次构建时，会读取之前的缓存
       cacheCompression: isProd,
       compact: isProd,
       // plugins: ['syntax-dynamic-import'],
@@ -290,6 +298,10 @@ exports.babelLoader = {
     },
 };
 
+/**
+ * 语法检查： eslint-loader  eslint
+ * 注意：只检查自己写的源代码，第三方的库是不用检查的
+*/
 exports.eslintLoader = {
   loader: "eslint-loader",
   options: {

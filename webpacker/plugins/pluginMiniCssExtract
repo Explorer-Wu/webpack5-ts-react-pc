@@ -4,6 +4,7 @@ const { assetsPath } = require("../utils/index");
 const config = {
     // Options similar to the same options in webpackOptions.output
     // both options are optional
+    // 对输出的css文件进行重命名
     filename: assetsPath('css/[name].[contenthash].css'),
     chunkFilename: "static/css/[id].[contenthash].css"
 };

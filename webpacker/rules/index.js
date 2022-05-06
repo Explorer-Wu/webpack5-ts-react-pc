@@ -1,6 +1,7 @@
 const {
-  typescriptRule,
+  javascriptPreRule,
   javascriptRule,
+  typescriptRule,
   tsJsRules,
   htmlRule,
   imagesRule,
@@ -21,6 +22,7 @@ const { svgReactComponentRule, svgRule, svgRules } = require("./svg");
 
 module.exports = {
   typescriptRule,
+  javascriptPreRule,
   javascriptRule,
   tsJsRules,
   htmlRule,

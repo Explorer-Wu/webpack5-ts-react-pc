@@ -61,21 +61,21 @@ Launches the test runner in the interactive watch mode.<br>
   "babel-plugin-transform-react-remove-prop-types": "^0.4.24", // 从生产生成中删除不必要的类型 -->
 
 * eslint相关插件
-    eslint
-    eslint-config-prettier // 关闭所有不必要或可能与[Prettier]冲突的规则
+  eslint
+  eslint-config-prettier // 关闭所有不必要或可能与[Prettier]冲突的规则
 <!-- "eslint-config-ts-important-stuff" -->
 <!-- "eslint-friendly-formatter" -->
 <!-- "eslint-loader" -->
 <!-- "eslint-plugin-flowtype" -->
-    "eslint-plugin-jsx-a11y":  JSX元素的可访问性规则的静态AST检查器 
-    "eslint-plugin-prettier": // 以 eslint的规则运行 prettier 格式化
-    "eslint-plugin-react": // react 相关规则
-    "eslint-plugin-react-hooks": // react-hooks 相关规则
-    "eslint-plugin-import" // ES6+  import/export 语法支持
-    "eslint-import-resolver-typescript": // 添加 ts 语法支持  eslint-plugin-import
-    "eslint-import-resolver-webpack": // 支持 eslint-plugin-import 读写模块解析
-    "@typescript-eslint/eslint-plugin" // 使 eslint 支持 typescript，.eslintrc.js 的 plugins 参数
-    "@typescript-eslint/parser" // 使 eslint 支持 typescript ，.eslintrc.js 的 parser 参数
+  "eslint-plugin-jsx-a11y":  JSX元素的可访问性规则的静态AST检查器 
+  "eslint-plugin-prettier": // 以 eslint的规则运行 prettier 格式化
+  "eslint-plugin-react": // react 相关规则
+  "eslint-plugin-react-hooks": // react-hooks 相关规则
+  "eslint-plugin-import" // ES6+  import/export 语法支持
+  "eslint-import-resolver-typescript": // 添加 ts 语法支持  eslint-plugin-import
+  "eslint-import-resolver-webpack": // 支持 eslint-plugin-import 读写模块解析
+  "@typescript-eslint/eslint-plugin" // 使 eslint 支持 typescript，.eslintrc.js 的 plugins 参数
+  "@typescript-eslint/parser" // 使 eslint 支持 typescript ，.eslintrc.js 的 parser 参数
 <!-- "eslint-plugin-redux-saga": // redux-saga 相关规则 -->
 <!-- eslint-config-airbnb-typescript // airbnb 规范 -->
 
@@ -112,18 +112,18 @@ Launches the test runner in the interactive watch mode.<br>
   <!-- "thread-loader":  -->
 
 * 其他
-    "typescript": "^4.3.5",
-    "less": "^4.1.1", // less 的解析库
-    "postcss": "^8.3.6", // 专门处理样式的工具
-    "postcss-nested": "^5.0.6", // 解析处理嵌套规则
-    "autoprefixer": "^10.3.1", // 自动生成各浏览器前缀 postcss 的一个插件
-    "postcss-cssnext": "^3.1.1",
-    "postcss-flexbugs-fixes": 
-    "postcss-import":
-    "postcss-normalize": 
-    "postcss-preset-env": 
-    "postcss-scss": 
-    "postcss-url": 
+  "typescript": "^4.3.5",
+  "less": "^4.1.1", // less 的解析库
+  "postcss": "^8.3.6", // 专门处理样式的工具
+  "postcss-nested": "^5.0.6", // 解析处理嵌套规则
+  "autoprefixer": "^10.3.1", // 自动生成各浏览器前缀 postcss 的一个插件
+  "postcss-cssnext": "^3.1.1",
+  "postcss-flexbugs-fixes": 
+  "postcss-import":
+  "postcss-normalize": 
+  "postcss-preset-env": 
+  "postcss-scss": 
+  "postcss-url": 
   <!-- "serve": "^12.0.0", // 本地启动一个服务，可以查看静态文件 -->
 
 * prettier 代码格式化
@@ -138,3 +138,28 @@ Launches the test runner in the interactive watch mode.<br>
   "rimraf": "^3.0.2", // 删除cli，兼容不同平台
   <!-- "yargs": "^17.1.0", // 读取命令参数 -->
 
+* tree shaking需要注意的4点细节:
+  1. 使用 ES2015 模块语法（即 import 和 export）。
+  
+  2. 确保没有编译器将 ES2015 模块语法转换为 CommonJS 模块（这是常用的 @babel/preset-env 的默认行为，详细信息请参阅文档）。
+（注：babel升级到7后，没有特殊配置，babel默认不会转换掉 ESM 模块语法）
+  
+  3. 在项目的 package.json 文件中，添加 "sideEffects" 属性。
+  （注：默认可以不写sideEffects，如果有需要某些文件不做tree shaking，可以加上）
+  
+  4. webpack默认只在 mode 为 "production" 的配置项启用，但是如果配置了不丑化压缩代码，webpack也会默认不是"production"，然后就没开启tree shaking。(注：不能关闭丑化压缩, 即optimization.minimize 此项不能设置为false，否者是导致 tree shaking 失效)
+
+  tree shaking将 JavaScript 上下文中的未引用代码（Dead Code）移除，通过 package.json 的 "sideEffects" 属性作为标记，向 compiler 提供提示，表明项目中的哪些文件是 "pure(纯正 ES2015 模块)"，由此可以安全地删除文件中未使用的部分。
+* Dead Code 一般具有以下几个特征：
+  1. 代码不会被执行，不可到达；
+  2. 代码执行的结果不会被用到；
+  3. 代码只会影响死变量（只写不读）
+
+* package.json 中，添加字段sideEffects:
+  1. sideEffects 默认为 true， 告诉 Webpack ，所有文件都有副作用，他们不能被 Tree Shaking。
+  2. sideEffects 为 false 时，告诉 Webpack ，没有文件是有副作用的，他们都可以 Tree Shaking。
+  3. sideEffects 为一个数组时，告诉 Webpack ，数组中那些文件不要进行 Tree Shaking，其他的可以 Tree Shaking。
+
+* sideEffects：摇树的作用范围
+  1. package.json 中的配置：sideEffects: false（全都摇）
+  2. 规则配置中的字段：sideEffects: true（控制全局文件不被摇掉）

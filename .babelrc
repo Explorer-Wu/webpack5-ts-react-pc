@@ -1,15 +1,22 @@
 {
+  // 自动修复eslint的错误
   "presets": [
     [
       "@babel/preset-env",
       {
-        // 开启浏览器兼容 polyfills，会根据browserslist配置，引入需要的库，需要安装对应版本的 core-js@3
+        // 按需加载
         "useBuiltIns": "usage", // "entry",
-        "modules": false,
+         // 如果 Babel 加载模块时已经转换了 ESM，则会导致 Tree Shaking 失效；最新版本的Babel自动关闭了 ESM 转换插件
+          // ['@babel/preset-env', { modules: 'commonjs' }] // 强制将ESM转换为CommonJS，tree shaking失效
+          // ['@babel/preset-env', { modules: false }] // 强制关闭转换插件
+          // 也可以使用默认配置，也就是 auto，这样 babel-loader 会自动关闭 ESM 转换
+        "modules": "auto", // false
+        // 开启浏览器兼容 polyfills，会根据browserslist配置
         "targets": {
           "browsers": [">1%", "last 4 versions", "not ie < 9"]
         },
         "debug": true,
+        // 引入需要的库，需要安装对应版本的 core-js@3
         "corejs": 3
       }
     ],
@@ -27,6 +34,7 @@
     [
       "@babel/plugin-transform-runtime",
       {
+        // 指定core-js版本
         "corejs": {
           "version": 3,
           "proposals": true
