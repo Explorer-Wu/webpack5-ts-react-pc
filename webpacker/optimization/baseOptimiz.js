@@ -7,7 +7,9 @@ exports.baseOptimiz = {
   runtimeChunk: true, // 对于每个entry会生成runtime~${entrypoint.name}的文件
   //splitChunks（代码分割）主要就是根据不同的策略来分割打包出来的bundle。对应废弃插件：CommonsChunkPlugin
   splitChunks: {
-    chunks: "async", // 默认‘async’。共有三个值可选：initial(初始模块)、async(按需加载模块)和all(全部模块)
+    // 自动提取所有公共模块到单独 bundle；
+    // 设置为 all 可能特别强大，因为这意味着 chunk 可以在异步和非异步 chunk 之间共享
+    chunks: "all", // 默认‘async’。共有三个值可选：initial(初始模块)、async(按需加载模块)和all(全部模块)
     minSize: 50000, // 模块超过30k自动被抽离成公共模块
     minChunks: 1, // 最小公用模块次数，默认为1。模块被引用>=1次，便分割
     maxAsyncRequests: 5, // 异步加载chunk的并发请求数量<=5
@@ -60,7 +62,6 @@ exports.baseOptimiz = {
 
    // 压缩输出结果，usedExports开启后会移除未被使用的成员
    // minimize: true,
-
   // 尽可能合并每一个模块到一个函数中（Scop Hosting）
   concatenateModules: true,
 };
