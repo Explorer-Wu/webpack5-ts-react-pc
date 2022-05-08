@@ -10,15 +10,21 @@ exports.baseOptimiz = {
     // 自动提取所有公共模块到单独 bundle；
     // 设置为 all 可能特别强大，因为这意味着 chunk 可以在异步和非异步 chunk 之间共享
     chunks: "all", // 默认‘async’。共有三个值可选：initial(初始模块)、async(按需加载模块)和all(全部模块)
-    minSize: 50000, // 模块超过30k自动被抽离成公共模块
-    minChunks: 1, // 最小公用模块次数，默认为1。模块被引用>=1次，便分割
-    maxAsyncRequests: 5, // 异步加载chunk的并发请求数量<=5
-    maxInitialRequests: 3, // 一个入口并发加载的chunk数量<=3
+    // 允许新拆出 chunk 的最小体积50k
+    minSize: 50000, // 模块超过50k自动被抽离成公共模块
+    minRemainingSize: 0, // webpack5新属性，防止0尺寸的chunk
+    minChunks: 1, // 最小公用模块次数，默认为1。模块最少被引用>=1次，才会拆分
+    maxAsyncRequests: 30, // 异步加载chunk的并发请求数量<=30，超过30的部分不拆分
+    // 页面初始并发的请求数量最大不能超过30，超过30的部分不拆分
+    maxInitialRequests: 30, // 一个入口并发加载的chunk数量<=30
+    // 当模块大小大于100KB强行进行拆分忽略其他任何限制
+    enforceSizeThreshold: 100000,
     automaticNameDelimiter: "~", // 命名分隔符
     //name 分割的js名称，默认为true，返回${cacheGroup的key} ${automaticNameDelimiter} ${moduleName},可以自定义。
     name: true, // 默认由模块名+hash命名，名称相同时多个模块将合并为1个，可以设置为function
     //cacheGroups缓存策略，默认设置了分割node_modules和公用模块。内部的参数可以和覆盖外部的参数。
     cacheGroups: {
+      // 默认缓存组
       default: {
         // 模块缓存规则，设置为false，默认缓存组将禁用
         minChunks: 2, // 模块被引用>=2次，拆分至vendors公共模块
@@ -26,12 +32,14 @@ exports.baseOptimiz = {
         reuseExistingChunk: true, // 是否复用存在的chunk，默认使用已有的模块，
       },
       defaultVendors: {
+        // 匹配规则
+        test: /[\\/]node_modules[\\/]/,
+        // 权重，权重越大优先级越高 当模块匹配到多个缓存组中，最终根据权重决定要打包进哪个缓存组
+        priority: -10,
         idHint: 'vendors',
         // name: "vendor",
         chunks: "initial",
-        priority: -10,
-        reuseExistingChunk: false,
-        test: /[\\/]node_modules[\\/]/,
+        reuseExistingChunk: false, 
       },
       // commons: {
       //   test: /[\\/]node_modules[\\/]/,

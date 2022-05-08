@@ -163,3 +163,12 @@ Launches the test runner in the interactive watch mode.<br>
 * sideEffects：摇树的作用范围
   1. package.json 中的配置：sideEffects: false（全都摇）
   2. 规则配置中的字段：sideEffects: true（控制全局文件不被摇掉）
+
+* sideEffects 和 usedExports（更多被认为是 tree shaking）是两种不同的优化方式：
+  1. sideEffects 更为有效 是因为它允许跳过整个模块/文件和整个文件子树。
+  2. usedExports 依赖于 terser 去检测语句中的副作用。它是一个 JavaScript 任务而且没有像 sideEffects 一样简单直接。而且它不能跳转子树/依赖由于细则中说副作用需要被评估。尽管导出函数能运作如常，但 React 框架的高阶函数（HOC）在这种情况下是会出问题的。
+
+* scope hoisting（作用域提升）
+scope hoisting 会将模块的结果进行预测，可以让webpack打包出的文件更小运行更快。scope hoisting（作用域提升） 的强大之处，是它通过webpack在打包时可将结果推断出来，将模块打散合并为一个函数极大的避免了代码的冗余。
+scope hoisting也是基于ES6模块化规范，它是由webpack内置插件 ModuleConcateNationPlugin实现的。
+在 production模式下默认配置 ModuleConcateNationPlugin插件，其他模式默认不开启。

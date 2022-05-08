@@ -310,3 +310,14 @@ exports.eslintLoader = {
     eslintPath: require.resolve("eslint"),
   },
 }
+
+/**
+ * 开启多进程打包： thread-loader
+*/
+exports.threadLoader = {
+  loader: "thread-loader",
+  options: {
+    // 开启进程的数量
+    workers: 6
+  },
+}
