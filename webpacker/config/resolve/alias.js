@@ -1,4 +1,4 @@
-const { resolve } = require("../utils");
+const { resolve } = require("../../utils");
 
 //配置别名，在项目中可缩减引用路径
 module.exports = {

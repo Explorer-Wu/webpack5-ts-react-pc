@@ -1,4 +1,4 @@
-const { tsLoader, babelLoader, eslintLoader } = require('./useLoaderRules');
+const { tsLoader, babelLoader, eslintLoader, threadLoader } = require('./useLoaderRules');
 const { resolve } = require("../utils");
 /**
  * @see https://webpack.js.org/guides/typescript/#loader

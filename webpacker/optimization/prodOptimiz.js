@@ -67,7 +67,7 @@ exports.prodOptimiz = {
         // 设置 chunk id 的提示。 它将被添加到 chunk 的文件名中
         idHint: 'vendors',
         // 一个模块可以属于多个缓存组。优化将优先考虑具有更高 priority（优先级）的缓存组。默认组的优先级为负，以允许自定义组获得更高的优先级（自定义组的默认值为 0）
-        priority: 10,
+        priority: 1,
         // 告诉 webpack 忽略 splitChunks.minSize、splitChunks.minChunks、splitChunks.maxAsyncRequests 和 splitChunks.maxInitialRequests 选项，并始终为此缓存组创建 chunk
         enforce: true
       }

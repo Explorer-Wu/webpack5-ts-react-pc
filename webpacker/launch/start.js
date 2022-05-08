@@ -5,7 +5,7 @@ require("./check-versions")();
 const path = require("path");
 const Webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
-const utils = require("../config/utils");
+const utils = require("../utils");
 const config = require("../config/index");
 console.log("process.env:", process.env);
 if (!process.env.NODE_ENV) {

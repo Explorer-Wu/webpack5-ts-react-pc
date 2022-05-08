@@ -15,7 +15,8 @@ const env = process.env.NODE_ENV === 'testing'
 
 const prodConfig = {
     mode: 'production',
-    devtool: config.build.productionSourceMap ? config.build.devtool : false,
+    //生产环境中 (none)（省略 devtool 选项） - 不生成 source map，是一个不错的选择
+    devtool: 'none', // config.build.productionSourceMap ? config.build.devtool : false,
     name: "app",
     // 在第一个错误出现时抛出失败结果，而不是容忍它。默认情况下，当使用 HMR 时，webpack 会将在终端以及浏览器控制台中，以红色文字记录这些错误，但仍然继续进行打包。
     bail: true,
@@ -62,46 +63,6 @@ const prodConfig = {
         // enable scope hoisting
         // new webpack.optimize.ModuleConcatenationPlugin(),
         copyPlugin,
-    ],
-    // externals: { React: 'React', 'react-dom': 'react-dom' },
-    // library 需要一个名为 lodash 的依赖，这个依赖在 consumer 环境中必须存在且可用
-    externals: [
-        {
-          'babel-polyfill': 'window', 
-        //   react: 'react',
-          'react': {
-            commonjs: 'react',
-            commonjs2: 'react',
-            amd: 'react',
-            root: 'React',
-          },
-          'react-dom': {
-            commonjs: 'react-dom',
-            commonjs2: 'react-dom',
-            amd: 'react-dom',
-            root: 'ReactDOM',
-          },
-          // Object
-          'lodash': {
-            commonjs: 'lodash',
-            commonjs2: 'lodash',
-            amd: 'lodash',
-            root: '_' // indicates global variable
-          },
-          'react-router-dom': 'react-router-dom',
-          'react-router-config': 'react-router-config',
-          'redux': 'redux',
-          'react-redux': 'react-redux',
-          // Array,  subtract 可以通过全局 math 对象下的属性 subtract 访问（例如 window['math']['subtract']）
-          //subtract: ['./math', 'subtract'] 
-        },
-        // Function 对于 webpack 外部化，通过定义函数来控制行为, 'commonjs'+ request 定义了需要外部化的模块类型。
-        // function(context, request, callback) {
-        //     if (/^yourregex$/.test(request)){
-        //     return callback(null, 'commonjs ' + request);
-        //     }
-        //     callback();
-        // },
     ],
     performance: {
       hints: "warning", // "warning" 枚举;  "error",性能提示中抛出错误;  false, 关闭性能提示   

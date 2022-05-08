@@ -1,8 +1,9 @@
+const utils = require("../utils");
+const rules = require("../rules");
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const postcssNormalize = require("postcss-normalize");
 const { cleanPlugin, dllPlugin } = require("../plugins");
-const rules = require("../rules");
-const utils = require("../utils");
+const { dllOptimiz } = require("../optimization");
 
 // const commonConfig
 module.exports = {
@@ -50,10 +51,7 @@ module.exports = {
       ...rules.svgRules,
     ]),
   },
-  optimization: {
-    // 如果所有代码都不包含 side effect，我们就可以简单地将该属性标记为 false，来告知 webpack，它可以安全地删除未用到的 export。
-    sideEffects: true, //打开移除未使用的模块
-  },
+  optimization: dllOptimiz,
   plugins: [
     // 清除上一次生成的文件
     cleanPlugin,

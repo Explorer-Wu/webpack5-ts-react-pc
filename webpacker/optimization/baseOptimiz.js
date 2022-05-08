@@ -10,13 +10,16 @@ exports.baseOptimiz = {
     // 自动提取所有公共模块到单独 bundle；
     // 设置为 all 可能特别强大，因为这意味着 chunk 可以在异步和非异步 chunk 之间共享
     chunks: "all", // 默认‘async’。共有三个值可选：initial(初始模块)、async(按需加载模块)和all(全部模块)
-    // 允许新拆出 chunk 的最小体积50k
-    minSize: 50000, // 模块超过50k自动被抽离成公共模块
+    // 允许新拆出 chunk 的最小体积30k
+    // minSize: 30 * 1024, // 模块超过30k自动被抽离成公共模块
+    minSize: {
+      javascript: 30 * 1024, // js模块超过30k自动被抽离成公共模块
+      webassembly: 50 * 1024, // webassembly模块超过50k自动被抽离成公共模块
+    },
     minRemainingSize: 0, // webpack5新属性，防止0尺寸的chunk
     minChunks: 1, // 最小公用模块次数，默认为1。模块最少被引用>=1次，才会拆分
-    maxAsyncRequests: 30, // 异步加载chunk的并发请求数量<=30，超过30的部分不拆分
-    // 页面初始并发的请求数量最大不能超过30，超过30的部分不拆分
-    maxInitialRequests: 30, // 一个入口并发加载的chunk数量<=30
+    maxAsyncRequests: 6, // 按需加载时，最大并行加载文件数量
+    maxInitialRequests: 10, // 入口点的最大并行请求数量<=10
     // 当模块大小大于100KB强行进行拆分忽略其他任何限制
     enforceSizeThreshold: 100000,
     automaticNameDelimiter: "~", // 命名分隔符

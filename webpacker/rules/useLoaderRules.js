@@ -1,7 +1,7 @@
 const { join } = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // import {sassResourceItems} from '../config/sassResources';
-const { isProd, webpackDir, resolve } = require("../utils");
+const { isProd, resolve } = require("../utils");
 
 exports.mixLessSacssLoaders = function (options) {
   options = options || null
