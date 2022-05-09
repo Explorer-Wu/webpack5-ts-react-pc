@@ -8,6 +8,8 @@ const {
   fontsRule
 } = require("./common");
 const {
+  mixCssLessRules,
+  mixCssSassRules,
   cssRule,
   lessModulesRule,
   lessRule,

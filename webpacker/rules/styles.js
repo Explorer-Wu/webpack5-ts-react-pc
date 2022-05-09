@@ -1,5 +1,5 @@
 const { isProd, arrFilterEmpty } = require("../utils");
-const config = require("../config");
+const config = require("../env");
 const {
   useCssLessLoaders,
   useCssSassLoaders,
@@ -35,7 +35,7 @@ exports.lessRule = {
   use: arrFilterEmpty([...cssLoaderItems, postCssLoader, resolveUrlLoader, lessLoader])
 };
 
-exports.lessRules = [lessModulesRule, lessRule];
+exports.lessRules = [exports.lessModulesRule, exports.lessRule];
 
 /** sass **/
 exports.sassModulesRule = {

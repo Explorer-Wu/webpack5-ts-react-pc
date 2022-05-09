@@ -6,7 +6,8 @@ const path = require("path");
 const Webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
 const utils = require("../utils");
-const config = require("../config/index");
+const config = require("../env");
+
 console.log("process.env:", process.env);
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV);

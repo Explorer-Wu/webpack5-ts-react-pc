@@ -1,6 +1,6 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { resolve } = require("../utils");
-const config = require('../config/index');
+const config = require('../env');
 
 // copy custom static assets
 const customConfig = {

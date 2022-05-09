@@ -1,6 +1,6 @@
 "use strict";
 const utils = require("../utils");
-const config = require("./index");
+const config = require("../env");
 const packageName = require("../../package.json").name;
 
 const rules = require("../rules");

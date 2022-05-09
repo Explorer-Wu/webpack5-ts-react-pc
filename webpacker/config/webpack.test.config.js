@@ -1,5 +1,5 @@
 // This is the webpack config used for unit tests.
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const baseWebpackConfig = require("./webpack.base.config");
 const { cleanPlugin, definePlugin } = require("../plugins");
 const rules = require("../rules");

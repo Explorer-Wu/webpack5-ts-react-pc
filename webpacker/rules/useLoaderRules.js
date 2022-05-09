@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // import {sassResourceItems} from '../config/sassResources';
 const { isProd, resolve } = require("../utils");
 
-exports.mixLessSacssLoaders = function (options) {
+function mixLessSacssLoaders(options) {
   options = options || null
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
@@ -101,9 +101,9 @@ exports.mixLessSacssLoaders = function (options) {
 }
 
 // Generate loaders for standalone style files
-exports.mixStylesLoaders = function (options) {
+function mixStylesLoaders(options) {
   const output = []
-  const loaders = exports.mixLessSacssLoaders(options)
+  const loaders = mixLessSacssLoaders(options)
 
   for (const extension in loaders) {
     const loader = loaders[extension]
@@ -152,7 +152,7 @@ exports.sassLoaderItems = [
     options: {
         sourceMap: true,
         // Prefer `dart-sassRules`
-        implementation: require('sass'),
+        // implementation: require('sass'),
     },
   },
   // sassResourceItems.length
@@ -235,10 +235,10 @@ exports.lessLoader = {
 // };
 
 exports.cssModulesSupportLoaderItems = [
-  miniCssExtractLoader,
+  exports.miniCssExtractLoader,
   // typingsCssModulesLoader,
   {
-      ...cssLoader,
+      ...exports.cssLoader,
       options: {
           // esModule: false,
           modules: {
@@ -318,6 +318,6 @@ exports.threadLoader = {
   loader: "thread-loader",
   options: {
     // 开启进程的数量
-    workers: 6
+    workers: 3
   },
 }

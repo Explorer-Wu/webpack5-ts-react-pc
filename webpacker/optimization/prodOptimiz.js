@@ -37,9 +37,9 @@ exports.prodOptimiz = {
         },
       },
       // Enable file caching
-      cache: true,
+      // cache: true,
       // sourceMap: shouldUseSourceMap,
-      sourceMap: true,
+      // sourceMap: true,
     }),
   ],
   // 可以考虑将 optimization.moduleIds 和 optimization.chunkIds在配置中移除, 使用默认值会更合适，因为默认值会在 production 模式 下支持长效缓存且可以在 development 模式下进行调试。

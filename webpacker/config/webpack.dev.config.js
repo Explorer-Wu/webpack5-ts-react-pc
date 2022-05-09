@@ -1,7 +1,7 @@
 const webpack = require("webpack");
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 
-const { dev } = require("./index");
+const { dev } = require("../env/index");
 const devServer = require("./dev.server");
 const baseWebpackConfig = require("./webpack.base.config");
 const { copyPlugin, dllReferencePlugin } = require("../plugins");

@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { resolve, isProd } = require("../utils");
-const config = require('../config/index');
+const config = require('../env');
 
 const baseConfig = {
   filename: process.env.NODE_ENV === 'testing'

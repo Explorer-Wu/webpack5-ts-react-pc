@@ -9,7 +9,7 @@ const path = require('path')
 // const chalk = require('chalk')
 const chalk = require('react-dev-utils/chalk');
 const Webpack = require('webpack')
-// const config = require('../config')
+// const config = require('../env')
 const utils = require('../utils')
 
 const dllWebpackConfig = require('../config/webpack.dll.config')

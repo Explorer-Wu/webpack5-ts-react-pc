@@ -1,7 +1,7 @@
 
 const path = require('path')
-const merge = require('webpack-merge')
-const config = require('./index')
+const { merge } = require('webpack-merge')
+const config = require('../env/index')
 const baseWebpackConfig = require('./webpack.base.config')
 const { cleanPlugin, cdnPlugin,  htmlPlugin, miniCssExtractPlugin, copyPlugin } = require("../plugins");
 const rules = require("../rules");
@@ -66,9 +66,9 @@ const prodConfig = {
     ],
     performance: {
       hints: "warning", // "warning" 枚举;  "error",性能提示中抛出错误;  false, 关闭性能提示   
-      maxAssetSize: 200000, // 整数类型（以字节为单位）此选项根据单个资源体积，控制 webpack 何时生成性能提示。默认值是：250000 (bytes)。
-      maxEntrypointSize: 400000, // 整数类型（以字节为单位）此选项根据入口起点的最大体积，控制 webpack 何时生成性能提示。默认值是：250000 (bytes)。
-      assetFilter: function(assetFilename) { //此属性允许 webpack 控制用于计算性能提示的文件
+      maxAssetSize: 256000, // 整数类型（以字节为单位）此选项根据单个资源体积，控制 webpack 何时生成性能提示。默认值是：250000 (bytes)。
+      maxEntrypointSize: 512000, // 整数类型（以字节为单位）此选项根据入口起点的最大体积，控制 webpack 何时生成性能提示。默认值是：250000 (bytes)。
+      assetFilter: function(assetFilename) { // 此属性允许 webpack 控制用于计算性能提示的文件
         // 提供资源文件名的断言函数
         return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
       }

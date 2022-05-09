@@ -8,7 +8,7 @@ const path = require('path')
 // const chalk = require('chalk')
 const chalk = require('react-dev-utils/chalk')
 const Webpack = require('webpack')
-const config = require('../config')
+const config = require('../env')
 const webpackProdConfig = require('../config/webpack.prod.config')
 
 const spinner = ora('building for production...')

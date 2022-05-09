@@ -2,7 +2,7 @@
 const path = require("path");
 const HOST = process.env.HOST;
 const PORT = process.env.PORT && Number(process.env.PORT);
-const config = require("./index");
+const config = require("../env");
 
 module.exports = {
   // static: {

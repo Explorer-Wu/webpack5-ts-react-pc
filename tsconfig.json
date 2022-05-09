@@ -130,13 +130,15 @@
   "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
   // ts 排除的文件
   "exclude": [
-    "node_modules",
-    "build",
+    "node_modules/**",
+    "build/**",
+    "webpacker/**",
+    "dist/**",
+    "coverage/**",
+    "src/*.d.ts",
     "scripts",
     "acceptance-tests",
-    "webpack",
-    "jest",
-    "src/global.d.ts"
+    "jest", 
   ]
   // "files": ["src/shims-vue.d.ts", "src/shims-tsx.d.ts", "src/vue.d.ts"]
 }

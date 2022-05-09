@@ -1,7 +1,7 @@
-const ManifestPlugin = require("webpack-manifest-plugin");
-const config = require('../config/index');
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
+const config = require('../env');
 
-exports.manifestPlugin = new ManifestPlugin({
+exports.manifestPlugin = new WebpackManifestPlugin({
   fileName: "asset-manifest.json",
   // publicPath: '/',
   basePath: config.build.assetsRoot,
