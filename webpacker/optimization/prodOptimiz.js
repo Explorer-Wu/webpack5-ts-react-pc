@@ -9,15 +9,18 @@ exports.prodOptimiz = {
     // This is only used in production mode
     new CssMinimizerPlugin({
       // 启用/禁用多进程并发执行,或者设置并发数
-      parallel: 6, // true
+      parallel: true,
     }),
     // 配置生产环境的压缩方案：js和css
     new TerserPlugin({
-      // Use multi-process parallel running to improve the build speed
-      // Default number of concurrent runs: os.cpus().length - 1
-      // Disabled on WSL (Windows Subsystem for Linux) due to an issue with Terser
-      parallel: 6, // true
+      /** 启用/禁用多进程并发运行功能
+       * 类型： Boolean|Number 默认值： true.
+       * 使用多进程并发运行以提高构建速度。 并发运行的默认数量： os.cpus().length - 1 
+      */
+      parallel: true, // 4
+      exclude: /\/node_modules\//,
       terserOptions: {
+        // ecma: undefined,
         parse: {
           ecma: 8,
         },
@@ -27,19 +30,24 @@ exports.prodOptimiz = {
           comparisons: false,
           inline: 2,
         },
-        mangle: {
-          safari10: true,
-        },
+        mangle: true, // Note `mangle.properties` is `false` by default.
+        module: false,
+        // Deprecated
         output: {
           ecma: 5,
           comments: false,
           ascii_only: true,
         },
+        // format: null,
+        // toplevel: false,
+        // nameCache: null,
+        // keep_classnames: undefined,
+        // keep_fnames: false,
+        ie8: false,
+        safari10: true,
       },
-      // Enable file caching
-      // cache: true,
-      // sourceMap: shouldUseSourceMap,
-      // sourceMap: true,
+      // 启用/禁用剥离注释功能
+      extractComments: true,
     }),
   ],
   // 可以考虑将 optimization.moduleIds 和 optimization.chunkIds在配置中移除, 使用默认值会更合适，因为默认值会在 production 模式 下支持长效缓存且可以在 development 模式下进行调试。

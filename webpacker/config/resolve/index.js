@@ -1,12 +1,13 @@
+const { resolve } = require("../../utils");
 const alias = require("./alias");
 
 module.exports = {
   //webpack 解析模块时应该搜索的目录, （不适用于对 loader 解析）
   modules: [
     // 指定以下目录寻找第三方模块，避免webpack往父级目录递归搜索
-    utils.resolve("libs"),
-    utils.resolve("node_modules"),
-    utils.resolve("src")
+    resolve("libs"),
+    resolve("node_modules"),
+    resolve("src")
   ],
 
   //mainFields将决定在 package.json 中使用哪个字段导入模块。根据 webpack 配置中指定的 target 不同，默认值也会有所不同。

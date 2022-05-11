@@ -1,6 +1,7 @@
-const { join } = require('path');
+// const { join } = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // import {sassResourceItems} from '../config/sassResources';
+const config = require('../env');
 const { isProd, resolve } = require("../utils");
 
 function mixLessSacssLoaders(options) {
@@ -110,7 +111,7 @@ function mixStylesLoaders(options) {
     // console.log("styleLoaders:", extension, loader)
     output.push(loader)
   }
-  console.log("styleLoaders-out:", output)
+  // console.log("styleLoaders-out:", output)
   return output
 }
 
@@ -313,11 +314,42 @@ exports.eslintLoader = {
 
 /**
  * 开启多进程打包： thread-loader
+ * 每个 worker 都是一个独立的 node.js 进程，其开销大约为 600ms 左右。同时会限制跨进程的数据交换。
+ * 注：请仅在耗时的操作中使用此 loader！
 */
+const osCpus = require('os').cpus();
 exports.threadLoader = {
   loader: "thread-loader",
+  // 有同样配置的 loader 会共享一个 worker 池
   options: {
-    // 开启进程的数量
-    workers: 3
+    // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)，或者，
+    // 在 require('os').cpus() 是 undefined 时回退至 1
+    workers: osCpus ? osCpus.length - 1 : 1,
+
+    // 一个 worker 进程中并行执行工作的数量
+    // 默认为 20
+    workerParallelJobs: 2, // node-sass 中有个来自 Node.js 线程池的阻塞线程的 bug。 当使用 thread-loader 时，需要设置 workerParallelJobs: 2
+
+    // 额外的 node.js 参数
+    // workerNodeArgs: ['--max-old-space-size=1024'],
+
+    // 允许重新生成一个僵死的 work 池
+    // 这个过程会降低整体编译速度
+    // 并且开发环境应该设置为 false
+    // poolRespawn: false,
+
+    // 闲置时定时删除 worker 进程
+    // 默认为 500（ms）
+    // 可以设置为无穷大，这样在监视模式(--watch)下可以保持 worker 持续存在
+    // poolTimeout: 2000,
+
+    // 池分配给 worker 的工作数量
+    // 默认为 200
+    // 降低这个数值会降低总体的效率，但是会提升工作分布更均一
+    // poolParallelJobs: 50,
+
+    // 池的名称
+    // 可以修改名称来创建其余选项都一样的池
+    // name: "my-pool"
   },
 }

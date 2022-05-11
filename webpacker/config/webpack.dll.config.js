@@ -3,7 +3,7 @@ const rules = require("../rules");
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const postcssNormalize = require("postcss-normalize");
 const { cleanPlugin, dllPlugin } = require("../plugins");
-const { dllOptimiz } = require("../optimization");
+const { dllOptimiz } = require("../optimization/dllOptimiz");
 
 // const commonConfig
 module.exports = {
@@ -32,7 +32,7 @@ module.exports = {
     filename: "[name].dll.js",
     // filename: '[name].[contenthash]js',
     chunkFilename: "[name].dll.[chunkhash].js", //决定 non-entry chunk(非入口 chunk) 的名称
-    library: "[name]_dll_[contenthash]",
+    library: "[name]_dll_[hash]",
     libraryTarget: "umd",
     publicPath: "/",
   },

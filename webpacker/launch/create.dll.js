@@ -5,7 +5,6 @@ process.env.NODE_ENV = 'development'
 
 const ora = require('ora')
 const rm = require('rimraf')
-const path = require('path')
 // const chalk = require('chalk')
 const chalk = require('react-dev-utils/chalk');
 const Webpack = require('webpack')
@@ -20,7 +19,7 @@ const spinnerDll = ora({
 });
 spinnerDll.start()
 
-rm(utils.resolve('libs/'), err => {
+rm(utils.resolve('/libs/'), err => {
   if (err) throw err
   Webpack(dllWebpackConfig, (err, stats) => {
     spinnerDll.stop()

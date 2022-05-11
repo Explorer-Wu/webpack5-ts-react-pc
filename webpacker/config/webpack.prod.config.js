@@ -1,7 +1,7 @@
 
 const path = require('path')
 const { merge } = require('webpack-merge')
-const config = require('../env/index')
+const config = require('../env')
 const baseWebpackConfig = require('./webpack.base.config')
 const { cleanPlugin, cdnPlugin,  htmlPlugin, miniCssExtractPlugin, copyPlugin } = require("../plugins");
 const rules = require("../rules");
@@ -9,8 +9,8 @@ const utils = require('../utils');
 const { prodOptimiz } = require("../optimization");
 
 const env = process.env.NODE_ENV === 'testing'
-  ? require('./test.env')
-  : require('./prod.env')
+  ? require('../env/test.env')
+  : require('../env/prod.env')
 
 
 const prodConfig = {

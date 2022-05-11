@@ -1,6 +1,7 @@
 
 const path = require('path')
 const config = require('../env')
+const packageConfig = require('../../package.json')
 
 module.exports = {
   mode: process.env.NODE_ENV, // ?? 'production',
@@ -19,5 +20,22 @@ module.exports = {
   // rootDir: path.join(__dirname, '../../'),
   // webpackDir: path.join(__dirname, '../'),
   arrFilterEmpty: (array) => array.filter((x) => !!x),
-  sassResourceItems: []
+  sassResourceItems: [],
+  createNotifierCallback: () => {
+    const notifier = require('node-notifier')
+  
+    return (severity, errors) => {
+      if (severity !== 'error') return
+  
+      const error = errors[0]
+      const filename = error.file && error.file.split('!').pop()
+  
+      notifier.notify({
+        title: packageConfig.name,
+        message: severity + ': ' + error.name,
+        subtitle: filename || '',
+        icon: path.join(__dirname, 'logo.png')
+      })
+    }
+  }
 }
