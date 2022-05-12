@@ -19,7 +19,7 @@ const spinnerDll = ora({
 });
 spinnerDll.start()
 
-rm(utils.resolve('/libs/'), err => {
+rm(utils.resolve('/libs'), err => {
   if (err) throw err
   Webpack(dllWebpackConfig, (err, stats) => {
     spinnerDll.stop()

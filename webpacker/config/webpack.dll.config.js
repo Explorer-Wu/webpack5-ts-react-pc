@@ -7,12 +7,12 @@ const { dllOptimiz } = require("../optimization/dllOptimiz");
 
 // const commonConfig
 module.exports = {
-  context: utils.resolve("/"),
+  context: utils.join("/"),
   name: "vendor",
   //要打包的模块的数组
   entry: {
     vendor: [
-      "@babel/polyfill",
+      // "@babel/polyfill", core-js@3 之后弃用了 @babel/polyfill
       "react",
       "react-dom",
       "react-router-dom",
@@ -28,11 +28,11 @@ module.exports = {
     ],
   },
   output: {
-    path: utils.resolve("libs"),
+    path: utils.resolve("/libs"),
     filename: "[name].dll.js",
     // filename: '[name].[contenthash]js',
     chunkFilename: "[name].dll.[chunkhash].js", //决定 non-entry chunk(非入口 chunk) 的名称
-    library: "[name]_dll_[hash]",
+    library: "[name]_dll_[hash]", // 向外暴露的打包库名
     libraryTarget: "umd",
     publicPath: "/",
   },

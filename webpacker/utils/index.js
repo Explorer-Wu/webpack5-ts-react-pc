@@ -8,7 +8,8 @@ module.exports = {
   // isDevServer: process.env.WEBPACK_IS_DEV_SERVER === 'true',
   isProd: ['production', 'uat', 'test'].includes(process.env.NODE_ENV),
   isDev: !exports.isProd,
-  resolve: (dir) => path.join(__dirname, '..', dir),
+  resolve: (dir) => path.resolve(dir), // 获取绝对路径， /斜杠代表根目录 
+  join: (dir, tier = '..') => path.join(__dirname, tier, dir), // 连接路径
   pathRewrite: (localUrl, remoteUrl) => path.replace(new RegExp(localUrl.replace('/', '\\/'), 'g'), remoteUrl),
   assetsPath: function (_path) {
     const assetsSubDirectory = process.env.NODE_ENV === 'production'

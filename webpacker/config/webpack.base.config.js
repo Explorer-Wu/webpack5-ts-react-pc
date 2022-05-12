@@ -13,7 +13,7 @@ const externals = require("./externals");
 module.exports = {
   //webpack 的主目录,基础目录，绝对路径，用于从配置中解析入口起点(entry point)和 loader
   // entry 和 module.rules.loader 选项,相对于此目录解析
-  context: utils.resolve("/"),
+  context: utils.join("/"),
   entry: {
     app: [
       // '@babel/polyfill',

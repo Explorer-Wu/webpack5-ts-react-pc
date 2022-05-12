@@ -8,7 +8,7 @@
 ``` 
 * 公共库或代码打包
 ```sh
-    npm run dlllibs / yarn dlllibs
+    npm run dlls / yarn dlls
 ``` 
 * 开发环境服务启动
 ```sh
