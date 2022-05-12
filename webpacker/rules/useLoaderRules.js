@@ -262,6 +262,7 @@ exports.tsLoader = {
   options: {
     /** 为 loader 传入 transpileOnly 选项，以缩短使用 ts-loader 时的构建时间。使用此选项，会关闭类型检查。
      * 如果要再次开启类型检查，请使用 ForkTsCheckerWebpackPlugin将检查过程移至单独的进程，可以加快 TypeScript 的类型检查和 ESLint 插入的速度
+     * 设置 happyPackMode: true / transpileOnly: true
      **/
      transpileOnly: true,
     // getCustomTransformers: () => ({

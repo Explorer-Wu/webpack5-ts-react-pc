@@ -6,8 +6,8 @@
     "dlls": "node webpacker/launch/create.dll.js",
     "start": "node webpacker/launch/start.js",
     "build": "node webpacker/launch/build.js",
-    "unit": "jest --config test/unit/jest.config.js --coverage",
-    "e2e": "node test/e2e/runner.js",
+    "unit": "jest --config tests/unit/jest.config.js --coverage",
+    "e2e": "node tests/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "mockserver": "nodemon ./server_mock/server.js"
   },

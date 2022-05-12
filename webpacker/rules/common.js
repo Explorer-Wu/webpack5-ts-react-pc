@@ -20,7 +20,7 @@ exports.javascriptRule = {
     test: /\.(js|jsx)$/,
     use: [babelLoader],
     //启用debug 用于故障排查。默认 false
-    debug: true,
+    // debug: true,
     exclude: /\/node_modules\//,
     include: [
       resolve("src"),
@@ -34,7 +34,7 @@ exports.javascriptPreRule = {
   enforce: "pre",
   use: [eslintLoader],
   //启用debug 用于故障排查。默认 false
-  debug: true,
+  // debug: true,
   exclude: /\/node_modules\//,
   include: [
     resolve("src"),
