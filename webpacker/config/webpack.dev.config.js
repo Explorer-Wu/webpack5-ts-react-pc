@@ -1,10 +1,10 @@
-const webpack = require("webpack");
+// const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 
 const { dev } = require("../env/index");
 const devServer = require("./dev.server");
 const baseWebpackConfig = require("./webpack.base.config");
-const { copyPlugin, dllReferencePlugin } = require("../plugins");
+const { copyPlugin, dllReferencePlugin, HMRReactRefreshPlugins } = require("../plugins");
 const rules = require("../rules");
 // const utils = require("../utils");
 const { devOptimiz } = require("../optimization");
@@ -23,8 +23,8 @@ const devConfig = {
   },
   optimization: devOptimiz,
   plugins: [
-    // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
-    new webpack.HotModuleReplacementPlugin(),
+    // webpack 热替换 和 热更新react组件
+    ...HMRReactRefreshPlugins,
 
     // 自动加载模块，而不必到处 import 或 require. 开发模式下optimization.concatenateModules设为false，可使用ProvidePlugin
     // new webpack.ProvidePlugin({

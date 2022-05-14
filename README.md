@@ -96,6 +96,7 @@ Launches the test runner in the interactive watch mode.<br>
   "clean-webpack-plugin": // 用于删除/清理生成的 build 文件 
   "copy-webpack-plugin": // 复制插件
   "compression-webpack-plugin": // Gzip压缩
+  "@pmmmwh/react-refresh-webpack-plugin" // 热更新 react 组件
 
 * webpack loader：解析对应文件
   "babel-loader": // 解析js文件

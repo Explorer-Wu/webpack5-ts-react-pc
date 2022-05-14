@@ -7,7 +7,8 @@ const { dllReferencePlugin } = require('./pluginDllReference');
 const { forkTsCheckerPlugin } = require('./pluginForkTsChecker');
 const { htmlPlugin } = require('./pluginHtml');
 const { manifestPlugin } = require('./pluginManifest');
-const { miniCssExtractPlugin } = require('./pluginMiniCssExtract');
+const { purgeMiniCssExtractPlugins } = require('./pluginPurgeMiniCssExtract');
+const { HMRReactRefreshPlugins } = require('./pluginHMRReactRefresh');
 // export * from './pluginEsLint';
 // export * from './pluginProvide';
 
@@ -21,5 +22,6 @@ module.exports = {
   forkTsCheckerPlugin,
   htmlPlugin,
   manifestPlugin,
-  miniCssExtractPlugin
+  purgeMiniCssExtractPlugins,
+  HMRReactRefreshPlugins
 }

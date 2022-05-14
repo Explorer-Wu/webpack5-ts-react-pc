@@ -17,7 +17,11 @@
         },
         "debug": true,
         // 引入需要的库，需要安装对应版本的 core-js@3
-        "corejs": 3
+        // "corejs": 3,
+        "corejs": {
+          "version": 3,
+          "proposals": true
+        }
       }
     ],
     "@babel/preset-react",
@@ -58,9 +62,10 @@
       }
     ],
     // ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }]
+    ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }],
     // Applies the react-refresh Babel plugin on non-production modes only
     // mode !== "production" && "react-refresh/babel",
+    "react-refresh/babel"
   ],
   "ignore": []
 }

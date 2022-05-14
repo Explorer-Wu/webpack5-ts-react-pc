@@ -3,7 +3,7 @@ const path = require('path')
 const { merge } = require('webpack-merge')
 const config = require('../env')
 const baseWebpackConfig = require('./webpack.base.config')
-const { cleanPlugin, cdnPlugin,  htmlPlugin, miniCssExtractPlugin, copyPlugin } = require("../plugins");
+const { cleanPlugin, cdnPlugin,  htmlPlugin, purgeMiniCssExtractPlugins, copyPlugin } = require("../plugins");
 const rules = require("../rules");
 const utils = require('../utils');
 const { prodOptimiz } = require("../optimization");
@@ -39,7 +39,7 @@ const prodConfig = {
     // 插件配置
     plugins: [
       cleanPlugin, // 每次打包前清空
-      miniCssExtractPlugin,
+      ...purgeMiniCssExtractPlugins,
       htmlPlugin,
         // new HtmlWebpackPlugin({
         //     // title: 'title',

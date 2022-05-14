@@ -7,7 +7,7 @@ const { dllOptimiz } = require("../optimization/dllOptimiz");
 
 // const commonConfig
 module.exports = {
-  context: utils.join("/"),
+  context: utils.resolve("./"),
   name: "vendor",
   //要打包的模块的数组
   entry: {
@@ -28,11 +28,11 @@ module.exports = {
     ],
   },
   output: {
-    path: utils.resolve("/libs"),
+    path: utils.resolve("libs"),
     filename: "[name].dll.js",
     // filename: '[name].[contenthash]js',
     chunkFilename: "[name].dll.[chunkhash].js", //决定 non-entry chunk(非入口 chunk) 的名称
-    library: "[name]_dll_[hash]", // 向外暴露的打包库名
+    library: "[name]_dll_[fullhash]", // 向外暴露的打包库名
     libraryTarget: "umd",
     publicPath: "/",
   },

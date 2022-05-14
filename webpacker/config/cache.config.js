@@ -6,6 +6,7 @@ module.exports = {
     // 1. 将缓存类型设置为文件系统
     type: 'filesystem', // "memory" ｜ "filesystem"
     cacheDirectory: path.resolve(__dirname, '.temp_cache'),
+    // cacheDirectory: path.resolve(__dirname, 'node_modules/.cache/webpack5')
     compression: isProd ? 'gzip' : false,
     buildDependencies: {
       // 2. 将你的 config 添加为 buildDependency，以便在改变 config 时获得缓存无效
