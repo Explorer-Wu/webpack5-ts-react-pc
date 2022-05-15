@@ -1,4 +1,5 @@
 const path = require("path");
+const envConfig = require("../env");
 const { isProd } = require("../utils");
 
 module.exports = {
@@ -7,7 +8,7 @@ module.exports = {
     type: 'filesystem', // "memory" ｜ "filesystem"
     cacheDirectory: path.resolve(__dirname, '.temp_cache'),
     // cacheDirectory: path.resolve(__dirname, 'node_modules/.cache/webpack5')
-    compression: isProd ? 'gzip' : false,
+    compression: envConfig.build.productionGzip ? 'gzip' : false,
     buildDependencies: {
       // 2. 将你的 config 添加为 buildDependency，以便在改变 config 时获得缓存无效
       config: [__filename],

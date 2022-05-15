@@ -1,11 +1,11 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { resolve, isProd } = require("../utils");
-const config = require('../env');
+const envConfig = require('../env');
 
 const baseConfig = {
   filename: process.env.NODE_ENV === 'testing'
     ? 'index.html'
-    : config.build.index,
+    : envConfig.build.index,
   template: './public/index.html', //resolve('/public/index.html'),
   inject: true,
   

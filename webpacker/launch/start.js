@@ -6,15 +6,15 @@ const path = require("path");
 const Webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
 const utils = require("../utils");
-const config = require("../env");
+const envConfig = require("../env");
 
 console.log("process.env:", process.env);
 if (!process.env.NODE_ENV) {
-  process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV);
+  process.env.NODE_ENV = JSON.parse(envConfig.dev.env.NODE_ENV);
 }
 
-const HOST = process.env.HOST || config.dev.host;
-const PORT = Number(process.env.PORT) || config.dev.port;
+const HOST = process.env.HOST || envConfig.dev.host;
+const PORT = Number(process.env.PORT) || envConfig.dev.port;
 
 const ora = require("ora");
 const devWebpackConfig = require("../config/webpack.dev.config");
@@ -25,7 +25,7 @@ devWebpackConfig.plugins.push(
     compilationSuccessInfo: {
       messages: [`Your application is running here: http://${HOST}:${PORT}`],
     },
-    onErrors: config.dev.notifyOnErrors
+    onErrors: envConfig.dev.notifyOnErrors
       ? utils.createNotifierCallback()
       : undefined,
   })

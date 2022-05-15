@@ -70,9 +70,8 @@ exports.baseOptimiz = {
   concatenateModules: false, //对应废弃插件：ModuleConcatenationPlugin
   //告知 webpack 去确定那些由模块提供的导出内容，为 export * from ... 生成更多高效的代码。 默认 optimization.providedExports 会被启用。
   providedExports: true,
-
-   // 压缩输出结果，usedExports开启后会移除未被使用的成员
-   // minimize: true,
+  // 压缩输出结果，usedExports开启后会移除未被使用的成员
+  // minimize: true,
   // 尽可能合并每一个模块到一个函数中（Scop Hosting）
   concatenateModules: true,
 };

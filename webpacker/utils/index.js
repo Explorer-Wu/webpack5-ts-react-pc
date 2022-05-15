@@ -1,7 +1,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const config = require('../env');
+const envConfig = require('../env');
 const packageConfig = require('../../package.json');
 // process.cwd() 方法返回的是 Node.js 进程的当前工作目录(即，当前脚本的工作目录的路径)，通常是package.json 文件所在目录，因为包含 process.cwd() 的脚本是在 package.json 中读取执行的
 const appDir = fs.realpathSync(process.cwd())
@@ -19,8 +19,8 @@ module.exports = {
   pathRewrite: (localUrl, remoteUrl) => path.replace(new RegExp(localUrl.replace('/', '\\/'), 'g'), remoteUrl),
   assetsPath: function (_path) {
     const assetsSubDirectory = process.env.NODE_ENV === 'production'
-      ? config.build.assetsSubDirectory
-      : config.dev.assetsSubDirectory
+      ? envConfig.build.assetsSubDirectory
+      : envConfig.dev.assetsSubDirectory
   
     return path.posix.join(assetsSubDirectory, _path)
   },

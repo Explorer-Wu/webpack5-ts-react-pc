@@ -1,6 +1,6 @@
 "use strict";
 const utils = require("../utils");
-const config = require("../env");
+const envConfig = require("../env");
 const packageName = require("../../package.json").name;
 
 const rules = require("../rules");
@@ -13,7 +13,7 @@ const externals = require("./externals");
 module.exports = {
   //webpack 的主目录,基础目录，绝对路径，用于从配置中解析入口起点(entry point)和 loader
   // entry 和 module.rules.loader 选项,相对于此目录解析
-  context: utils.resolve("/"),
+  context: utils.resolve("./"),
   entry: {
     app: [
       // '@babel/polyfill',
@@ -22,14 +22,14 @@ module.exports = {
   },
 
   output: {
-    path: config.build.assetsRoot, //path: resolve('/dist'),
+    path: envConfig.build.assetsRoot, //path: resolve('/dist'),
     filename: "[name].[contenthash]js",
     chunkFilename: "[name].[chunkhash].js", //决定 non-entry chunk(非入口 chunk) 的名称
     //publicPath: "/"
     publicPath:
       process.env.NODE_ENV === "production"
-        ? config.build.assetsPublicPath
-        : config.dev.assetsPublicPath,
+        ? envConfig.build.assetsPublicPath
+        : envConfig.dev.assetsPublicPath,
     library: {
       type: "umd", // 通用模块定义 libraryTarget: "umd"
       // the type of the exported library

@@ -1,15 +1,10 @@
+'use strict'
 const path = require("path");
-const httpProxyTarget = {
-  port: 3681, // 80
-  protocol: 'http',
-};
+const { merge } = require('webpack-merge')
+// const { resolve } = require("../utils/index");
+const reactConfig = require('../../react-cli.config')
 
-const httpsProxyTarget = {
-  port: 3683, // 443
-  protocol: 'https',
-};
-
-module.exports = {
+module.exports = merge({
   dev: {
     env: require("./dev.env"),
     // Paths
@@ -17,25 +12,13 @@ module.exports = {
     assetsPublicPath: "/", // `//localhost:3603/`,
     proxyTable: {
       "/api/": {
-        target: `${httpProxyTarget.protocol}://172.0.0.1:${httpProxyTarget.port}`,
+        target: 'http://172.0.0.1:8080',
         secure: false,
         changeOrigin: true,
         pathRewrite: {
           "^/api": "/api"
         }
-        // onProxyReq: function(proxyReq, req, res) {
-        //   // add custom header to request
-        //   proxyReq.setHeader('Cookie', 'username=wuwh; sessionid=xxxxx');
-        //   // or log the req
-        // }
       },
-      "/auth": {
-        target: `${httpsProxyTarget.protocol}://172.0.0.1:${httpsProxyTarget.port}`,
-        changeOrigin: true,
-        pathRewrite: {
-          "^/auth": "/auth"
-        }
-      }
     },
     // Various Dev Server settings
     host: "localhost", // '0.0.0.0', // can be overwritten by process.env.HOST
@@ -46,6 +29,7 @@ module.exports = {
     // },
     errorOverlay: true,
     notifyOnErrors: true,
+    // watchOptions
     poll: false,
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
@@ -85,13 +69,15 @@ module.exports = {
     // Surge or Netlify already gzip all static assets for you.
     // Before setting to `true`, make sure to:
     // npm install --save-dev compression-webpack-plugin
-    productionGzip: true,
+    productionGzip: false,
     productionGzipExtensions: ["js", "jsx", "css", "less", "sass", "html"],
-
     // Run the build command with an extra argument to
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: true //process.env.npm_config_report
-  }
-};
+    bundleAnalyzerReport: true // process.env.npm_config_report
+  },
+
+  // 默认禁用多进程
+  useWorkerPool: false,
+}, reactConfig);

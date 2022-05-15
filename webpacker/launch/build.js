@@ -8,13 +8,13 @@ const path = require('path')
 // const chalk = require('chalk')
 const chalk = require('react-dev-utils/chalk')
 const Webpack = require('webpack')
-const config = require('../env')
+const envConfig = require('../env')
 const webpackProdConfig = require('../config/webpack.prod.config')
 
 const spinner = ora('building for production...')
 spinner.start()
 
-rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
+rm(path.join(envConfig.build.assetsRoot, envConfig.build.assetsSubDirectory), err => {
   if (err) throw err
 
   // console.log("webpackProdConfig:", webpackProdConfig)

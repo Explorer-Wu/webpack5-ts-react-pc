@@ -24,6 +24,7 @@ module.exports = {
   http2: "empty",
   net: "empty",
   tls: "empty",
+  process: "mock",
   child_process: "empty"
   // path: true,
   // url: false

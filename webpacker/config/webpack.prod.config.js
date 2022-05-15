@@ -1,7 +1,7 @@
 
 const path = require('path')
 const { merge } = require('webpack-merge')
-const config = require('../env')
+const envConfig = require('../env')
 const baseWebpackConfig = require('./webpack.base.config')
 const { cleanPlugin, cdnPlugin,  htmlPlugin, purgeMiniCssExtractPlugins, copyPlugin } = require("../plugins");
 const rules = require("../rules");
@@ -12,21 +12,20 @@ const env = process.env.NODE_ENV === 'testing'
   ? require('../env/test.env')
   : require('../env/prod.env')
 
-
 const prodConfig = {
     mode: 'production',
     //生产环境中 (none)（省略 devtool 选项） - 不生成 source map，是一个不错的选择
-    devtool: 'none', // config.build.productionSourceMap ? config.build.devtool : false,
+    devtool: 'none', // envConfig.build.productionSourceMap ? envConfig.build.devtool : false,
     name: "app",
     // 在第一个错误出现时抛出失败结果，而不是容忍它。默认情况下，当使用 HMR 时，webpack 会将在终端以及浏览器控制台中，以红色文字记录这些错误，但仍然继续进行打包。
     bail: true,
     output: {
-        path: config.build.assetsRoot,
+        path: envConfig.build.assetsRoot,
         filename: utils.assetsPath('js/[name].[chunkhash].js'),
         chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
         publicPath: process.env.NODE_ENV === 'production' ?
-            config.build.assetsPublicPath :
-            config.dev.assetsPublicPath
+            envConfig.build.assetsPublicPath :
+            envConfig.dev.assetsPublicPath
     },
     module: {
       rules: [
@@ -46,7 +45,7 @@ const prodConfig = {
         //     // cdnModule: 'react',
         //     filename: process.env.NODE_ENV === 'testing'
         //       ? 'index.html'
-        //       : config.build.index,
+        //       : envConfig.build.index,
         //     template: './public/index.html', //resolve('/public/index.html'),
         //     inject: true,
         //     minify: {
@@ -75,7 +74,7 @@ const prodConfig = {
     },
 };
 
-if (config.build.productionGzip) {
+if (envConfig.build.productionGzip) {
     const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
     prodConfig.plugins.push(
@@ -84,7 +83,7 @@ if (config.build.productionGzip) {
           algorithm: 'gzip', // 压缩算法
           test: new RegExp(
               '\\.(' +
-              config.build.productionGzipExtensions.join('|') +
+              envConfig.build.productionGzipExtensions.join('|') +
               ')$'
           ),
           // cache: true,
@@ -96,7 +95,7 @@ if (config.build.productionGzip) {
     )
 }
 
-if (config.build.bundleAnalyzerReport) {
+if (envConfig.build.bundleAnalyzerReport) {
     const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
     prodConfig.plugins.push(new BundleAnalyzerPlugin())
 }

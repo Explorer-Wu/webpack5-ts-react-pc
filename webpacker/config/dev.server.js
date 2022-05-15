@@ -2,7 +2,7 @@
 const path = require("path");
 const HOST = process.env.HOST;
 const PORT = process.env.PORT && Number(process.env.PORT);
-const config = require("../env");
+const envConfig = require("../env");
 
 module.exports = {
   // static: {
@@ -16,7 +16,7 @@ module.exports = {
     rewrites: [
       {
         from: /.*/,
-        to: path.posix.join(config.dev.assetsPublicPath, "index.html"),
+        to: path.posix.join(envConfig.dev.assetsPublicPath, "index.html"),
       },
     ],
   },
@@ -29,17 +29,17 @@ module.exports = {
   //告诉服务器从哪个目录中提供内容。只有在你想要提供静态文件时才需要
   contentBase: false, //设置为 false 以禁用 contentBase。 默认情况下，将使用当前工作目录作为提供内容的目录，如：[path.join(__dirname, 'public'), path.join(__dirname, 'assets')]。
   compress: true, // gzip压缩
-  host: HOST || config.dev.host,
-  port: PORT || config.dev.port,
-  open: config.dev.autoOpenBrowser,
-  overlay: config.dev.errorOverlay
+  host: HOST || envConfig.dev.host,
+  port: PORT || envConfig.dev.port,
+  open: envConfig.dev.autoOpenBrowser,
+  overlay: envConfig.dev.errorOverlay
     ? { warnings: false, errors: true }
     : false,
-  publicPath: config.dev.assetsPublicPath,
-  proxy: config.dev.proxyTable,
+  publicPath: envConfig.dev.assetsPublicPath,
+  proxy: envConfig.dev.proxyTable,
   quiet: false, // necessary for FriendlyErrorsPlugin
   watchOptions: {
-    poll: config.dev.poll,
+    poll: envConfig.dev.poll,
   },
   headers: {
     "Access-Control-Allow-Origin": "*",

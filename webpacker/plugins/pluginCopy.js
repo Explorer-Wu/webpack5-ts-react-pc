@@ -1,6 +1,6 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { resolve } = require("../utils");
-const config = require('../env');
+const envConfig = require('../env');
 
 // copy custom static assets
 const customConfig = {
@@ -8,7 +8,7 @@ const customConfig = {
     patterns: [
       {
         from: resolve("public/static"),
-        to: config.dev.assetsSubDirectory,
+        to: envConfig.dev.assetsSubDirectory,
       },
     ],
     options: {

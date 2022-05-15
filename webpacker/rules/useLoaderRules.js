@@ -1,15 +1,15 @@
 // const { join } = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // import {sassResourceItems} from '../config/sassResources';
-const config = require('../env');
+const envConfig = require('../env');
 const { isProd, resolve } = require("../utils");
 
 function mixLessSacssLoaders(options) {
   options = options || null
   // generate loader string to be used with extract text plugin
-  function generateLoaders (loader, loaderOptions) {
+  function generateLoaders(loader, loaderOptions) {
     if (!options.sourceMap) {
-      if(loaderOptions) {
+      if (loaderOptions) {
         return {
           loader: loader + '-loader',
           options: { ...loaderOptions }
@@ -26,9 +26,9 @@ function mixLessSacssLoaders(options) {
           sourceMap: options.sourceMap
         }
       }
-    }  
+    }
   };
-  
+
   // console.log("cssLoaders:", generateLoaders())
 
   const css = generateLoaders('css', {
@@ -65,16 +65,16 @@ function mixLessSacssLoaders(options) {
     // implementation: require.resolve('sass'),
   });
   /** 调用generateLoaders执行... **/
-  if(options.usePostCSS) {
+  if (options.usePostCSS) {
     //MiniCssExtractPlugin只用在 production 配置中，并且在loaders链中不使用 style-loader, 特别是在开发中使用HMR，因为这个插件暂时不支持HMR
-    if(options.miniCssExtract) {
+    if (options.miniCssExtract) {
       return {
         loader: MiniCssExtractPlugin.loader,
         css,
         postcss,
         less
       }
-    }else{
+    } else {
       return {
         style: generateLoaders('style'),
         css,
@@ -82,15 +82,15 @@ function mixLessSacssLoaders(options) {
         less
       }
     }
-    
+
   } else {
-    if(options.miniCssExtract) {
+    if (options.miniCssExtract) {
       return {
         loader: MiniCssExtractPlugin.loader,
         css,
         scss,
       }
-    }else{
+    } else {
       return {
         style: generateLoaders('style'),
         css,
@@ -116,28 +116,28 @@ function mixStylesLoaders(options) {
 }
 
 exports.useCssLessLoaders = isProd
-? mixStylesLoaders({
-    sourceMap: config.build.productionSourceMap,
+  ? mixStylesLoaders({
+    sourceMap: envConfig.build.productionSourceMap,
     miniCssExtract: true,
     usePostCSS: true
   })
-: mixStylesLoaders({
-  // sourceMap: config.dev.cssSourceMap,
+  : mixStylesLoaders({
+    // sourceMap: envConfig.dev.cssSourceMap,
     miniCssExtract: false,
     usePostCSS: true
   });
 
 exports.useCssSassLoaders = isProd
   ? mixStylesLoaders({
-      sourceMap: config.build.productionSourceMap,
-      miniCssExtract: true,
-      usePostCSS: false
-    })
+    sourceMap: envConfig.build.productionSourceMap,
+    miniCssExtract: true,
+    usePostCSS: false
+  })
   : mixStylesLoaders({
-    // sourceMap: config.dev.cssSourceMap,
-      miniCssExtract: false,
-      usePostCSS: false
-    });
+    // sourceMap: envConfig.dev.cssSourceMap,
+    miniCssExtract: false,
+    usePostCSS: false
+  });
 
 
 exports.cssLoader = {
@@ -151,9 +151,9 @@ exports.sassLoaderItems = [
   {
     loader: 'sass-loader',
     options: {
-        sourceMap: true,
-        // Prefer `dart-sassRules`
-        // implementation: require('sass'),
+      sourceMap: true,
+      // Prefer `dart-sassRules`
+      // implementation: require('sass'),
     },
   },
   // sassResourceItems.length
@@ -169,14 +169,14 @@ exports.sassLoaderItems = [
 exports.postCssLoader = {
   loader: 'postcss-loader',
   options: {
-      postcssOptions: {
-        // config: true, // 开启 / 关闭自动加载配置 postcss.config.js, 默认开启true
-        // 处理写在 JavaScript 中的样式，那么你需要使用 postcss-js parser
-        parser: 'postcss-js',
-      },
-      // 在 CSS-in-JS 中启动 PostCSS Parser 支持
-      execute: true,
-      sourceMap: true,
+    postcssOptions: {
+      // config: true, // 开启 / 关闭自动加载配置 postcss.config.js, 默认开启true
+      // 处理写在 JavaScript 中的样式，那么你需要使用 postcss-js parser
+      parser: 'postcss-js',
+    },
+    // 在 CSS-in-JS 中启动 PostCSS Parser 支持
+    execute: true,
+    sourceMap: true,
   },
 };
 
@@ -187,29 +187,29 @@ exports.postCssLoader = {
  */
 exports.miniCssExtractLoader = isProd
   ? {
-        loader: MiniCssExtractPlugin.loader,
-        // options: {
-        //     esModule: false,
-        // },
-    }
+    loader: MiniCssExtractPlugin.loader,
+    // options: {
+    //     esModule: false,
+    // },
+  }
   : {
-        loader: 'style-loader',
-        // options: {
-        //     esModule: false,
-        // },
-    };
+    loader: 'style-loader',
+    // options: {
+    //     esModule: false,
+    // },
+  };
 
 /**
  * @see https://webpack.js.org/loaders/less-loader/#root
  */
 exports.lessLoader = {
-    loader: 'less-loader',
-    options: {
-        sourceMap: true,
-        lessOptions: {
-            javascriptEnabled: true,
-        },
+  loader: 'less-loader',
+  options: {
+    sourceMap: true,
+    lessOptions: {
+      javascriptEnabled: true,
     },
+  },
 };
 
 /**
@@ -239,14 +239,14 @@ exports.cssModulesSupportLoaderItems = [
   exports.miniCssExtractLoader,
   // typingsCssModulesLoader,
   {
-      ...exports.cssLoader,
-      options: {
-          // esModule: false,
-          modules: {
-              exportLocalsConvention: 'camelCaseOnly',
-              localIdentName: '[local]__[contenthash:base64:5]',
-          },
+    ...exports.cssLoader,
+    options: {
+      // esModule: false,
+      modules: {
+        exportLocalsConvention: 'camelCaseOnly',
+        localIdentName: '[local]__[contenthash:base64:5]',
       },
+    },
   },
 ];
 
@@ -264,7 +264,7 @@ exports.tsLoader = {
      * 如果要再次开启类型检查，请使用 ForkTsCheckerWebpackPlugin将检查过程移至单独的进程，可以加快 TypeScript 的类型检查和 ESLint 插入的速度
      * 设置 happyPackMode: true / transpileOnly: true
      **/
-     transpileOnly: true,
+    transpileOnly: true,
     // getCustomTransformers: () => ({
     //   before: [ReactRefreshTypeScript()].filter(Boolean),
     //   transpileOnly: true
@@ -281,23 +281,23 @@ exports.tsLoader = {
     3. 需要做兼容性处理的就做：按需加载  --> core-js
 **/
 exports.babelLoader = {
-    loader: 'babel-loader', // 代码换成ES5 的代码来做浏览器兼容
-    options: {
-      configFile: resolve('/.babelrc'),
-      /*cacheDirectory是用来缓存编译结果，下次编译加速*/
-      cacheDirectory: true, // 开启babel缓存， 第二次构建时，会读取之前的缓存
-      cacheCompression: isProd,
-      compact: isProd,
-      // plugins: ['syntax-dynamic-import'],
-      // presets: [
-      //   [
-      //     '@babel/preset-env',
-      //     {
-      //         modules: false
-      //     }
-      //   ]
-      // ]
-    },
+  loader: 'babel-loader', // 代码换成ES5 的代码来做浏览器兼容
+  options: {
+    configFile: resolve('/.babelrc'),
+    /*cacheDirectory是用来缓存编译结果，下次编译加速*/
+    cacheDirectory: true, // 开启babel缓存， 第二次构建时，会读取之前的缓存
+    cacheCompression: isProd,
+    compact: isProd,
+    // plugins: ['syntax-dynamic-import'],
+    // presets: [
+    //   [
+    //     '@babel/preset-env',
+    //     {
+    //         modules: false
+    //     }
+    //   ]
+    // ]
+  },
 };
 
 /**
@@ -316,41 +316,85 @@ exports.eslintLoader = {
 /**
  * 开启多进程打包： thread-loader
  * 每个 worker 都是一个独立的 node.js 进程，其开销大约为 600ms 左右。同时会限制跨进程的数据交换。
+ * 为了防止启动 worker 时的高延迟，提供了对 worker 池的优化：预热
  * 注：请仅在耗时的操作中使用此 loader！
 */
 const osCpus = require('os').cpus();
-exports.threadLoader = {
-  loader: "thread-loader",
-  // 有同样配置的 loader 会共享一个 worker 池
-  options: {
-    // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)，或者，
-    // 在 require('os').cpus() 是 undefined 时回退至 1
-    workers: osCpus ? osCpus.length - 1 : 1,
+const threadLoader = require('thread-loader');
 
-    // 一个 worker 进程中并行执行工作的数量
-    // 默认为 20
-    workerParallelJobs: 2, // node-sass 中有个来自 Node.js 线程池的阻塞线程的 bug。 当使用 thread-loader 时，需要设置 workerParallelJobs: 2
+const tsJsWorkerPool = {
+  // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)，或者，
+  // 在 require('os').cpus() 是 undefined 时回退至 1
+  workers: osCpus ? osCpus.length - 1 : 1,
 
-    // 额外的 node.js 参数
-    // workerNodeArgs: ['--max-old-space-size=1024'],
+  // 闲置时定时删除 worker 进程
+  // 默认为 500ms
+  // 可以设置为无穷大， 这样在监视模式(--watch)下可以保持 worker 持续存在
+  poolTimeout: 2000,
+  // 允许重新生成一个僵死的 work 池
+  // 这个过程会降低整体编译速度
+  // 并且开发环境应该设置为 false
+  poolRespawn: isProd,
+};
 
-    // 允许重新生成一个僵死的 work 池
-    // 这个过程会降低整体编译速度
-    // 并且开发环境应该设置为 false
-    // poolRespawn: false,
+const stylesCssWorkerPool = {
+  // 一个 worker 进程中并行执行工作的数量
+  // 默认为 20
+  workerParallelJobs: 2, // node-sass 中有个来自 Node.js 线程池的阻塞线程的 bug。 当使用 thread-loader 时，需要设置 workerParallelJobs: 2
+  poolTimeout: 2000,
+  poolRespawn: isProd,
+};
 
-    // 闲置时定时删除 worker 进程
-    // 默认为 500（ms）
-    // 可以设置为无穷大，这样在监视模式(--watch)下可以保持 worker 持续存在
-    // poolTimeout: 2000,
+threadLoader.warmup(tsJsWorkerPool, ['babel-loader', 'ts-loader']);
+threadLoader.warmup(stylesCssWorkerPool, ['css-loader', 'postcss-loader', 'less-loader']);
+threadLoader.warmup(stylesCssWorkerPool, ['css-loader', 'sass-loader']);
 
-    // 池分配给 worker 的工作数量
-    // 默认为 200
-    // 降低这个数值会降低总体的效率，但是会提升工作分布更均一
-    // poolParallelJobs: 50,
-
-    // 池的名称
-    // 可以修改名称来创建其余选项都一样的池
-    // name: "my-pool"
-  },
+exports.tsJsThreadLoader = {
+  loader: 'thread-loader',
+  options: tsJsWorkerPool
 }
+
+exports.leCssThreadLoader = {
+  loader: 'thread-loader',
+  options: stylesCssWorkerPool
+}
+exports.saCssThreadLoader = {
+  loader: 'thread-loader',
+  options: stylesCssWorkerPool
+}
+
+// exports.threadLoader = {
+//   loader: "thread-loader",
+//   // 有同样配置的 loader 会共享一个 worker 池
+//   options: {
+//     // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)，或者，
+//     // 在 require('os').cpus() 是 undefined 时回退至 1
+//     workers: osCpus ? osCpus.length - 1 : 1,
+
+//     // 一个 worker 进程中并行执行工作的数量
+//     // 默认为 20
+//     workerParallelJobs: 2, // node-sass 中有个来自 Node.js 线程池的阻塞线程的 bug。 当使用 thread-loader 时，需要设置 workerParallelJobs: 2
+
+//     // 额外的 node.js 参数
+//     workerNodeArgs: ['--max-old-space-size=1024'],
+
+//     // 允许重新生成一个僵死的 work 池
+//     // 这个过程会降低整体编译速度
+//     // 并且开发环境应该设置为 false
+//     poolRespawn: false,
+
+//     // 闲置时定时删除 worker 进程
+//     // 默认为 500（ms）
+//     // 可以设置为无穷大，这样在监视模式(--watch)下可以保持 worker 持续存在
+//     poolTimeout: 2000,
+
+//     // 池分配给 worker 的工作数量
+//     // 默认为 200
+//     // 降低这个数值会降低总体的效率，但是会提升工作分布更均一
+//     poolParallelJobs: 50,
+
+//     // 池的名称
+//     // 可以修改名称来创建其余选项都一样的池
+//     name: "my-pool"
+//   },
+// }
