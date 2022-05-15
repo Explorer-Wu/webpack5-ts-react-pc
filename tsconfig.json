@@ -126,6 +126,12 @@
     "version": true,	// 打印编译器版本号
     // watch		在监视模式下运行编译器。会监视输出文件，在它们改变时重新编译。监视文件和目录的具体实现可以通过环境变量进行配置。
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "target": "es2019"
+    }
+  },
   // ts 管理的文件
   "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
   // ts 排除的文件

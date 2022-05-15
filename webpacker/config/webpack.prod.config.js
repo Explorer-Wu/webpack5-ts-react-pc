@@ -81,7 +81,7 @@ if (config.build.productionGzip) {
     prodConfig.plugins.push(
         new CompressionWebpackPlugin({
           filename: '[path].gz[query]',
-          algorithm: 'gzip',
+          algorithm: 'gzip', // 压缩算法
           test: new RegExp(
               '\\.(' +
               config.build.productionGzipExtensions.join('|') +
@@ -90,8 +90,8 @@ if (config.build.productionGzip) {
           // cache: true,
           // include: /\/includes/, 所有包含(include)的文件
           // exclude: /\/excludes/, 所有排除(exclude)的文件
-          threshold: 10240,
-          minRatio: 0.8
+          threshold: 10240, // 只压缩大于 10240 bytes 的chunk
+          minRatio: 0.8  // 只压缩大于该值的 minRatio = Compressed Size / Original Size
         })
     )
 }

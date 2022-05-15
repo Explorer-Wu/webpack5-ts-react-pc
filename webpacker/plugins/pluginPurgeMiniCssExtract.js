@@ -15,6 +15,10 @@ const MiniCssConfig = {
 const PurgeCSSConfig = {
   // **匹配任意字符，包括路径分割符，*匹配任意字符，不暴扣路径分割符
   paths: glob.sync(`${resolve('src')}/**/*`,  { nodir: true }),
+  // 指明哪些安全不需要删除
+  safelist: () => ({
+    stardand: ['body']
+  })
 }
 
 exports.purgeMiniCssExtractPlugins = [ new MiniCssExtractPlugin(MiniCssConfig), new PurgeCSSPlugin(PurgeCSSConfig) ];
