@@ -11,7 +11,7 @@ module.exports = merge({
     assetsSubDirectory: "static",
     assetsPublicPath: "/", // `//localhost:3603/`,
     proxyTable: {
-      "/api/": {
+      "/api": {
         target: 'http://172.0.0.1:8080',
         secure: false,
         changeOrigin: true,
@@ -22,7 +22,7 @@ module.exports = merge({
     },
     // Various Dev Server settings
     host: "localhost", // '0.0.0.0', // can be overwritten by process.env.HOST
-    port: 3603, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 3000, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     // {
     //   app: ["Google Chrome", "--incognito", "--other-flag"] //隐身窗口

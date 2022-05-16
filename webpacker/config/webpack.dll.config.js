@@ -7,6 +7,7 @@ const { dllOptimiz } = require("../optimization/dllOptimiz");
 
 // const commonConfig
 module.exports = {
+  mode: 'production',
   context: utils.resolve("./"),
   name: "vendor",
   //要打包的模块的数组
@@ -21,7 +22,7 @@ module.exports = {
       "immer",
       "use-immer",
       "axios",
-      "lodash",
+      // "lodash",
       // "antd",
       // 'common/js/format',
       // 'popup',

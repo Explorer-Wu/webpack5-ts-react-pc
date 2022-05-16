@@ -1,5 +1,6 @@
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
+const { useWorkerPool } = require('../env');
 
 exports.prodOptimiz = {
   // 在production模式，minimize默认为true，效果就是压缩混淆js代码。
@@ -9,7 +10,7 @@ exports.prodOptimiz = {
     // This is only used in production mode
     new CssMinimizerPlugin({
       // 启用/禁用多进程并发执行,或者设置并发数
-      parallel: true,
+      parallel: useWorkerPool,
     }),
     // 配置生产环境的压缩方案：js和css
     new TerserPlugin({
@@ -17,7 +18,7 @@ exports.prodOptimiz = {
        * 类型： Boolean|Number 默认值： true.
        * 使用多进程并发运行以提高构建速度。 并发运行的默认数量： os.cpus().length - 1 
       */
-      parallel: true, // 4
+      parallel: useWorkerPool, // 4
       exclude: /\/node_modules\//,
       terserOptions: {
         // ecma: undefined,

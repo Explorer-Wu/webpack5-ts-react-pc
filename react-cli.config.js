@@ -10,6 +10,7 @@ const httpsProxyTarget = {
 
 module.exports = {
   dev: {
+    port: 3603,
     proxyTable: {
       "/api": {
         target: `${httpProxyTarget.protocol}://172.0.0.1:${httpProxyTarget.port}`,
