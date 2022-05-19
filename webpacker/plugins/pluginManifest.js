@@ -5,9 +5,10 @@ exports.manifestPlugin = new WebpackManifestPlugin({
   fileName: "asset-manifest.json",
   // publicPath: '/',
   basePath: envConfig.build.assetsRoot,
-  publicPath: process.env.NODE_ENV === "production"
-    ? envConfig.build.assetsPublicPath
-    : envConfig.dev.assetsPublicPath,
+  publicPath: envConfig.assetsPublicPath,
+  // process.env.NODE_ENV === "production"
+  //   ? envConfig.build.assetsPublicPath
+  //   : envConfig.dev.assetsPublicPath,
   generate: (seed, files) => {
     const manifestFiles = files.reduce(function (manifest, file) {
       manifest[file.name] = file.path;

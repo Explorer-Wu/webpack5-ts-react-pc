@@ -8,24 +8,20 @@ module.exports = {
   */
   global: true,
   // boolean 'mock' | 'warn-mock' | 'eval-only'
+  /**
+   * true: 输入文件的文件名，是相对于 context 选项。
+   * false: webpack 不会更改 __filename 的代码。在 Node.js 环境中运行时，出文件的文件名。
+   * 'mock': value 填充为 'index.js'。
+   * 'warn-mock': 使用 '/index.js' 但是会展示一个警告。
+   * 'eval-only'
+   */
   __filename: false,
+  /**
+   * true: 输入 文件的目录名，是相对于 context 选项。
+   * false: webpack 不会更改 __dirname 的代码，这意味着你有常规 Node.js 中的 __dirname 的行为。在 Node.js 环境中运行时，输出 文件的目录名。
+   * 'mock': value 填充为 '/'。
+   * 'warn-mock': 使用 '/' 但是会显示一个警告。
+   * 'eval-only'
+   */
   __dirname: false,
-  // prevent webpack from injecting useless setImmediate polyfill
-  // because source contains it (although only uses it if it's native).
-  setImmediate: true, //boolean | "mock" | "empty"
-  // prevent webpack from injecting mocks to Node native modules
-  // that does not make sense for the client
-  // "mock"：提供 mock 实现预期接口，但功能很少或没有。
-  // "empty"：提供空对象。
-  module: "empty",
-  dgram: "empty",
-  dns: "mock",
-  fs: "empty",
-  http2: "empty",
-  net: "empty",
-  tls: "empty",
-  process: "mock",
-  child_process: "empty"
-  // path: true,
-  // url: false
 };

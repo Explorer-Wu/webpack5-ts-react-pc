@@ -33,8 +33,8 @@ const devConfig = {
     // //   join: ['lodash', 'join'],
     // }),
     
-    //开发环境使用dll分割代码
-    dllReferencePlugin,
+    // 开发环境判断是需要dll动态第三方库还是CDN引入的方式
+    envConfig.useCDN ? cdnPlugin : dllReferencePlugin,
     // copy custom static assets
     copyPlugin
   ],

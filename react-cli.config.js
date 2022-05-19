@@ -42,4 +42,6 @@ module.exports = {
   },
   // 开启多进程
   useWorkerPool: true,
+  // 是否使用CDN
+  useCDN: true,
 };

@@ -75,7 +75,7 @@ exports.imagesRule = {
 };
 // options: {
 //   limit: 10000,
-//   name: utils.assetsPath("images/[name].[hash:7].[ext]"),
+//   name: utils.pathRelative("images/[name].[hash:7].[ext]"),
 // },
 
 exports.fontsRule = {

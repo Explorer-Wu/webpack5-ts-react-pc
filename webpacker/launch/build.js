@@ -11,14 +11,16 @@ const Webpack = require('webpack')
 const envConfig = require('../env')
 const webpackProdConfig = require('../config/webpack.prod.config')
 
-const spinner = ora('building for production...')
+const spinner = ora('生产环境构建打包中...')
+// 启动终端旋转器
 spinner.start()
 
-rm(path.join(envConfig.build.assetsRoot, envConfig.build.assetsSubDirectory), err => {
+rm(path.join(envConfig.build.assetsRoot, envConfig.assetsSubDirectory), err => {
   if (err) throw err
 
   // console.log("webpackProdConfig:", webpackProdConfig)
   Webpack(webpackProdConfig, (err, stats) => {
+    // 停止并清除转轮
     spinner.stop()
     if (err) throw err
     process.stdout.write(stats.toString({

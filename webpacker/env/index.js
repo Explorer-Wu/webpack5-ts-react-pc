@@ -1,14 +1,15 @@
 'use strict'
 const path = require("path");
 const { merge } = require('webpack-merge')
-// const { resolve } = require("../utils/index");
+const { resolve } = require("../utils/index");
 const reactConfig = require('../../react-cli.config')
 
 module.exports = merge({
+  assetsSubDirectory: "static",
   dev: {
     env: require("./dev.env"),
     // Paths
-    assetsSubDirectory: "static",
+    assetsSubDirectory: "./static",
     assetsPublicPath: "/", // `//localhost:3603/`,
     proxyTable: {
       "/api": {
@@ -52,10 +53,10 @@ module.exports = merge({
   build: {
     env: require("./prod.env"),
     // Template for index.html
-    index: path.resolve(__dirname, "../dist/index.html"),
+    index: resolve("dist/index.html"),
     // Paths
-    assetsRoot: path.resolve(__dirname, "../dist"),
-    assetsSubDirectory: "static",
+    assetsRoot: resolve("./dist"),
+    assetsSubDirectory: "./static",
     assetsPublicPath: "/",
     /**
      * Source Maps
@@ -78,6 +79,8 @@ module.exports = merge({
     bundleAnalyzerReport: true // process.env.npm_config_report
   },
 
-  // 默认禁用多进程
+  // 默认禁用多进程打包
   useWorkerPool: false,
+  // 默认使用CDN
+  useCDN: true,
 }, reactConfig);

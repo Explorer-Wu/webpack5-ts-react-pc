@@ -17,7 +17,7 @@ module.exports = {
   entry: {
     app: [
       // '@babel/polyfill',
-      "./src/main.ts", //resolve('/src/main.js')
+      "./src/main.tsx", //resolve('/src/main.js')
     ],
   },
 
@@ -63,7 +63,7 @@ module.exports = {
     // new webpack.ProgressPlugin(), // 废弃 自定义编译过程中的进度报告 
     manifestPlugin,
     //自动生成html文件
-    htmlPlugin
+    htmlPlugin,
   ],
   // 代码分割、tree shaking等优化
   optimization: baseOptimiz,

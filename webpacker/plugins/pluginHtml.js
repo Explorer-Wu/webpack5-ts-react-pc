@@ -3,6 +3,8 @@ const { resolve, isProd } = require("../utils");
 const envConfig = require('../env');
 
 const baseConfig = {
+  // title: 'title',
+  cdnModule: 'react',
   filename: process.env.NODE_ENV === 'testing'
     ? 'index.html'
     : envConfig.build.index,

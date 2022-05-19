@@ -1,14 +1,15 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const glob = require('glob');
 const PurgeCSSPlugin = require('purgecss-webpack-plugin');
-const { assetsPath, resolve } = require("../utils/index");
+const glob = require('glob');
+const { pathRelative, resolve } = require('../utils');
+const { assetsSubDirectory } = require('../env');
 
 const MiniCssConfig = {
     // Options similar to the same options in webpackOptions.output
     // both options are optional
     // 对输出的css文件进行重命名
-    filename: assetsPath('css/[name].[contenthash].css'),
-    chunkFilename: "static/css/[id].[contenthash].css"
+    filename: pathRelative(assetsSubDirectory, 'css/[name].[contenthash].css'),
+    chunkFilename: pathRelative(assetsSubDirectory, 'css/[id].[contenthash].css')
 };
 
 // CSS Tree Shaking

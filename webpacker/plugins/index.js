@@ -9,6 +9,9 @@ const { htmlPlugin } = require('./pluginHtml');
 const { manifestPlugin } = require('./pluginManifest');
 const { purgeMiniCssExtractPlugins } = require('./pluginPurgeMiniCssExtract');
 const { HMRReactRefreshPlugins } = require('./pluginHMRReactRefresh');
+const { compressionPlugin } = require('./pluginCompression');
+const { bundleAnalyzerPlugin } = require('./pluginBundleAnalyzer');
+
 // export * from './pluginEsLint';
 // export * from './pluginProvide';
 
@@ -23,5 +26,7 @@ module.exports = {
   htmlPlugin,
   manifestPlugin,
   purgeMiniCssExtractPlugins,
-  HMRReactRefreshPlugins
+  HMRReactRefreshPlugins,
+  compressionPlugin,
+  bundleAnalyzerPlugin
 }
