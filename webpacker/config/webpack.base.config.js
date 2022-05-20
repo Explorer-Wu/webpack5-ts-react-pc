@@ -61,7 +61,7 @@ module.exports = {
 
   plugins: [
     // new webpack.ProgressPlugin(), // 废弃 自定义编译过程中的进度报告 
-    manifestPlugin,
+    // manifestPlugin,
     //自动生成html文件
     htmlPlugin,
   ],

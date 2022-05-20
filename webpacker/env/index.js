@@ -53,7 +53,7 @@ module.exports = merge({
   build: {
     env: require("./prod.env"),
     // Template for index.html
-    index: resolve("dist/index.html"),
+    index: resolve("dist/index.[contenthash].html"),
     // Paths
     assetsRoot: resolve("./dist"),
     assetsSubDirectory: "./static",

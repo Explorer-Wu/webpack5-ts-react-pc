@@ -25,7 +25,8 @@ const prodConfig = {
       chunkFilename: utils.pathRelative(envConfig.assetsSubDirectory, 'js/[id].[chunkhash].js'),
       publicPath: process.env.NODE_ENV === 'production' ?
           envConfig.build.assetsPublicPath :
-          envConfig.dev.assetsPublicPath
+          envConfig.dev.assetsPublicPath,
+      clean: true,
   },
   module: {
     rules: [

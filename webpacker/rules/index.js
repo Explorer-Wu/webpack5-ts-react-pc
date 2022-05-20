@@ -27,7 +27,7 @@ module.exports = {
   javascriptPreRule,
   javascriptRule,
   tsJsRules,
-  htmlRule,
+  // htmlRule,
   imagesRule,
   fontsRule,
   svgReactComponentRule,

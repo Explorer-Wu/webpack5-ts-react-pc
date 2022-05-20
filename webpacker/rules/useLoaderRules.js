@@ -346,8 +346,8 @@ const stylesCssWorkerPool = {
 };
 
 threadLoader.warmup(tsJsWorkerPool, ['babel-loader', 'ts-loader']);
-threadLoader.warmup(stylesCssWorkerPool, ['css-loader', 'postcss-loader', 'less-loader']);
-threadLoader.warmup(stylesCssWorkerPool, ['css-loader', 'sass-loader']);
+threadLoader.warmup(stylesCssWorkerPool, ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']);
+threadLoader.warmup(stylesCssWorkerPool, ['style-loader', 'css-loader', 'sass-loader']);
 
 exports.tsJsThreadLoader = {
   loader: 'thread-loader',

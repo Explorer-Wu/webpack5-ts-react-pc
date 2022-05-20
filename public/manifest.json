@@ -1,6 +1,6 @@
 {
-  "short_name": "Webpack+React App",
-  "name": "React App webpack template for PC",
+  "short_name": "webpack5-ts-react-pc",
+  "name": "React App webpack5 template for PC",
   "icons": [
     {
       "src": "./static/images/favicon.ico",

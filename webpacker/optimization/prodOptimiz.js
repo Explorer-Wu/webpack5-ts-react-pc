@@ -86,8 +86,7 @@ exports.prodOptimiz = {
   runtimeChunk: true,
   concatenateModules: true,
   
-  //库的Tree Shaking,比如lodash. Webpack默认忽略了sideEffect标注，改变此行为需要设置optimization.sideEffects为true。你能手工设置它或通过设置mode:"production"模式也行。
-
+  // 库的Tree Shaking,比如lodash. Webpack默认忽略了sideEffect标注，改变此行为需要设置optimization.sideEffects为true。你能手工设置它或通过设置mode:"production"模式也行。
   // 通过 package.json 的 "sideEffects" 属性作为标记，向 compiler 提供提示，表明项目中的哪些文件是 "pure(纯正 ES2015 模块)"，由此可以安全地删除文件中未使用的部分。
   sideEffects: true, // 打开移除未使用的模块. 更为有效 是因为它允许跳过整个模块/文件和整个文件子树。需在package.json中设置， 否则影响less和scss的加载
 };
