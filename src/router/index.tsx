@@ -1,9 +1,9 @@
 import { lazy } from "react";
 import type { RouteObject } from "react-router-dom";
-// const Root = lazy(() => import("@@components/LayoutTemp"));
-// const OverView = lazy(() => import("@@views/Overview/index"));
-const Home = lazy(() => import("@@views/Home/index"));
-const Error = lazy(() => import("@@views/error"));
+// const Root = lazy(() => import("@/components/LayoutTemp"));
+// const OverView = lazy(() => import("@/views/Overview/index"));
+const Home = lazy(() => import("@/views/home/index"));
+const Error = lazy(() => import("@/views/error"));
 
 const routes: RouteObject[] = [
   {

@@ -57,7 +57,7 @@ module.exports = {
     // 清除上一次生成的文件
     cleanPlugin,
     // new CleanWebpackPlugin({
-    //   root: utils.resolve("libs"), // 绝对路径 utils.resolve('/dist'),
+    //   root: utils.resolve("libs"), // 绝对路径 utils.resolve('./dist'),
     //   verbose: true, // 是否显示到控制台
     //   dry: false, // 不删除所有
     // }),

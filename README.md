@@ -173,3 +173,12 @@ Launches the test runner in the interactive watch mode.<br>
 scope hoisting 会将模块的结果进行预测，可以让webpack打包出的文件更小运行更快。scope hoisting（作用域提升） 的强大之处，是它通过webpack在打包时可将结果推断出来，将模块打散合并为一个函数极大的避免了代码的冗余。
 scope hoisting也是基于ES6模块化规范，它是由webpack内置插件 ModuleConcateNationPlugin实现的。
 在 production模式下默认配置 ModuleConcateNationPlugin插件，其他模式默认不开启。
+
+* Runtime
+Runtime 主要是指在浏览器运行时，webpack 用来连接模块化的应用程序的所有代码。runtime 包含：在模块交互时，连接模块所需的加载和解析逻辑。包括浏览器中的已加载模块的连接，以及懒加载模块的执行逻辑。
+
+* Manifest
+在代码经过编译打包之后，形成如 index.html 文件、一些 bundle 和各种资源加载到浏览器中，是不是 src 目录下的文件结构现在已经不存在了，那 webpack 如何管理所有模块之间的交互呢？这就是 manifest 数据的由来
+当编译器开始执行，解析和映射应用程序时，它会保留所有模块的详细要点。这个数据集合成为 manifest，当完成打包并发送到浏览器时，会在运行时通过 manifest 来解析加载模块。无论选择哪种模块语法，那些 import 或 require 语句都已经转化为__webpack_require__方法，此方法指向模块标识符。通过使用 manifest 中的数据，runtime 将能够查询模块标识符，检索背后对应的模块。
+* webpack-manifest-plugin
+通过配置webpack-manifest-plugin，生成manifest.json文件，用来对比js资源的差异，做到是否替换，当然，也要写缓存script

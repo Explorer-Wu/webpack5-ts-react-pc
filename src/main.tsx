@@ -9,7 +9,6 @@ import * as ReactDOM from 'react-dom';
 
 /*-- 使用 raf 的 package 增添 requestAnimationFrame 的 shim --*/
 import "raf/polyfill";
-// import '@babel/polyfill';
 
 import App from "./App";
 // import * as serviceWorker from './serviceWorker';

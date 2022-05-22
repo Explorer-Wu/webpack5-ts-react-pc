@@ -1,5 +1,4 @@
 const { isProd, arrFilterEmpty } = require("../utils");
-const { useWorkerPool } = require('../env');
 const {
   useCssLessLoaders,
   useCssSassLoaders,
@@ -10,9 +9,7 @@ const {
   miniCssExtractLoader,
   postCssLoader,
   resolveUrlLoader,
-  sassLoaderItems,
-  leCssThreadLoader,
-  saCssThreadLoader
+  sassLoaderItems
 } = require("./useLoaderRules");
 
 /** css **/
@@ -62,12 +59,12 @@ exports.sassRules = [exports.sassModulesRule, exports.sassRule];
 exports.mixCssLessRules = {
   test: /\.((c|le)ss)$/i,
   exclude: /\.module.less$/,
-  use: [ useWorkerPool && leCssThreadLoader, ...useCssLessLoaders ]
+  use: [ ...useCssLessLoaders ]
 };
 
 // /\.(s[ac]ss)$/
 exports.mixCssSassRules = {
   test: /\.((c|sa|sc)ss)$/i,
   exclude: /\.module.scss$/,
-  use: [ useWorkerPool && saCssThreadLoader, ...useCssSassLoaders ]
+  use: [ ...useCssSassLoaders ]
 };

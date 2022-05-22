@@ -29,7 +29,7 @@
     "allowUnusedLabels": false, // 不报告未使用的标签错误。
     // 在 .js文件中报告错误。与 --allowJs配合使用
     "checkJs": false,	
-    "jsx": "react-jsx", // "React"或"Preserve", 在.tsx文件里支持JSX
+    "jsx": "react-jsx", // 在.tsx文件里支持JSX "React"或"Preserve",
     // "jsxFactory": "h", // JSX时，使用的JSX工厂函数，比如 React.createElement或 h
     // 编译过程中需要引入的库文件的列表。注意：如果--lib没有指定默认注入的库的列表。
     /* 默认注入的库为：
@@ -59,13 +59,22 @@
     "types": ["node", "webpack-env", "jest"],
     // 模块名到基于 baseUrl的路径映射的列表（指定特殊模块的路径）
     "paths": {                   // 路径映射，与 baseUrl 关联
-      "@@/*": ["src/*"],
-      "@@components/*": ["src/components/*"],
-      "@@utils/*": ["src/utils/*"],
-      "@@assets/*": ["src/assets/*"],
-      "@@public/*": ["public/*"],
-      "@@env/*": ["env/*"],
-      "*": ["node_modules/*"]
+      // "@views/": ["src/views/*"],
+      // "@router": ["src/router/*"],
+      // "@layouts": ["src/layouts/*"],
+      // "@components/*": ["src/components/*"],
+      // "@containers": ["src/reduxstore/containers/*"],
+      // "@actions": ["src/reduxstore/actions/*"],
+      // "@reducers": ["src/reduxstore/reducers/*"],
+      // "@store": ["src/reduxstore/store/*"],
+      // "@api": ["src/api/*"],
+      // "@utils/*": ["src/utils/*"],
+      // "@assets/*": ["src/assets/*"],
+      "@/*": ["src/*"],
+      "public/*": ["public/*"],
+      // "@env/*": ["env/*"],
+      "/#/*": ["types/*"],
+      // "*": ["node_modules/*"]
     },
 
     /** 实验性选项 **/
@@ -129,22 +138,29 @@
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS",
-      "target": "es2019"
+      "target": "es6" // "es2020"
     }
   },
   // ts 管理的文件
-  "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts", 
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "types/**/*.d.ts",
+    "types/**/*.ts"
+  ],
   // ts 排除的文件
   "exclude": [
-    "node_modules/**",
-    "build/**",
-    "webpacker/**",
-    "dist/**",
+    "node_modules",
+    "dist",
+    "public", // "public/static/*"
+    "webpacker",
+    "tests/**/*.ts",
     "coverage/**",
-    "src/*.d.ts",
     "scripts",
-    "acceptance-tests",
-    "jest", 
-  ]
-  // "files": ["src/shims-vue.d.ts", "src/shims-tsx.d.ts", "src/vue.d.ts"]
+    "**/*.js" 
+  ],
+  "files": ["src/types/index.d.ts", "src/types/global.d.ts", "src/types/axios.d.ts"] // "src/shims-tsx.d.ts", 
 }

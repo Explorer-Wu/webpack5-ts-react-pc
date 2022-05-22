@@ -54,7 +54,7 @@ const prodConfig = {
   //     filename: process.env.NODE_ENV === 'testing'
   //       ? 'index.html'
   //       : envConfig.build.index,
-  //     template: './public/index.html', //resolve('/public/index.html'),
+  //     template: './public/index.html', //resolve('./public/index.html'),
   //     inject: true,
   //     minify: {
   //       removeComments: true,
@@ -64,7 +64,7 @@ const prodConfig = {
   //     },
   //     // chunks: ['main', 'vendors'],
   //     chunksSortMode: 'dependency',
-  //     favicon: utils.resolve('/public/favicon.ico'),
+  //     favicon: utils.resolve('./public/favicon.ico'),
   // }),
   performance: {
     hints: "warning", // "warning" 枚举;  "error",性能提示中抛出错误;  false, 关闭性能提示   

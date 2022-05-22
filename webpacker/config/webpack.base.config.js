@@ -17,12 +17,12 @@ module.exports = {
   entry: {
     app: [
       // '@babel/polyfill',
-      "./src/main.tsx", //resolve('/src/main.js')
+      "./src/main.tsx", //resolve('./src/main.js')
     ],
   },
 
   output: {
-    path: envConfig.build.assetsRoot, //path: resolve('/dist'),
+    path: envConfig.build.assetsRoot, //path: resolve('./dist'),
     filename: "[name].[contenthash]js",
     chunkFilename: "[name].[chunkhash].js", //决定 non-entry chunk(非入口 chunk) 的名称
     //publicPath: "/"

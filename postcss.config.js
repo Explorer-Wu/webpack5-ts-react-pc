@@ -15,12 +15,12 @@ module.exports = {
           flexbox: 'no-2009',
         },
         stage: 3,
-        browsers: 'last 5 versions'
+        browsers: 'last 2 versions'
       },
     ],
     ['autoprefixer', {
       // browsers: 'last 5 version',
-      overrideBrowserslist: ['last 5 version', '>1%', 'ios 7'],
+      overrideBrowserslist: ['> 1%', 'last 2 versions','not ie <= 10']
     }],
     'postcss-normalize',
     // require('postcss-nested'),  // 废弃的，将会在下一个主要版本中移除

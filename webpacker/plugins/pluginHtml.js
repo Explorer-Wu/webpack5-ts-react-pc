@@ -8,7 +8,7 @@ const baseConfig = {
   filename: process.env.NODE_ENV === 'testing'
     ? 'index.html'
     : envConfig.build.index,
-  template: resolve('/public/index.html'), // './public/index.html',
+  template: resolve('./public/index.html'), // './public/index.html',
   // templateContent: false, // {string|Function|false}
   // templateParameters: {Boolean|Object|Function}
   inject: true,

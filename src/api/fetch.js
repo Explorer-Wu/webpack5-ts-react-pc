@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { message } from 'antd';
-import CookieStorage from '@@utils/cookiestorage';
+import CookieStorage from '@utils/cookiestorage';
 import { BaseURl } from './ipconfig'
 
 // 请求队列

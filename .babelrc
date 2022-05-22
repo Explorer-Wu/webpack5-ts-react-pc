@@ -1,6 +1,7 @@
 {
   // 自动修复eslint的错误
   "presets": [
+    ["@babel/preset-typescript"],
     [
       "@babel/preset-env",
       {
@@ -13,8 +14,9 @@
         "modules": "auto", // false
         // 开启浏览器兼容 polyfills，会根据browserslist配置
         "targets": {
-          "browsers": [">1%", "last 4 versions", "not ie < 9"]
+          "browsers": [">1%", "last 2 versions", "not ie < 10"]
         },
+        "loose": true,
         "debug": true,
         // 引入需要的库，需要安装对应版本的 core-js@3
         // "corejs": 3,
@@ -24,8 +26,7 @@
         }
       }
     ],
-    "@babel/preset-react",
-    "@babel/preset-typescript"
+    "@babel/preset-react"
   ],
   "plugins": [
     "@babel/plugin-syntax-dynamic-import",

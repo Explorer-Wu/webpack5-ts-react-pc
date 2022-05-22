@@ -2,11 +2,11 @@ import React, { Suspense, useState } from "react";
 import { ConfigProvider, Layout } from "antd";
 import zhCN from "antd/es/locale/zh_CN";
 import { Outlet, Link, useRoutes, useParams } from "react-router-dom";
-import routes from "@@router/index";
+import routes from "@/router/index";
 
 import Header from "./Header";
 import MenuNav from "./Nav";
-import Loading from "@@/components/Loading";
+import Loading from "@/components/Loading";
 // import Footer from './Footer';
 
 const { Content, Sider } = Layout;

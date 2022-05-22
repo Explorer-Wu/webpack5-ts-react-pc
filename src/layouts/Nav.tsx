@@ -1,6 +1,7 @@
-import React, { PureComponent } from "react";
+import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useRoutes, useParams } from "react-router-dom";
 import _ from "lodash";
+import logo from "public/static/images/logo.svg";
 import { Menu } from "antd";
 import {
   AppstoreOutlined,
@@ -18,155 +19,102 @@ import {
   // VideoCameraOutlined,
 } from "@ant-design/icons";
 
-import logo from "public/static/images/logo.svg";
+import type { MenuProps } from 'antd';
+type MenuItem = Required<MenuProps>['items'][number];
 
-const { SubMenu } = Menu;
+function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode, children?: MenuItem[], type?: 'group'): MenuItem {
+  // link: string,
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as MenuItem;
+}
 
-class NavMenu extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedKeys: []
-    };
-    this.menuLinks = [
-      {
-        type: <AppstoreOutlined />,
-        title: "首页概览",
-        path: "/views/home"
-      },
-      {
-        type: <LineChartOutlined />,
-        title: "Echart图表",
-        // path: '/echarts',
-        children: [
-          {
-            title: "通用图表",
-            path: "/views/charts/index"
-          },
-          {
-            title: "D3图表",
-            path: "/views/charts/d3charts"
-          }
-        ]
-      },
-      {
-        type: <FormOutlined />,
-        title: "表单展示",
-        path: "/views/forms"
-      },
-      {
-        type: <TableOutlined />,
-        title: "表格展示",
-        path: "/views/tables"
-      },
-      {
-        type: <DragOutlined />,
-        title: "拖拽组件",
-        path: "/views/dndpage"
-      },
-      {
-        type: <InteractionOutlined />,
-        title: "设计模式",
-        children: [
-          {
-            title: "单例模式",
-            path: "/views/designmodes/index"
-          },
-          {
-            title: "策略模式",
-            path: "/views/designmodes/strategy"
-          },
-          {
-            title: "代理模式",
-            path: "/views/designmodes/proxymode",
-          },
-          {
-            title: "发布订阅模式",
-            path: "/views/designmodes/pubsubscribe",
-          },
-          {
-            title: "适配器模式",
-            path: "/views/designmodes/adaptermode",
-          },
-        ]
-      },
-      {
-        type: <PictureOutlined />,
-        title: "图片展示",
-        path: "/views/pictures"
-      },
-    ];
-
-    this.menuPath = this.menuLinks.map(menu => {
-      if (menu.path) {
-        return menu.path;
-      } else {
-        return menu.children.map(el => el.path);
-      }
-    });
-  }
-
-  componentDidMount() {
-    _.flatten(this.menuPath).forEach(mpath => {
-      if (this.props.location.pathname.indexOf(mpath) > -1) {
-        this.setState({ selectedKeys: [mpath] });
-      }
-    });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    // const { router } = this.props;
-    if (prevProps.location.pathname !== this.props.location.pathname) {
-      _.flatten(this.menuPath).forEach(mpath => {
-        if (this.props.location.pathname.indexOf(mpath) > -1) {
-          this.setState({ selectedKeys: [mpath] });
-        }
-      });
+function mapPathFn(menus: Array<any>) {
+  return menus.map(menu => {
+    if (menu.children) {
+      return mapPathFn(menu.children)
+    } else {
+      return menu.key;
     }
-  }
+  });
+}
 
-  linkTo = link => {
-    console.log("linkTo:", link.key, this.props);
-    this.props.history.replace(link.key);
+const MenusList: MenuItem[] = [
+  getItem('首页概览', '/views/home', <AppstoreOutlined />),
+  getItem('Echart图表', '/views/charts', <LineChartOutlined />, [
+    getItem('通用图表', '/views/charts/index'),
+    getItem('D3图表', '/views/charts/d3charts'),
+  ]),
+  getItem('表单展示', '/views/forms', <FormOutlined />),
+  getItem('表格展示', '/views/tables', <TableOutlined />),
+  getItem('拖拽组件', '/views/dndpage', <DragOutlined />),
+  getItem('设计模式', '/views/designmodes', <InteractionOutlined />, [
+    getItem('单例模式', '/views/designmodes/index'),
+    getItem('策略模式', '/views/designmodes/strategy'),
+    getItem('代理模式', '/views/designmodes/proxymode'),
+    getItem('发布订阅模式', '/views/designmodes/pubsubscribe'),
+    getItem('适配器模式', '/views/designmodes/adaptermode'),
+    // getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
+  ]),
+  getItem('图片展示', '/views/pictures', <PictureOutlined />),
+];
+
+// // 创建类型接口
+// export interface MenuProps {
+//   menuLinks: Array<any>, // Array<{ type: any; title: string, path: string, children: any[] }>,
+//   menuPath: Array<any>,
+//   // onIncrement: () => void,
+// }
+
+// 使用接口代替 PropTypes 进行类型校验
+const NavMenu: React.FC = (props) => {
+  const [selKeys, setSelKeys] = useState([]);
+
+  const menuLinks: any[] = mapPathFn(MenusList);
+
+  console.log("NavMenu:", props);
+
+  const linkTo = link => {
+    console.log("linkTo:", link.key, props);
+    props.history.replace(link.key);
   };
 
-  render() {
-    let MenusList = this.menuLinks.map((el, index) =>
-      el.children ? (
-        <SubMenu key={"sub" + index + 1} icon={el.type} title={el.title}>
-          {el.children.map(echd => (
-            <Menu.Item key={echd.path}>{echd.title}</Menu.Item>
-          ))}
-        </SubMenu>
-      ) : (
-        <Menu.Item key={el.path} icon={el.type}>
-          {el.title}
-        </Menu.Item>
-      )
-    );
+  useEffect(() => {
+      // if (prevProps.location.pathname !== props.location.pathname) {
+      // }
+      for (let mpath of _.flatten(menuLinks)) {
+        if (props.location.pathname.indexOf(mpath) > -1) {
+          setSelKeys([mpath])
+        }
+      }
 
-    return (
-      <>
-        <div className="head-logo">
-          <img src={logo} alt="logo" type="image/png" />
-          <div className="title">React App PC</div>
-        </div>
+      return () => {}
+  }, [props]);
 
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["/views/home"]}
-          selectedKeys={this.state.selectedKeys}
-          onClick={this.linkTo}
-          mode="inline"
-        >
-          {MenusList}
-        </Menu>
-
-        {/* <style jsx="true">{`
-        `}</style> */}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <div className="head-logo">
+        <img src={logo} alt="logo"/>
+        <div className="title">React App PC</div>
+      </div>
+      {/* defaultOpenKeys={['sub1']} */}
+      {/* inlineCollapsed={collapsed} */}
+      <Menu
+        mode="inline"
+        theme="dark"
+        defaultSelectedKeys={["/views/home"]}
+        selectedKeys={selKeys}
+        items={MenusList}
+        onClick={linkTo}
+      />
+        {/* {MenusList}
+      </Menu> */}
+    </>
+  );
+};
 
 export default withRouter(NavMenu);

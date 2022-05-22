@@ -4,7 +4,7 @@ const { resolve, isDev } = require("../utils");
 const config = {
   async: isDev,
   typescript: {
-    configFile: resolve('/tsconfig.json'),
+    configFile: resolve('./tsconfig.json'),
   },
   // eslint: {enabled: true, files: '../../src/**/*.{ts,tsx,js,jsx}'},
 };

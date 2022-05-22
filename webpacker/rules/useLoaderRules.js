@@ -4,6 +4,48 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const envConfig = require('../env');
 const { isProd, resolve } = require("../utils");
 
+/**
+ * 开启多进程打包： thread-loader
+ * 每个 worker 都是一个独立的 node.js 进程，其开销大约为 600ms 左右。同时会限制跨进程的数据交换。
+ * 为了防止启动 worker 时的高延迟，提供了对 worker 池的优化：预热
+ * 注：请仅在耗时的操作中使用此 loader！
+*/
+const osCpus = require('os').cpus();
+const threadLoader = require('thread-loader');
+
+const tsJsWorkerPool = {
+  // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)，或者，
+  // 在 require('os').cpus() 是 undefined 时回退至 1
+  workers: osCpus ? (osCpus.length - 1)* 3 / 5 : 1,
+
+  // 闲置时定时删除 worker 进程
+  // 默认为 500ms
+  // 可以设置为无穷大， 这样在监视模式(--watch)下可以保持 worker 持续存在
+  poolTimeout: 2000,
+  // 允许重新生成一个僵死的 work 池
+  // 这个过程会降低整体编译速度
+  // 并且开发环境应该设置为 false
+  poolRespawn: isProd,
+};
+
+const stylesCssWorkerPool = {
+  workers: (osCpus && osCpus.length - 1 > 1) ? osCpus.length - 1 - tsJsWorkerPool.workers : 0,
+  // 一个 worker 进程中并行执行工作的数量
+  // 默认为 20
+  workerParallelJobs: 2, // node-sass 中有个来自 Node.js 线程池的阻塞线程的 bug。 当使用 thread-loader 时，需要设置 workerParallelJobs: 2
+  poolTimeout: 2000,
+  poolRespawn: isProd,
+};
+
+threadLoader.warmup(tsJsWorkerPool, ['babel-loader', 'ts-loader']);
+threadLoader.warmup(stylesCssWorkerPool, ['css-loader', 'postcss-loader', 'less-loader']);
+threadLoader.warmup(stylesCssWorkerPool, ['css-loader', 'sass-loader']);
+
+exports.tsJsThreadLoader = {
+  loader: 'thread-loader',
+  options: tsJsWorkerPool
+}
+
 function mixLessSacssLoaders(options) {
   options = options || null
   // generate loader string to be used with extract text plugin
@@ -64,12 +106,22 @@ function mixLessSacssLoaders(options) {
     // Prefer `dart-sass` 是首选
     // implementation: require.resolve('sass'),
   });
+  
+  const leCssThreadLoader = generateLoaders('thread', {
+    options: stylesCssWorkerPool
+  });
+
+  const saCssThreadLoader = generateLoaders('thread', {
+    options: stylesCssWorkerPool
+  });
+
   /** 调用generateLoaders执行... **/
   if (options.usePostCSS) {
     //MiniCssExtractPlugin只用在 production 配置中，并且在loaders链中不使用 style-loader, 特别是在开发中使用HMR，因为这个插件暂时不支持HMR
     if (options.miniCssExtract) {
       return {
         loader: MiniCssExtractPlugin.loader,
+        threader: envConfig.useWorkerPool && leCssThreadLoader,
         css,
         postcss,
         less
@@ -77,6 +129,7 @@ function mixLessSacssLoaders(options) {
     } else {
       return {
         style: generateLoaders('style'),
+        threader: envConfig.useWorkerPool && leCssThreadLoader,
         css,
         postcss,
         less
@@ -87,12 +140,14 @@ function mixLessSacssLoaders(options) {
     if (options.miniCssExtract) {
       return {
         loader: MiniCssExtractPlugin.loader,
+        threader: envConfig.useWorkerPool && saCssThreadLoader,
         css,
         scss,
       }
     } else {
       return {
         style: generateLoaders('style'),
+        threader: envConfig.useWorkerPool && saCssThreadLoader,
         css,
         // sass: generateLoaders('sass', { indentedSyntax: true }),
         scss,
@@ -109,9 +164,10 @@ function mixStylesLoaders(options) {
   for (const extension in loaders) {
     const loader = loaders[extension]
     // console.log("styleLoaders:", extension, loader)
-    output.push(loader)
+    loader && output.push(loader)
   }
-  // console.log("styleLoaders-out:", output)
+  console.log("styleLoaders-out:", output)
+  debugger
   return output
 }
 
@@ -283,7 +339,7 @@ exports.tsLoader = {
 exports.babelLoader = {
   loader: 'babel-loader', // 代码换成ES5 的代码来做浏览器兼容
   options: {
-    configFile: resolve('/.babelrc'),
+    configFile: resolve('./.babelrc'),
     /*cacheDirectory是用来缓存编译结果，下次编译加速*/
     cacheDirectory: true, // 开启babel缓存， 第二次构建时，会读取之前的缓存
     cacheCompression: isProd,
@@ -311,56 +367,6 @@ exports.eslintLoader = {
     formatter: require.resolve("react-dev-utils/eslintFormatter"),
     eslintPath: require.resolve("eslint"),
   },
-}
-
-/**
- * 开启多进程打包： thread-loader
- * 每个 worker 都是一个独立的 node.js 进程，其开销大约为 600ms 左右。同时会限制跨进程的数据交换。
- * 为了防止启动 worker 时的高延迟，提供了对 worker 池的优化：预热
- * 注：请仅在耗时的操作中使用此 loader！
-*/
-const osCpus = require('os').cpus();
-const threadLoader = require('thread-loader');
-
-const tsJsWorkerPool = {
-  // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)，或者，
-  // 在 require('os').cpus() 是 undefined 时回退至 1
-  workers: osCpus ? osCpus.length - 1 : 1,
-
-  // 闲置时定时删除 worker 进程
-  // 默认为 500ms
-  // 可以设置为无穷大， 这样在监视模式(--watch)下可以保持 worker 持续存在
-  poolTimeout: 2000,
-  // 允许重新生成一个僵死的 work 池
-  // 这个过程会降低整体编译速度
-  // 并且开发环境应该设置为 false
-  poolRespawn: isProd,
-};
-
-const stylesCssWorkerPool = {
-  // 一个 worker 进程中并行执行工作的数量
-  // 默认为 20
-  workerParallelJobs: 2, // node-sass 中有个来自 Node.js 线程池的阻塞线程的 bug。 当使用 thread-loader 时，需要设置 workerParallelJobs: 2
-  poolTimeout: 2000,
-  poolRespawn: isProd,
-};
-
-threadLoader.warmup(tsJsWorkerPool, ['babel-loader', 'ts-loader']);
-threadLoader.warmup(stylesCssWorkerPool, ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']);
-threadLoader.warmup(stylesCssWorkerPool, ['style-loader', 'css-loader', 'sass-loader']);
-
-exports.tsJsThreadLoader = {
-  loader: 'thread-loader',
-  options: tsJsWorkerPool
-}
-
-exports.leCssThreadLoader = {
-  loader: 'thread-loader',
-  options: stylesCssWorkerPool
-}
-exports.saCssThreadLoader = {
-  loader: 'thread-loader',
-  options: stylesCssWorkerPool
 }
 
 // exports.threadLoader = {

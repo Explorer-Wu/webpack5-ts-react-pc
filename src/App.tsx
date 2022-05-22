@@ -6,14 +6,14 @@ import {
   Route,
   Navigate // Redirect,
 } from "react-router-dom";
-// import HistoryNav from '@@router/history';
-// import LayoutScreen from "@@components/Visualscreen/LayoutScreen";
-import MainLayout from "@@layouts/LayoutTemp";
-// import OverView from "@@views/Overview/index";
-import "@@assets/styles/antd-custom.less";
-import "@@assets/styles/main/base.scss";
-import "@@assets/styles/components/general.scss";
-// import "@@assets/css/main.css"
+// import HistoryNav from '@/router/history';
+// import LayoutScreen from "@/components/Visualscreen/LayoutScreen";
+import MainLayout from "@/layouts/LayoutTemp";
+// import OverView from "@/views/Overview/index";
+import "@assets/styles/antd-custom.less";
+import "@assets/styles/main/base.scss";
+import "@assets/styles/components/general.scss";
+// import "@assets/css/main.css"
 
 // const supportsHistory = "pushState" in window.history;
 // BrowserRouter as Router用 forceRefresh={!supportsHistory}  history={History}
