@@ -11,8 +11,6 @@ import Loading from "@/components/Loading";
 
 const { Content, Sider } = Layout;
 
-const routeElement = useRoutes(routes);
-
 function MainLayout(props) {
   // const { match } = props;
   const [collapsed, setCollapsed] = useState(false);
@@ -20,6 +18,9 @@ function MainLayout(props) {
     setCollapsed(bool);
   };
   console.log("lay-router:", props);
+  
+  const routeElement = useRoutes(routes);
+
   return (
     <ConfigProvider locale={zhCN}>
       <Layout>

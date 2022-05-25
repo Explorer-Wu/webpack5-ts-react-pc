@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Outlet, Link, useRoutes, useParams } from "react-router-dom";
 import _ from "lodash";
 import logo from "public/static/images/logo.svg";
@@ -71,7 +71,8 @@ const MenusList: MenuItem[] = [
 // }
 
 // 使用接口代替 PropTypes 进行类型校验
-const NavMenu: React.FC = (props) => {
+const NavMenu: FC<any> = (props) => {
+  const { location: any, history: any } = props;
   const [selKeys, setSelKeys] = useState([]);
 
   const menuLinks: any[] = mapPathFn(MenusList);
@@ -80,14 +81,14 @@ const NavMenu: React.FC = (props) => {
 
   const linkTo = link => {
     console.log("linkTo:", link.key, props);
-    props.history.replace(link.key);
+    history.replace(link.key);
   };
 
   useEffect(() => {
       // if (prevProps.location.pathname !== props.location.pathname) {
       // }
       for (let mpath of _.flatten(menuLinks)) {
-        if (props.location.pathname.indexOf(mpath) > -1) {
+        if (location.pathname.indexOf(mpath) > -1) {
           setSelKeys([mpath])
         }
       }
@@ -117,4 +118,4 @@ const NavMenu: React.FC = (props) => {
   );
 };
 
-export default withRouter(NavMenu);
+export default NavMenu;

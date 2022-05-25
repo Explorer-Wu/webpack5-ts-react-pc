@@ -6,6 +6,17 @@ declare interface PromiseFn<T = any, R = T> {
   (...arg: T[]): Promise<R>;
 }
 
+declare function useNavigate(): NavigateFunction;
+
+interface NavigateFunction {
+  (
+    to: To,
+    options?: { replace?: boolean; state?: State }
+  ): void;
+  (delta: number): void;
+}
+
+
 declare type RefType<T> = T | null;
 
 declare type LabelValueOptions = {

@@ -3,7 +3,7 @@ const { resolve, isProd } = require("../utils");
 const envConfig = require('../env');
 
 const baseConfig = {
-  // title: 'title',
+  title: 'React TypeScript App webpack5 template for PC',
   cdnModule: 'react',
   filename: process.env.NODE_ENV === 'testing'
     ? 'index.html'
