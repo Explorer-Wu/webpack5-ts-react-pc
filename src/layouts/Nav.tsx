@@ -1,5 +1,6 @@
 import { FC, useState, useEffect } from 'react';
-import { Outlet, Link, useRoutes, useParams } from "react-router-dom";
+import { Link, useRoutes, useParams } from "react-router-dom";
+import HistoryNav from "@/router/history";
 import _ from "lodash";
 import logo from "public/static/images/logo.svg";
 import { Menu } from "antd";
@@ -33,14 +34,15 @@ function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode,
   } as MenuItem;
 }
 
-function mapPathFn(menus: Array<any>) {
-  return menus.map(menu => {
+function mapPathFn(menus: Array<any>, paths: Array<any> = []) {
+  for (let menu of menus) {
     if (menu.children) {
-      return mapPathFn(menu.children)
+      paths = mapPathFn(menu.children, paths)
     } else {
-      return menu.key;
-    }
-  });
+      paths.push(menu.key);
+    } 
+  }
+  return paths;
 }
 
 const MenusList: MenuItem[] = [
@@ -72,7 +74,9 @@ const MenusList: MenuItem[] = [
 
 // 使用接口代替 PropTypes 进行类型校验
 const NavMenu: FC<any> = (props) => {
-  const { location: any, history: any } = props;
+  console.log("NavMenu-props:", props);
+  
+  const { location } = props;
   const [selKeys, setSelKeys] = useState([]);
 
   const menuLinks: any[] = mapPathFn(MenusList);
@@ -81,7 +85,8 @@ const NavMenu: FC<any> = (props) => {
 
   const linkTo = link => {
     console.log("linkTo:", link.key, props);
-    history.replace(link.key);
+    // history.replace(link.key);
+    HistoryNav(link.key, { replace: true });
   };
 
   useEffect(() => {
@@ -89,7 +94,7 @@ const NavMenu: FC<any> = (props) => {
       // }
       for (let mpath of _.flatten(menuLinks)) {
         if (location.pathname.indexOf(mpath) > -1) {
-          setSelKeys([mpath])
+          setSelKeys([ mpath ])
         }
       }
 
