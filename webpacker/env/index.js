@@ -42,7 +42,7 @@ module.exports = merge({
     /**
      * Source Maps
      */
-    devtool: "cheap-module-eval-source-map", //在大多数情况下，最佳选择
+    devtool: "eval-cheap-module-source-map", //在大多数情况下，最佳选择
     // 'eval-source-map', 变体配置进行增量编译
     // If you have problems debugging vue-files in devtools,
     // set this to false - it *may* help
@@ -61,7 +61,6 @@ module.exports = merge({
     /**
      * Source Maps
      */
-
     productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: "#source-map", // 'cheap-module-source-map' 'cheap-source-map' 转换过的代码（仅限行）

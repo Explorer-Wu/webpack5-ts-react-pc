@@ -87,6 +87,7 @@ module.exports = {
     // "jsx-control-statements/jsx-use-if-tag": 'off',
 
     'prettier/prettier': 1,
+    "global-require": 0,
     'no-debugger': isProd ? 'warn' : 'off',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     "eqeqeq": ['warn', 'always'],

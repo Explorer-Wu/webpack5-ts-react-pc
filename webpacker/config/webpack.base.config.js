@@ -41,9 +41,31 @@ module.exports = {
 
   module: {
     // noParse: /lodash/, // 忽略未采用模块化的文件，因此jquery或lodash将不会被下面的loaders解析
+    // parser: {
+    //   asset: {
+    //     // 资产模块的 parser 选项
+    //   },
+    //   javascript: {
+    //     // javascript 模块的解析器选项: 启用解析 require.ensure 语法的功能
+    //     requireEnsure: true,
+    //   },
+    // },
     rules: utils.arrFilterEmpty([
       // Disable require.ensure as it's not a standard language feature.
-      { parser: { requireEnsure: false } }, // 禁用 require.ensure
+      { 
+        parser: { 
+          amd: false, // 禁用 AMD
+          commonjs: false, // 禁用 CommonJS
+          system: false, // 禁用 SystemJS
+          harmony: false, // 禁用 ES2015 Harmony import/export
+          requireInclude: false, // 禁用 require.include
+          requireEnsure: false, // 禁用 require.ensure
+          requireContext: false, // 禁用 require.context
+          browserify: false, // 禁用特殊处理的 browserify bundle
+          requireJs: false, // 禁用 requirejs.*
+          node: false, // 禁用 __dirname, __filename, module, require.extensions, require.main, 等。
+        }
+      }, 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
       rules.javascriptPreRule,
@@ -61,12 +83,12 @@ module.exports = {
 
   plugins: [
     // new webpack.ProgressPlugin(), // 废弃 自定义编译过程中的进度报告 
-    // manifestPlugin,
+    manifestPlugin,
     //自动生成html文件
-    htmlPlugin,
+    // htmlPlugin,
   ],
   // 代码分割、tree shaking等优化
-  optimization: baseOptimiz,
+  // optimization: baseOptimiz,
   
   // externals: { React: 'React', 'react-dom': 'react-dom' },
   // library 需要一个名为 lodash 的依赖，这个依赖在 consumer 环境中必须存在且可用

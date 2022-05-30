@@ -67,11 +67,9 @@ exports.baseOptimiz = {
   // concatenateModules 告知 webpack 去寻找模块类型中的片段，哪些是可以安全地被合并到单一模块中。这取决于 optimization.providedExports 和 optimization.usedExports。
   //“作用域提升(scope hoisting)”, 仅适用于由 webpack 直接处理的 ES6 模块。在使用转译器(transpiler)时，你需要禁用对模块的处理（例如 Babel 中的 modules 选项）。
   // 默认 optimization.concatenateModules 在生产模式下被启用，而在其它情况下被禁用。
-  concatenateModules: false, //对应废弃插件：ModuleConcatenationPlugin
+  concatenateModules: true, // 尽可能合并每一个模块到一个函数中（Scop Hosting） 对应废弃插件：ModuleConcatenationPlugin
   //告知 webpack 去确定那些由模块提供的导出内容，为 export * from ... 生成更多高效的代码。 默认 optimization.providedExports 会被启用。
   providedExports: true,
   // 压缩输出结果，usedExports开启后会移除未被使用的成员
   // minimize: true,
-  // 尽可能合并每一个模块到一个函数中（Scop Hosting）
-  concatenateModules: true,
 };

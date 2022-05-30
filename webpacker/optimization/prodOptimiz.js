@@ -21,7 +21,7 @@ exports.prodOptimiz = {
       parallel: useWorkerPool, // 4
       exclude: /\/node_modules\//,
       terserOptions: {
-        // ecma: undefined,
+        ecma: undefined,
         parse: {
           ecma: 8,
         },
@@ -32,18 +32,19 @@ exports.prodOptimiz = {
           inline: 2,
         },
         mangle: true, // Note `mangle.properties` is `false` by default.
-        module: false,
+        module: true,
         // Deprecated
-        output: {
-          ecma: 5,
-          comments: false,
-          ascii_only: true,
-        },
-        // format: null,
-        // toplevel: false,
-        // nameCache: null,
-        // keep_classnames: undefined,
-        // keep_fnames: false,
+        output: null,
+        // {
+        //   ecma: 5,
+        //   comments: false,
+        //   ascii_only: true,
+        // },
+        format: null,
+        toplevel: true,
+        nameCache: null,
+        keep_classnames: undefined,
+        keep_fnames: false,
         ie8: false,
         safari10: true,
       },
@@ -84,7 +85,6 @@ exports.prodOptimiz = {
   },
   // Keep the runtime chunk separated to enable long term caching
   runtimeChunk: true,
-  concatenateModules: true,
   
   // 库的Tree Shaking,比如lodash. Webpack默认忽略了sideEffect标注，改变此行为需要设置optimization.sideEffects为true。你能手工设置它或通过设置mode:"production"模式也行。
   // 通过 package.json 的 "sideEffects" 属性作为标记，向 compiler 提供提示，表明项目中的哪些文件是 "pure(纯正 ES2015 模块)"，由此可以安全地删除文件中未使用的部分。

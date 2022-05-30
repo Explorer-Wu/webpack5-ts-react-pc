@@ -41,7 +41,7 @@ module.exports = {
     productionGzip: true,
   },
   // 开启多进程
-  useWorkerPool: false,
+  useWorkerPool: true,
   // 是否使用CDN
-  useCDN: true,
+  useCDN: false,
 };

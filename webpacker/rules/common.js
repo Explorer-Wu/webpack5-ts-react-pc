@@ -72,6 +72,9 @@ exports.htmlRule = {
 exports.imagesRule = {
   test: /\.(?:ico|gif|png|jpe?g|webp)$/i,
   type: 'asset/resource',
+  generator: {
+    filename: 'static/images/[hash][ext][query]'
+  }
 };
 // options: {
 //   limit: 10000,

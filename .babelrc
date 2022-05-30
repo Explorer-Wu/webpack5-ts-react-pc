@@ -1,7 +1,6 @@
 {
   // 自动修复eslint的错误
   "presets": [
-    ["@babel/preset-typescript"],
     [
       "@babel/preset-env",
       {
@@ -26,7 +25,8 @@
         }
       }
     ],
-    "@babel/preset-react"
+    "@babel/preset-react",
+    "@babel/preset-typescript"
   ],
   "plugins": [
     "@babel/plugin-syntax-dynamic-import",
@@ -66,7 +66,11 @@
     ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }],
     // Applies the react-refresh Babel plugin on non-production modes only
     // mode !== "production" && "react-refresh/babel",
-    "react-refresh/babel"
   ],
+  "env": {
+    "development": {
+      "plugins": ["react-refresh/babel"]
+    }
+  },
   "ignore": []
 }

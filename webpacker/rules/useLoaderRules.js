@@ -37,9 +37,9 @@ const stylesCssWorkerPool = {
   poolRespawn: isProd,
 };
 
-threadLoader.warmup(tsJsWorkerPool, ['babel-loader', 'ts-loader']);
-threadLoader.warmup(stylesCssWorkerPool, ['css-loader', 'postcss-loader', 'less-loader']);
-threadLoader.warmup(stylesCssWorkerPool, ['css-loader', 'sass-loader']);
+envConfig.useWorkerPool && threadLoader.warmup(tsJsWorkerPool, ['babel-loader', 'ts-loader']);
+envConfig.useWorkerPool && threadLoader.warmup(stylesCssWorkerPool, ['css-loader', 'postcss-loader', 'less-loader']);
+envConfig.useWorkerPool && threadLoader.warmup(stylesCssWorkerPool, ['css-loader', 'sass-loader']);
 
 exports.tsJsThreadLoader = {
   loader: 'thread-loader',
@@ -320,7 +320,8 @@ exports.tsLoader = {
      * 如果要再次开启类型检查，请使用 ForkTsCheckerWebpackPlugin将检查过程移至单独的进程，可以加快 TypeScript 的类型检查和 ESLint 插入的速度
      * 设置 happyPackMode: true / transpileOnly: true
      **/
-    transpileOnly: true,
+    // transpileOnly: true,
+    happyPackMode: true
     // getCustomTransformers: () => ({
     //   before: [ReactRefreshTypeScript()].filter(Boolean),
     //   transpileOnly: true

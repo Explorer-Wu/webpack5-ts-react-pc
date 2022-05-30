@@ -1,17 +1,16 @@
 // const webpack = require("webpack");
 const { merge } = require("webpack-merge");
-
-const { dev } = require("../env/index");
+const envConfig = require('../env');
 const devServer = require("./dev.server");
 const baseWebpackConfig = require("./webpack.base.config");
-const { copyPlugin, dllReferencePlugin, HMRReactRefreshPlugins } = require("../plugins");
+const { copyPlugin, dllReferencePlugin, cdnPlugin, HMRReactRefreshPlugins } = require("../plugins");
 const rules = require("../rules");
 // const utils = require("../utils");
 const { devOptimiz } = require("../optimization");
 
 const devConfig = {
   mode: "development",
-  devtool: dev.devtool,
+  devtool: envConfig.dev.devtool,
   name: "app",
   dependencies: ["vendor"],
   module: {
@@ -42,4 +41,5 @@ const devConfig = {
   devServer,
 };
 
+console.log("config-dev:", JSON.stringify(rules.javascriptPreRule), merge(baseWebpackConfig, devConfig));
 module.exports = merge(baseWebpackConfig, devConfig);
