@@ -14,28 +14,28 @@ module.exports = {
   //webpack 的主目录,基础目录，绝对路径，用于从配置中解析入口起点(entry point)和 loader
   // entry 和 module.rules.loader 选项,相对于此目录解析
   context: utils.resolve("./"),
+  
   entry: {
     app: [
-      // '@babel/polyfill',
+      // "core-js/modules/es.promise",
+      // "core-js/modules/es.array.iterator",
       "./src/main.tsx", //resolve('./src/main.js')
     ],
+    // reactvendors: { import: ['react', 'react-dom', "react-router-dom",], runtime: 'runtime' },
+    // app: { import: "./src/main.tsx", dependOn: "reactvendors" },
   },
 
   output: {
-    path: envConfig.build.assetsRoot, //path: resolve('./dist'),
-    filename: "[name].[contenthash]js",
-    chunkFilename: "[name].[chunkhash].js", //决定 non-entry chunk(非入口 chunk) 的名称
+    path: envConfig.assetsRoot, //path: resolve('./dist'),
     //publicPath: "/"
-    publicPath:
-      process.env.NODE_ENV === "production"
-        ? envConfig.build.assetsPublicPath
-        : envConfig.dev.assetsPublicPath,
+    publicPath: envConfig.assetsPublicPath,
+    filename: "[name].[contenthash].js",
+    chunkFilename: "[name].[chunkhash].js", //决定 non-entry chunk(非入口 chunk) 的名称
+    // 向外暴露的打包库名
     library: {
       type: "umd", // 通用模块定义 libraryTarget: "umd"
       // the type of the exported library
-      name: `${packageName}-[name]`, // string | string[] // the name of the exported library
-      /* Advanced output.library configuration */
-      // export: "default", // string | string[]
+      name: `${packageName}_[name]_[fullhash]`, // string | string[] the name of the exported library
     },
   },
 

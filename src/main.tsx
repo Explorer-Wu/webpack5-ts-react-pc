@@ -13,9 +13,9 @@ import "raf/polyfill";
 import App from "./App";
 // import * as serviceWorker from './serviceWorker';
 
-if (module && module.hot) {
-  module.hot.accept();
-}
+// if (module && module.hot) {
+//   module.hot.accept();
+// }
 
 ReactDOM.render(<App />,
   // <React.StrictMode>

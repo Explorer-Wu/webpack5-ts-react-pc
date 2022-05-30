@@ -4,7 +4,7 @@ const envConfig = require('../env');
 
 const baseConfig = {
   title: 'React TypeScript App webpack5 template for PC',
-  cdnModule: 'react',
+  // cdnModule: 'react',
   filename: process.env.NODE_ENV === 'testing'
     ? 'index.html'
     : envConfig.build.index,
@@ -35,7 +35,7 @@ const prodConfig = {
     removeRedundantAttributes: true,
     removeScriptTypeAttributes: true,
     removeStyleLinkTypeAttributes: true,
-    useShortDoctype: true
+    useShortDoctype: true,
   },
 }
 const mergeConfig = isProd ? {

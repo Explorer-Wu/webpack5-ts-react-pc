@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React from "react";
 import {
   BrowserRouter,
   Routes,
@@ -17,7 +17,7 @@ import "@assets/styles/components/general.scss";
 
 // const supportsHistory = "pushState" in window.history;
 // BrowserRouter as Router用 forceRefresh={!supportsHistory}  history={History}
-const App: FC<any> = () => (
+const App: React.FC<any> = () => (
   // <BrowserRouter forceRefresh={!supportsHistory}>
   <BrowserRouter>
     <Routes>

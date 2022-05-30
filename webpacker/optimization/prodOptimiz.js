@@ -21,35 +21,35 @@ exports.prodOptimiz = {
       parallel: useWorkerPool, // 4
       exclude: /\/node_modules\//,
       terserOptions: {
-        ecma: undefined,
-        parse: {
-          ecma: 8,
-        },
-        compress: {
-          ecma: 5,
-          warnings: false,
-          comparisons: false,
-          inline: 2,
-        },
-        mangle: true, // Note `mangle.properties` is `false` by default.
-        module: true,
-        // Deprecated
-        output: null,
+        // ecma: undefined,
+        // parse: {
+        //   // ecma: 8,
+        // },
+        compress: true, // Typescript 使用默认 terser 压缩函数
         // {
-        //   ecma: 5,
+        //   // ecma: 5,
+        //   warnings: false,
+        //   comparisons: false,
+        //   // inline: 2,
+        // },
+        // mangle: true, // Note `mangle.properties` is `false` by default.
+        // module: false,
+        // Deprecated
+        // output: {
+        //   // ecma: 5,
         //   comments: false,
         //   ascii_only: true,
         // },
-        format: null,
-        toplevel: true,
-        nameCache: null,
-        keep_classnames: undefined,
-        keep_fnames: false,
-        ie8: false,
-        safari10: true,
+        // format: null,
+        // toplevel: true,
+        // nameCache: null,
+        // keep_classnames: undefined,
+        // keep_fnames: false,
+        // ie8: false,
+        // safari10: true,
       },
       // 启用/禁用剥离注释功能
-      extractComments: true,
+      // extractComments: true,
     }),
   ],
   // 可以考虑将 optimization.moduleIds 和 optimization.chunkIds在配置中移除, 使用默认值会更合适，因为默认值会在 production 模式 下支持长效缓存且可以在 development 模式下进行调试。
@@ -68,20 +68,20 @@ exports.prodOptimiz = {
     // include all types of chunks
     chunks: 'all',
     // 拆分 chunk 的名称。设为 false 将保持 chunk 的相同名称，因此不会不必要地更改名称。这是生产环境下构建的建议值。
-    name: false,
-    // 重复打包问题
-    cacheGroups:{
-      defaultVendors:{ // node_modules里的代码
-        test: /[\\/]node_modules[\\/]/,
-        chunks: "all",
-        // 设置 chunk id 的提示。 它将被添加到 chunk 的文件名中
-        idHint: 'vendors',
-        // 一个模块可以属于多个缓存组。优化将优先考虑具有更高 priority（优先级）的缓存组。默认组的优先级为负，以允许自定义组获得更高的优先级（自定义组的默认值为 0）
-        priority: 1,
-        // 告诉 webpack 忽略 splitChunks.minSize、splitChunks.minChunks、splitChunks.maxAsyncRequests 和 splitChunks.maxInitialRequests 选项，并始终为此缓存组创建 chunk
-        enforce: true
-      }
-    }
+    // name: false,
+    // // 重复打包问题
+    // cacheGroups:{
+    //   defaultVendors:{ // node_modules里的代码
+    //     test: /[\\/]node_modules[\\/]/,
+    //     chunks: "all",
+    //     // 设置 chunk id 的提示。 它将被添加到 chunk 的文件名中
+    //     idHint: 'vendors',
+    //     // 一个模块可以属于多个缓存组。优化将优先考虑具有更高 priority（优先级）的缓存组。默认组的优先级为负，以允许自定义组获得更高的优先级（自定义组的默认值为 0）
+    //     priority: 1,
+    //     // 告诉 webpack 忽略 splitChunks.minSize、splitChunks.minChunks、splitChunks.maxAsyncRequests 和 splitChunks.maxInitialRequests 选项，并始终为此缓存组创建 chunk
+    //     enforce: true
+    //   }
+    // }
   },
   // Keep the runtime chunk separated to enable long term caching
   runtimeChunk: true,
