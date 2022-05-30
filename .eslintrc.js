@@ -1,6 +1,6 @@
 const path = require("path");
 
-const isProd = ["production", "prod", "test", "pre"].includes(process.env.NODE_ENV);
+const isProd = ["production", "test", "uat"].includes(process.env.NODE_ENV);
 
 module.exports = {
   root: true,
@@ -21,14 +21,16 @@ module.exports = {
   // 配置解析选项
   parserOptions: {
     project: path.resolve(__dirname, "./tsconfig.json"),
-    tsconfigRootDir: __dirname,
+    // project: "./tsconfig.json",
+    // tsconfigRootDir: __dirname,
     ecmaVersion: 6, // 2020, // Allows for the parsing of modern ECMAScript features
     sourceType: "module", // Allows for the use of imports
     ecmaFeatures: {
       jsx: true // Allows for the parsing of JSX
     },
     parser: "@typescript-eslint/parser",
-    createDefaultProgram: true
+    createDefaultProgram: true,
+    allowImportExportEverywhere: true,
   },
 
   // 继承的规则 [扩展]
@@ -95,9 +97,9 @@ module.exports = {
   },
 
   settings: {
-    react: {
-      version: "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
-    },
+    // react: {
+    //   version: "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
+    // },
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },

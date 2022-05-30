@@ -12,7 +12,8 @@ const devConfig = {
   mode: "development",
   devtool: envConfig.dev.devtool,
   name: "app",
-  dependencies: ["vendor"],
+  // 一个 name 列表，定义它所依赖的所有兄弟（sibling）配置。需要首先编译依赖的配置
+  // dependencies: ["reactvendors"],
   module: {
     rules: [
       rules.tsJsRules,

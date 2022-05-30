@@ -9,29 +9,33 @@ const { dllOptimiz } = require("../optimization/dllOptimiz");
 module.exports = {
   mode: 'production',
   context: utils.resolve("./"),
-  name: "vendor",
+  // devtool: false,
+  name: "reactvendors",
   //要打包的模块的数组
   entry: {
-    vendor: [
-      // "@babel/polyfill", core-js@3 之后弃用了 @babel/polyfill
-      "react",
-      "react-dom",
-      "react-router-dom",
-      "redux",
-      "react-redux",
-      "immer",
-      "use-immer",
-      "axios",
-      // "lodash",
-      // "antd",
-      // 'common/js/format',
-      // 'popup',
-    ],
+    reactvendors: { 
+      import: [
+        // "@babel/polyfill", core-js@3 之后弃用了 @babel/polyfill
+        "react",
+        "react-dom",
+        "react-router-dom",
+        "redux",
+        "react-redux",
+        "immer",
+        "use-immer",
+        "axios",
+        // "lodash",
+        // "antd",
+        // 'common/js/format',
+        // 'popup',
+      ], 
+      runtime: 'runtime'
+    },
   },
   output: {
     path: utils.resolve("libs"),
     filename: "[name].dll.js",
-    // filename: '[name].[contenthash]js',
+    // filename: '[name].[contenthash].js',
     chunkFilename: "[name].dll.[chunkhash].js", //决定 non-entry chunk(非入口 chunk) 的名称
     library: "[name]_dll_[fullhash]", // 向外暴露的打包库名
     libraryTarget: "umd",

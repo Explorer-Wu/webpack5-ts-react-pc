@@ -5,7 +5,9 @@ const { resolve } = require("../utils/index");
 const reactConfig = require('../../react-cli.config')
 
 module.exports = merge({
-  assetsSubDirectory: "static",
+  assetsRoot: resolve("./dist"),
+  assetsPublicPath: "/",
+  assetsSubDirectory: "./static",   
   dev: {
     env: require("./dev.env"),
     // Paths
@@ -63,7 +65,7 @@ module.exports = merge({
      */
     productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
-    devtool: "#source-map", // 'cheap-module-source-map' 'cheap-source-map' 转换过的代码（仅限行）
+    devtool: "source-map", // 'cheap-module-source-map' 'cheap-source-map' 转换过的代码（仅限行）
 
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.

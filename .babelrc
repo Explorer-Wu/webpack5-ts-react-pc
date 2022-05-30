@@ -36,6 +36,7 @@
       // "@babel/proposal-object-rest-spread",
       // "@babel/plugin-transform-async-to-generator",
 		  // "@babel/plugin-transform-arrow-functions",
+    // "@babel/plugin-transform-runtime",
     [
       "@babel/plugin-transform-runtime",
       {
@@ -63,7 +64,7 @@
       }
     ],
     // ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }],
+    ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }]
     // Applies the react-refresh Babel plugin on non-production modes only
     // mode !== "production" && "react-refresh/babel",
   ],

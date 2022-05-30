@@ -15,17 +15,17 @@ const { prodOptimiz } = require("../optimization");
 const prodConfig = {
   mode: 'production',
   //生产环境中 (none)（省略 devtool 选项） - 不生成 source map，是一个不错的选择
-  devtool: false, // envConfig.build.productionSourceMap ? envConfig.build.devtool : false,
+  devtool: envConfig.build.productionSourceMap ? envConfig.build.devtool : false,
   name: "app",
+  dependencies: ["reactvendors"],
   // 在第一个错误出现时抛出失败结果，而不是容忍它。默认情况下，当使用 HMR 时，webpack 会将在终端以及浏览器控制台中，以红色文字记录这些错误，但仍然继续进行打包。
   bail: true,
   output: {
-      path: envConfig.build.assetsRoot,
-      filename: utils.pathRelative(envConfig.assetsSubDirectory, 'js/[name].[chunkhash].js'),
+      filename: utils.pathRelative(envConfig.assetsSubDirectory, 'js/[name].[contenthash].js'),
       chunkFilename: utils.pathRelative(envConfig.assetsSubDirectory, 'js/[id].[chunkhash].js'),
-      publicPath: process.env.NODE_ENV === 'production' ?
-          envConfig.build.assetsPublicPath :
-          envConfig.dev.assetsPublicPath,
+      // publicPath: process.env.NODE_ENV === 'production' ?
+      //     envConfig.build.assetsPublicPath :
+      //     envConfig.dev.assetsPublicPath,
       clean: true,
   },
   module: {
@@ -77,6 +77,6 @@ const prodConfig = {
   },
 };
 
-console.log("prodConfig:", prodConfig);
+console.log("prodConfig:", merge(baseWebpackConfig, prodConfig));
 
 module.exports = merge(baseWebpackConfig, prodConfig);
