@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 import HistoryNav from "@/router/history";
 import { Breadcrumb } from "antd";
 
-
 const Tables: React.FC<any> = (props) => {
   const linkTo = (link) => {
     // history 的 replace 模式

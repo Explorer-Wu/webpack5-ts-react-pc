@@ -59,6 +59,74 @@ Launches the test runner in the interactive watch mode.<br>
   <!-- "babel-plugin-import": "^1.13.3", // 按需引入、加载
   "babel-plugin-lodash": "^3.3.4", // 按需加载
   "babel-plugin-transform-react-remove-prop-types": "^0.4.24", // 从生产生成中删除不必要的类型 -->
+  1. 开发应用：polyfill 垫片方案 的升级策略
+  ```sh
+    yarn add babel-loader @babel/core @babel/preset-env -D
+    yarn add core-js regenerator-runtime @babel/runtime -D
+  ``` 
+  babelrc配置
+  ```sh
+    {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "modules": false, // 对ES6的模块文件不做转化，以便使用tree shaking、sideEffects等
+            "useBuiltIns": "entry", // browserslist环境不支持的所有垫片都导入
+            // https://babeljs.io/docs/en/babel-preset-env#usebuiltins
+            // https://github.com/zloirock/core-js/blob/master/docs/2019-03-19-core-js-3-babel-and-a-look-into-the-future.md
+            "corejs": {
+              "version": 3, // 使用core-js@3
+              "proposals": true,
+            }
+          }
+        ]
+      ],
+      "plugins": [
+        [
+          "@babel/plugin-transform-runtime",
+            {
+              "corejs": false // 解决 helper 函数重复引入
+            }
+        ]
+      ]
+    }
+  ``` 
+  js代码里取代原先的import '@babel/polyfill'，做如下修改：
+  ```sh
+    import "core-js/stable"
+    import "regenerator-runtime/runtime"
+  ```
+  2. 开发第三方类库：transform-runtime 按需加载方案 的升级策略
+  ```sh
+    yarn add babel-loader @babel/core @babel/preset-env @babel/plugin-transform-runtime -D
+    yarn add @babel/runtime-corejs3 -D
+  ``` 
+  babelrc配置
+  ```sh
+    {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "modules": false,
+          }
+        ]
+      ],
+      "plugins": [
+        [
+          "@babel/plugin-transform-runtime",
+          {
+            "corejs": {
+              "version": 3,
+              "proposals": true
+            },
+            "useESModules": true
+          }
+        ]
+      ]
+    }
+  ```
 
 * eslint相关插件
   eslint
@@ -182,3 +250,4 @@ Runtime 主要是指在浏览器运行时，webpack 用来连接模块化的应�
 当编译器开始执行，解析和映射应用程序时，它会保留所有模块的详细要点。这个数据集合成为 manifest，当完成打包并发送到浏览器时，会在运行时通过 manifest 来解析加载模块。无论选择哪种模块语法，那些 import 或 require 语句都已经转化为__webpack_require__方法，此方法指向模块标识符。通过使用 manifest 中的数据，runtime 将能够查询模块标识符，检索背后对应的模块。
 * webpack-manifest-plugin
 通过配置webpack-manifest-plugin，生成manifest.json文件，用来对比js资源的差异，做到是否替换，当然，也要写缓存script
+

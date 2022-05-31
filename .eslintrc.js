@@ -39,16 +39,14 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     'plugin:prettier/recommended',
     // 'react-app',
-    // 'prettier',
-    // 'plugin:jsx-control-statements/recommended',
+    'prettier', // === 'prettier/@typescript-eslint' + 'prettier/react'
+    'plugin:jsx-control-statements/recommended',
     // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
-    'prettier/@typescript-eslint',
     // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
-    'prettier/react'
   ],
 
   // 拓展和支持相关能力的插件库
-  plugins: ['prettier', 'react', 'react-hooks', 'jsx-a11y', '@typescript-eslint'], // 'jsx-control-statements',
+  plugins: ['prettier', 'react', 'react-hooks', 'jsx-a11y', '@typescript-eslint', 'jsx-control-statements'],
 
   // 规则
   rules: {

@@ -7,7 +7,7 @@ import { Button } from "antd";
 // // import PureTablePaging from "@/components/TablePaginations/PureTablePaging";
 // import PureTable from "@@components/TablePaginations/PureTable";
 
-export default const TableList = (props) => {
+const TableList: React.FC<any> = (props) => {
   // const {initPropsData, initStatesVal, getTableDataFn, delArticleFn} = ArticleTablesRule();
 //   const ArticleTablePaging = TablePagingHOC(
 //     PureTable,
@@ -18,7 +18,7 @@ export default const TableList = (props) => {
   return (
     <dl className="page-box">
         <dt>
-          <h3 className="page-title">新闻列表</h3>
+          <h3 className="page-title">信息列表</h3>
           <Button type="primary" size="small">
             新增文章
           </Button>
@@ -32,3 +32,5 @@ export default const TableList = (props) => {
       </dl>
   );
 }
+
+export default TableList;

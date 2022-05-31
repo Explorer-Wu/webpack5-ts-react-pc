@@ -4,6 +4,7 @@ const { copyPlugin } = require('./pluginCopy');
 const { definePlugin } = require('./pluginDefine');
 const { dllPlugin } = require('./pluginDll');
 const { dllReferencePlugin } = require('./pluginDllReference');
+const { providePlugin } = require('./pluginProvide');
 const { forkTsCheckerPlugin } = require('./pluginForkTsChecker');
 const { htmlPlugin } = require('./pluginHtml');
 const { manifestPlugin } = require('./pluginManifest');
@@ -22,6 +23,7 @@ module.exports = {
   definePlugin,
   dllPlugin,
   dllReferencePlugin,
+  providePlugin,
   forkTsCheckerPlugin,
   htmlPlugin,
   manifestPlugin,

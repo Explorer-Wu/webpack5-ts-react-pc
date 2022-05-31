@@ -33,7 +33,7 @@ exports.javascriptRule = {
 exports.javascriptPreRule = {
   test: /\.(js|jsx)$/,
   enforce: "pre",
-  use: [eslintLoader],
+  use: [eslintLoader, "source-map-loader"],
   //启用debug 用于故障排查。默认 false
   // debug: true,
   exclude: /\/node_modules\//,

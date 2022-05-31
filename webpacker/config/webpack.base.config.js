@@ -37,6 +37,7 @@ module.exports = {
       // the type of the exported library
       name: `${packageName}_[name]_[fullhash]`, // string | string[] the name of the exported library
     },
+    globalObject: 'window',
   },
 
   module: {
@@ -88,7 +89,7 @@ module.exports = {
     // htmlPlugin,
   ],
   // 代码分割、tree shaking等优化
-  // optimization: baseOptimiz,
+  optimization: baseOptimiz,
   
   // externals: { React: 'React', 'react-dom': 'react-dom' },
   // library 需要一个名为 lodash 的依赖，这个依赖在 consumer 环境中必须存在且可用
@@ -101,4 +102,5 @@ module.exports = {
   node: require('./node.config'),
   // 配置启用持久缓存: 这个个文件系统缓存是可选的
   cache: require('./cache.config'),
+  ignoreWarnings: [/Failed to parse source map/],
 };

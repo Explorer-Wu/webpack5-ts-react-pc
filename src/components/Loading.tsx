@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout, Spin, Typography } from 'antd'
 
-export default function Laoding(props){
+export default function Laoding(props: any): React.ReactElement<any, any> {
   const { isLoad } = props
 
   return (

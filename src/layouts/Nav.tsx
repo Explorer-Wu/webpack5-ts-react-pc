@@ -73,10 +73,10 @@ const MenusList: MenuItem[] = [
 // }
 
 // 使用接口代替 PropTypes 进行类型校验
-const NavMenu: React.FC<any> = (props) => {
+const NavMenu: React.FC<any> = (props: any, context?: any) => {
   console.log("NavMenu-props:", props);
   
-  const { location } = props;
+  // const { location } = props;
   const [selKeys, setSelKeys] = useState([]);
 
   const menuLinks: any[] = mapPathFn(MenusList);
@@ -90,11 +90,11 @@ const NavMenu: React.FC<any> = (props) => {
   useEffect(() => {
       // if (prevProps.location.pathname !== props.location.pathname) {
       // }
-      for (let mpath of _.flatten(menuLinks)) {
-        if (location.pathname.indexOf(mpath) > -1) {
-          setSelKeys([ mpath ])
-        }
-      }
+      // for (let mpath of _.flatten(menuLinks)) {
+      //   if (location.pathname.indexOf(mpath) > -1) {
+      //     setSelKeys([ mpath ])
+      //   }
+      // }
 
       return () => {}
   }, [props]);

@@ -4,21 +4,19 @@
     [
       "@babel/preset-env",
       {
-        // 按需加载
-        "useBuiltIns": "usage", // "entry",
+        
+        "useBuiltIns": "entry", // browserslist环境不支持的所有垫片都导入. "usage", // 按需加载
          // 如果 Babel 加载模块时已经转换了 ESM，则会导致 Tree Shaking 失效；最新版本的Babel自动关闭了 ESM 转换插件
-          // ['@babel/preset-env', { modules: 'commonjs' }] // 强制将ESM转换为CommonJS，tree shaking失效
-          // ['@babel/preset-env', { modules: false }] // 强制关闭转换插件
-          // 也可以使用默认配置，也就是 auto，这样 babel-loader 会自动关闭 ESM 转换
-        "modules": "auto", // false
+        // modules: 'commonjs' // 强制将ESM转换为CommonJS，tree shaking失效
+        // "modules": "auto", // 也可以使用默认配置，也就是 auto，这样 babel-loader 会自动关闭 ESM 转换
+        "modules": false, // 强制关闭转换插件,对ES6的模块文件不做转化，以便使用tree shaking、sideEffects等
         // 开启浏览器兼容 polyfills，会根据browserslist配置
         "targets": {
           "browsers": [">1%", "last 2 versions", "not ie < 10"]
         },
         "loose": true,
         "debug": true,
-        // 引入需要的库，需要安装对应版本的 core-js@3
-        // "corejs": 3,
+        // 引入 core-js@3 库
         "corejs": {
           "version": 3,
           "proposals": true
@@ -33,20 +31,13 @@
     "@babel/plugin-proposal-class-properties",
       // "@babel/plugin-proposal-export-namespace-from",
       // "@babel/plugin-proposal-throw-expressions",
-      // "@babel/proposal-object-rest-spread",
-      // "@babel/plugin-transform-async-to-generator",
-		  // "@babel/plugin-transform-arrow-functions",
-    // "@babel/plugin-transform-runtime",
+    // "@babel/plugin-transform-async-to-generator",
+    // "@babel/plugin-transform-arrow-functions",
     [
       "@babel/plugin-transform-runtime",
-      {
-        // 指定core-js版本
-        "corejs": {
-          "version": 3,
-          "proposals": true
-        },
-        "useESModules": true
-      }
+        {
+          "corejs": false // 解决 helper 函数重复引入
+        }
     ],
     //只需从 antd 引入模块即可，无需单独引入样式. babel-plugin-import 会帮助你加载 JS 和 CSS
     [
@@ -59,12 +50,14 @@
       "antd"
     ],
     [
-      "styled-jsx/babel", { 
+      "styled-jsx/babel", {
         "plugins": ["styled-jsx-plugin-sass"] 
       }
     ],
     // ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }]
+    ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }],
+    "jsx-control-statements",
+    "@babel/plugin-transform-react-inline-elements"
     // Applies the react-refresh Babel plugin on non-production modes only
     // mode !== "production" && "react-refresh/babel",
   ],

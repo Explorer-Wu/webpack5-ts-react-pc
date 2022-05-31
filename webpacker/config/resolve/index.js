@@ -12,7 +12,8 @@ module.exports = {
 
   //mainFields将决定在 package.json 中使用哪个字段导入模块。根据 webpack 配置中指定的 target 不同，默认值也会有所不同。
   // 针对 Npm 中的第三方模块优先采用 jsnext:main 中指向的 ES6 模块化语法的文件
-  mainFields: ["jsnext:main", "browser", "main"], // 只采用main字段作为入口文件描述字段，减少搜索步骤
+  mainFields: ["main", "browser", "module"],
+  // ["jsnext:main", "browser", "main"], // 只采用main字段作为入口文件描述字段，减少搜索步骤
 
   //自动解析确定的扩展, require文件的时候可以直接使用require('file')，不用使用require('file.coffee')
   extensions: [
@@ -24,12 +25,13 @@ module.exports = {
     ".css",
     ".scss",
     ".less",
-    ".tpl",
-    ".wasm",
+    // ".wasm",
     ".png",
     ".jpg",
     ".jpeg",
-    ".gif"
+    ".gif",
+    ".svg"
+    // ".bmp", ".tiff"
   ],
   //配置别名
   alias

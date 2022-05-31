@@ -1,7 +1,7 @@
-import React,{ useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams, useSearchParams  } from "react-router-dom";
 
-export default function tableDetail() {
+export default function tableDetail(): React.ReactElement<any, any> | null {
   // 获取动态路由的值
   const params = useParams();
 
@@ -23,7 +23,7 @@ export default function tableDetail() {
   const handleAddParams = () => {
     // 修改 查询字符串 的数据
     setSearchParams({
-      name:"xxx"
+      name: "xxx"
     });
   };
   

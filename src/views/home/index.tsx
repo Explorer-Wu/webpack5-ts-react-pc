@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Tag } from 'antd';
 
-const HomePage = () => {
+const Home: React.FC<any> = () => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -18,4 +18,5 @@ const HomePage = () => {
     </Card>
   );
 };
-export default HomePage;
+
+export default Home;

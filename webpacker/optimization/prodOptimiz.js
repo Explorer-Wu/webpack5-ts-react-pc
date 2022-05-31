@@ -13,44 +13,44 @@ exports.prodOptimiz = {
       parallel: useWorkerPool,
     }),
     // 配置生产环境的压缩方案：js和css
-    new TerserPlugin({
-      /** 启用/禁用多进程并发运行功能
-       * 类型： Boolean|Number 默认值： true.
-       * 使用多进程并发运行以提高构建速度。 并发运行的默认数量： os.cpus().length - 1 
-      */
-      parallel: useWorkerPool, // 4
-      exclude: /\/node_modules\//,
-      terserOptions: {
-        // ecma: undefined,
-        // parse: {
-        //   // ecma: 8,
-        // },
-        compress: true, // Typescript 使用默认 terser 压缩函数
-        // {
-        //   // ecma: 5,
-        //   warnings: false,
-        //   comparisons: false,
-        //   // inline: 2,
-        // },
-        // mangle: true, // Note `mangle.properties` is `false` by default.
-        // module: false,
-        // Deprecated
-        // output: {
-        //   // ecma: 5,
-        //   comments: false,
-        //   ascii_only: true,
-        // },
-        // format: null,
-        // toplevel: true,
-        // nameCache: null,
-        // keep_classnames: undefined,
-        // keep_fnames: false,
-        // ie8: false,
-        // safari10: true,
-      },
-      // 启用/禁用剥离注释功能
-      // extractComments: true,
-    }),
+    // new TerserPlugin({
+    //   /** 启用/禁用多进程并发运行功能
+    //    * 类型： Boolean|Number 默认值： true.
+    //    * 使用多进程并发运行以提高构建速度。 并发运行的默认数量： os.cpus().length - 1 
+    //   */
+    //   parallel: useWorkerPool, // 4
+    //   exclude: /\/node_modules\//,
+    //   terserOptions: {
+    //     // ecma: undefined,
+    //     // parse: {
+    //     //   // ecma: 8,
+    //     // },
+    //     compress: true, // Typescript 使用默认 terser 压缩函数
+    //     // {
+    //     //   // ecma: 5,
+    //     //   warnings: false,
+    //     //   comparisons: false,
+    //     //   // inline: 2,
+    //     // },
+    //     // mangle: true, // Note `mangle.properties` is `false` by default.
+    //     // module: false,
+    //     // Deprecated
+    //     // output: {
+    //     //   // ecma: 5,
+    //     //   comments: false,
+    //     //   ascii_only: true,
+    //     // },
+    //     // format: null,
+    //     // toplevel: true,
+    //     // nameCache: null,
+    //     // keep_classnames: undefined,
+    //     // keep_fnames: false,
+    //     // ie8: false,
+    //     // safari10: true,
+    //   },
+    //   // 启用/禁用剥离注释功能
+    //   // extractComments: true,
+    // }),
   ],
   // 可以考虑将 optimization.moduleIds 和 optimization.chunkIds在配置中移除, 使用默认值会更合适，因为默认值会在 production 模式 下支持长效缓存且可以在 development 模式下进行调试。
   /** optimization.chunkIds 的默认值是 false(optimization.moduleIds同样)：
@@ -68,8 +68,8 @@ exports.prodOptimiz = {
     // include all types of chunks
     chunks: 'all',
     // 拆分 chunk 的名称。设为 false 将保持 chunk 的相同名称，因此不会不必要地更改名称。这是生产环境下构建的建议值。
-    // name: false,
-    // // 重复打包问题
+    name: false,
+    // 重复打包问题
     // cacheGroups:{
     //   defaultVendors:{ // node_modules里的代码
     //     test: /[\\/]node_modules[\\/]/,
@@ -83,8 +83,10 @@ exports.prodOptimiz = {
     //   }
     // }
   },
-  // Keep the runtime chunk separated to enable long term caching
-  runtimeChunk: true,
+
+  // runtimeChunk: {  
+  //   name: 'manifest', // asset-manifest
+  // },
   
   // 库的Tree Shaking,比如lodash. Webpack默认忽略了sideEffect标注，改变此行为需要设置optimization.sideEffects为true。你能手工设置它或通过设置mode:"production"模式也行。
   // 通过 package.json 的 "sideEffects" 属性作为标记，向 compiler 提供提示，表明项目中的哪些文件是 "pure(纯正 ES2015 模块)"，由此可以安全地删除文件中未使用的部分。

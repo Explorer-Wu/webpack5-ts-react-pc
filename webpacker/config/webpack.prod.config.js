@@ -3,7 +3,7 @@ const path = require('path');
 const { merge } = require('webpack-merge');
 const envConfig = require('../env');
 const baseWebpackConfig = require('./webpack.base.config');
-const { cleanPlugin, cdnPlugin, dllReferencePlugin, purgeMiniCssExtractPlugins, copyPlugin, compressionPlugin,bundleAnalyzerPlugin } = require("../plugins");
+const { cleanPlugin, cdnPlugin, dllReferencePlugin, providePlugin, purgeMiniCssExtractPlugins, copyPlugin, compressionPlugin,bundleAnalyzerPlugin } = require("../plugins");
 const rules = require("../rules");
 const utils = require('../utils');
 const { prodOptimiz } = require("../optimization");
@@ -41,6 +41,7 @@ const prodConfig = {
     cleanPlugin, // 每次打包前清空
     copyPlugin,
     ...purgeMiniCssExtractPlugins,
+    providePlugin,
     // 判断是需要dll动态第三方库还是CDN引入的方式
     envConfig.useCDN ? cdnPlugin : dllReferencePlugin,
     // enable scope hoisting

@@ -1,11 +1,5 @@
 exports.baseOptimiz = {
-  // runtimeChunk 默认为false,runtime相关的代码(各个模块之间的引用和加载的逻辑)内嵌入每个entry
-  // ‘single’: 会生成一个唯一单独的runtime.js文件，就是manifest
-  // { name: 'runtime', }：自定义runtime文件的name
-  // multiple：和true一致。
-  // 最小化 entry chunk, 为运行时代码创建一个额外的 chunk，减少 entry chunk 体积，提高性能。
-  runtimeChunk: true, // 对于每个entry会生成runtime~${entrypoint.name}的文件
-  //splitChunks（代码分割）主要就是根据不同的策略来分割打包出来的bundle。对应废弃插件：CommonsChunkPlugin
+  //splitChunks（代码分割）主要就是根据不同的策略来分割打包出来的bundle
   splitChunks: {
     // 自动提取所有公共模块到单独 bundle；
     // 设置为 all 可能特别强大，因为这意味着 chunk 可以在异步和非异步 chunk 之间共享
@@ -37,12 +31,13 @@ exports.baseOptimiz = {
       defaultVendors: {
         // 匹配规则
         test: /[\\/]node_modules[\\/]/,
+        chunks: "initial",
         // 权重，权重越大优先级越高 当模块匹配到多个缓存组中，最终根据权重决定要打包进哪个缓存组
-        priority: -10,
+        priority: 1,
         idHint: 'vendors',
         // name: "vendor",
-        chunks: "initial",
-        reuseExistingChunk: false, 
+        reuseExistingChunk: false,
+        enforce: true
       },
       // commons: {
       //   test: /[\\/]node_modules[\\/]/,
@@ -50,7 +45,7 @@ exports.baseOptimiz = {
       //   chunks: 'initial',
       // },
       manifest: {
-        name: "manifest",
+        name: "asset-manifest",
         chunks: "initial",
       },
       styles: {
@@ -61,15 +56,22 @@ exports.baseOptimiz = {
       },
     },
   },
+  // runtimeChunk 默认为false,runtime相关的代码(各个模块之间的引用和加载的逻辑)内嵌入每个entry
+  // ‘single’: 会生成一个唯一单独的runtime.js文件，就是manifest
+  // { name: 'runtime', }：自定义runtime文件的name
+  // multiple：和true一致。
+  // 最小化 entry chunk, 为运行时代码创建一个额外的 chunk，减少 entry chunk 体积，提高性能。
+  runtimeChunk: true, // 对于每个entry会生成runtime~${entrypoint.name}的文件
+  
   // emitOnErrors默认为true,在编译出错时是否生成资源，使用 optimization.emitOnErrors 来跳过生成阶段(emitting phase)。这可以确保没有生成出错误资源。而 stats 中所有 assets 中的 emitted 标记都是 false
   emitOnErrors: true,
 
   // concatenateModules 告知 webpack 去寻找模块类型中的片段，哪些是可以安全地被合并到单一模块中。这取决于 optimization.providedExports 和 optimization.usedExports。
   //“作用域提升(scope hoisting)”, 仅适用于由 webpack 直接处理的 ES6 模块。在使用转译器(transpiler)时，你需要禁用对模块的处理（例如 Babel 中的 modules 选项）。
   // 默认 optimization.concatenateModules 在生产模式下被启用，而在其它情况下被禁用。
-  concatenateModules: true, // 尽可能合并每一个模块到一个函数中（Scop Hosting） 对应废弃插件：ModuleConcatenationPlugin
+  // concatenateModules: true, // 尽可能合并每一个模块到一个函数中（Scop Hosting） 对应废弃插件：ModuleConcatenationPlugin
   //告知 webpack 去确定那些由模块提供的导出内容，为 export * from ... 生成更多高效的代码。 默认 optimization.providedExports 会被启用。
-  providedExports: true,
+  // providedExports: true,
   // 压缩输出结果，usedExports开启后会移除未被使用的成员
   // minimize: true,
 };

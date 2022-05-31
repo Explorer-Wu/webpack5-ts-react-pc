@@ -6,11 +6,11 @@ const Home = lazy(() => import("@/views/home/index"));
 const NotFound = lazy(() => import("@/views/error"));
 
 const routes: RouteObject[] = [
-  {
-    path: "/views/",
-    // exact: true,
-    element: <Home />
-  },
+  // {
+  //   path: "/views/",
+  //   // exact: true,
+  //   element: <Home />
+  // },
   {
     path: "/views/home",
     element: <Home />
