@@ -6,8 +6,8 @@ import {
 } from '@ant-design/icons';
 const { Header } = Layout;
 
-export default function Head(props) {
-  const {propCollapsed, onToggleMenu} = props
+export default function Head(props: any, context?: any): React.ReactElement<any, any> {
+  const { propCollapsed, onToggleMenu } = props
   const toggleIcon = () => {
     onToggleMenu(!propCollapsed)
   }

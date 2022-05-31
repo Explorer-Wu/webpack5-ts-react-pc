@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useRoutes, useParams } from "react-router-dom";
 import HistoryNav from "@/router/history";
 import _ from "lodash";
-import logo from "public/static/images/logo.svg";
 import { Menu } from "antd";
 import {
   AppstoreOutlined,
@@ -90,11 +89,12 @@ const NavMenu: React.FC<any> = (props: any, context?: any) => {
   useEffect(() => {
       // if (prevProps.location.pathname !== props.location.pathname) {
       // }
-      // for (let mpath of _.flatten(menuLinks)) {
-      //   if (location.pathname.indexOf(mpath) > -1) {
-      //     setSelKeys([ mpath ])
-      //   }
-      // }
+      for (let mpath of _.flatten(menuLinks)) {
+        if (location.pathname.indexOf(mpath) > -1) {
+          // setSelKeys([ mpath ])
+          setSelKeys(mpath)
+        }
+      }
 
       return () => {}
   }, [props]);
@@ -102,7 +102,7 @@ const NavMenu: React.FC<any> = (props: any, context?: any) => {
   return (
     <>
       <div className="head-logo">
-        <img src={logo} alt="logo"/>
+        <img src={require("public/static/images/logo.svg")} alt="logo"/>
         <div className="title">React App PC</div>
       </div>
       {/* defaultOpenKeys={['sub1']} */}

@@ -11,7 +11,7 @@ import Loading from "@/components/Loading";
 
 const { Content, Sider } = Layout;
 
-function MainLayout(props) {
+export default function MainLayout(props: any, context?: any): React.ReactElement<any, any> {
   // const { match } = props;
   const [collapsed, setCollapsed] = useState(false);
   const toggleMenu = bool => {
@@ -43,5 +43,3 @@ function MainLayout(props) {
     </ConfigProvider>
   );
 }
-
-export default MainLayout;
