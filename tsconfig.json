@@ -1,4 +1,6 @@
 {
+  // 设置保存文件的时候自动编译，但需要编译器支持
+  "compileOnSave": false,
   // 编译选项
   "compilerOptions": {
     /** 基本配置 **/
@@ -15,9 +17,9 @@
     // 确保类的非undefined属性已经在构造函数里初始化。若要令此选项生效，需要同时启用--strictNullChecks。
     // "strictPropertyInitialization": false,
     // 在严格的 null检查模式下， null和 undefined值不包含在任何类型里，只允许用它们自己和 any来赋值（有个例外， undefined可以赋值到 void）
-    "strictNullChecks": true,    
+    "strictNullChecks": true,
     // 输入文件的字符集 
-    "charset": "utf-8",
+    "charset": "utf8",
     // 显示错误信息时使用的语言，比如：en-us
     // "locale": "cn-zh",
     // --project 编译指定目录下的项目。这个目录应该包含一个 tsconfig.json文件来管理编译。
@@ -40,11 +42,6 @@
       "ESNext",
       "ScriptHost"
     ], // 编译过程中需要引入的库文件的列表  "es5"
-    // 要包含的类型声明文件路径列表
-    "typeRoots": [
-      "./node_modules/@types",
-      "./types"
-    ],
     /** 模块解析选项 **/
     //module === "AMD" or "System" or "ES6" ? "Classic" : "Node"	决定如何处理模块。或者是"Node"对于Node.js/io.js，或者是"Classic"（默认）。
     "moduleResolution": "Node", // 指定模块解析策略
@@ -59,42 +56,41 @@
     // "sourceRoot": "./",	指定TypeScript源文件的路径，以便调试器定位。当TypeScript文件的位置是在运行时指定时使用此标记。路径信息会被加到 sourceMap里
     // 为调试器指定指定sourcemap文件的路径，而不是使用生成时的路径。
     // "mapRoot": "./", 当.map文件是在运行时指定的，并不同于 js文件的地址时使用这个标记。指定的路径会嵌入到 sourceMap里告诉调试器到哪里去找它们。
-    // 解析非相对模块名的基准目录 
+    // 解析非相对模块名的基准目录，默认是当前目录
     "baseUrl": "./", // 根路径
-    // 设置引入的类型声明文件名列表。
-    "types": [
-      "node",
-      "webpack-env",
-      "jest"
+    // 默认所有可见的"@types"包会在编译过程中被包含进来， 而typeRoots指定要包含的类型声明文件路径列表（仅以下路径的包）， 
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
     ],
+    // 设置引入的类型声明文件名列表。 指定了types，只有被列出来的包才会被包含进来，指定"types": []来禁用自动引入@types包
+    // "types": [
+    //   "node",
+    //   "webpack-env",
+    //   "jest"
+    // ],
     // 模块名到基于 baseUrl的路径映射的列表（指定特殊模块的路径）
     "paths": { // 路径映射，与 baseUrl 关联
-      // "@views/": ["src/views/*"],
-      // "@router": ["src/router/*"],
-      // "@layouts": ["src/layouts/*"],
-      // "@components/*": ["src/components/*"],
-      // "@containers": ["src/reduxstore/containers/*"],
-      // "@actions": ["src/reduxstore/actions/*"],
-      // "@reducers": ["src/reduxstore/reducers/*"],
-      // "@store": ["src/reduxstore/store/*"],
-      // "@api": ["src/api/*"],
-      // "@utils/*": ["src/utils/*"],
-      // "@assets/*": ["src/assets/*"],
-      "@/*": [
-        "src/*"
-      ],
-      "public/*": [
-        "public/*"
-      ],
-      // "@env/*": ["env/*"],
-      "types/*": [
-        "types/*"
-      ],
-      // "/#/*": [
+      // 如使用jq时不想使用默认版本，而需要手动指定版本，可进行如下配置
+      // "@/*": [
+      //   "src/*"
+      // ],
+      // "types/*": [
       //   "types/*"
       // ],
-      // "*": ["node_modules/*"]
+      "*": [
+        "node_modules/*"
+      ],
+      "/#/*": [
+        "types/*"
+      ],
     },
+    // 仅用来控制输出的目录结构 --outDir
+    "outDir": "dist", // 重定向输出目录
+    // "outFile": "dist",  // 将输出文件合并为一个文件。合并的顺序是根据传入编译器的文件顺序和 ///<reference``>和 import的文件顺序决定的
+    "rootDir": "./", // "src", 根（root）文件夹列表，表示运行时组合工程结构的内容。
+    // 将多个目录放在一个虚拟目录下，用于运行时，即编译后引入文件的位置可能发生变化，这也设置可以虚拟src和out在同一个目录下，不用再去改变路径也不会报错
+    // "rootDirs": ["src","out"],
     // 生成相应的 .d.ts文件
     "declaration": true,
     // 生成声明文件的输出路径
@@ -104,8 +100,8 @@
     "emitDecoratorMetadata": true, // 给源码里的装饰器声明加上设计类型元数据
     /** 其他选项 **/
     "forceConsistentCasingInFileNames": true, // 禁止对同一个文件的不一致的引用。 
-    "listEmittedFiles": false, // 打印出编译后生成文件的名字
-    "listFiles": false, // 编译过程中打印文件名。"
+    "listEmittedFiles": true, // 打印输出文件名字
+    "listFiles": true, // 打印编译的文件(包括引用的声明文件)
     "noEmitHelpers": false, // 不在输出文件中生成用户自定义的帮助函数代码，如 __extends。
     "noEmitOnError": false, // 报错时不生成输出文件
     "noErrorTruncation": false, // 不截短错误消息
@@ -136,15 +132,11 @@
     "noStrictGenericChecks": false, // 禁用在函数类型里对泛型签名进行严格检查。
     "noUnusedLocals": true, // 若有未使用的局部变量则抛错
     "noUnusedParameters": false, // 若有未使用的参数则抛错
-    // 仅用来控制输出的目录结构 --outDir
-    "outDir": "dist",  // 重定向输出目录
-    // "outFile": "dist",  // 将输出文件合并为一个文件。合并的顺序是根据传入编译器的文件顺序和 ///<reference``>和 import的文件顺序决定的
-    "rootDir":	"./",  // "src", 根（root）文件夹列表，表示运行时组合工程结构的内容。
     "preserveConstEnums": true, // 保留 const和 enum声明
     "preserveSymlinks": false, // 不把符号链接解析为其真实路径；将符号链接文件视为真正的文件
     "preserveWatchOutput": false, // 保留watch模式下过时的控制台输出
     "skipDefaultLibCheck": false, // 忽略库的默认声明文件的类型检查
-    "removeComments": false, // 删除所有注释，除了以 /!*开头的版权信息
+    "removeComments": true, // 删除所有注释，除了以 /!*开头的版权信息
     "stripInternal": true, //	不对具有 /** @internal */ JSDoc注解的代码生成代码
     "suppressExcessPropertyErrors": false, // 阻止对对象字面量的额外属性检查
     "suppressImplicitAnyIndexErrors": true, // 阻止 --noImplicitAny对缺少索引签名的索引对象报错
@@ -152,13 +144,19 @@
     "version": true, // 打印编译器版本号
     // watch		在监视模式下运行编译器。会监视输出文件，在它们改变时重新编译。监视文件和目录的具体实现可以通过环境变量进行配置。
   },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS",
-      "target": "es6" // "es2020"
-    }
-  },
-  // ts 管理的文件
+  // "ts-node": {
+  //   "compilerOptions": {
+  //     "module": "CommonJS",
+  //     "target": "ESNext" // "es2020"
+  //   }
+  // },
+  // 指定工程引用依赖
+  // "references": [
+  //   {
+  //     "path": "./common"
+  //   }
+  // ],
+  // "include"和"exclude"属性指定一个文件glob匹配模式列表。 支持的glob通配符有：*、**/ 、?。 使用"include"引入的文件可以使用"exclude"属性过滤。
   "include": [
     "src/**/*.ts",
     // "src/**/*.d.ts", 
@@ -168,7 +166,7 @@
     "types/**/*.d.ts",
     // "types/**/*.ts"
   ],
-  // ts 排除的文件
+  // ts 排除的文件,  "exclude"默认情况下会排除node_modules，bower_components，jspm_packages和<outDir>目录
   "exclude": [
     "node_modules",
     "dist",
@@ -180,6 +178,7 @@
     "**/*.js",
     "**/**/*.js"
   ],
+  // "files"指定一个包含相对或绝对文件路径的列表。通过 "files"属性明确指定的文件却总是会被包含在内，不管"exclude"如何设置。
   "files": [
     "types/index.d.ts",
     "types/global.d.ts",

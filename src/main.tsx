@@ -9,7 +9,7 @@ import "react-app-polyfill/ie9";
 import "react-app-polyfill/stable";
 
 // import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as ReactDOM from "react-dom";
 
 /*-- 使用 raf 的 package 增添 requestAnimationFrame 的 shim --*/
 // import "raf/polyfill";
@@ -21,12 +21,10 @@ import App from "./App";
 //   module.hot.accept();
 // }
 
-ReactDOM.render(<App />,
+ReactDOM.render(
+  <App />,
   // <React.StrictMode>
   //   <App />
   // </React.StrictMode>,
   document.getElementById("root") as HTMLElement
 );
-
-
-

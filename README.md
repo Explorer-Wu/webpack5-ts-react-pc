@@ -133,15 +133,14 @@ Launches the test runner in the interactive watch mode.<br>
   eslint-config-prettier // 关闭所有不必要或可能与[Prettier]冲突的规则
 <!-- "eslint-config-ts-important-stuff" -->
 <!-- "eslint-friendly-formatter" -->
-<!-- "eslint-loader" -->
 <!-- "eslint-plugin-flowtype" -->
-  "eslint-plugin-jsx-a11y":  JSX元素的可访问性规则的静态AST检查器 
+  ?"eslint-plugin-jsx-a11y":  JSX元素的可访问性规则的静态AST检查器 
   "eslint-plugin-prettier": // 以 eslint的规则运行 prettier 格式化
-  "eslint-plugin-react": // react 相关规则
-  "eslint-plugin-react-hooks": // react-hooks 相关规则
-  "eslint-plugin-import" // ES6+  import/export 语法支持
-  "eslint-import-resolver-typescript": // 添加 ts 语法支持  eslint-plugin-import
-  "eslint-import-resolver-webpack": // 支持 eslint-plugin-import 读写模块解析
+  ?"eslint-plugin-react": // react 相关规则
+  ?"eslint-plugin-react-hooks": // react-hooks 相关规则
+  ?"eslint-plugin-import" // ES6+  import/export 语法支持
+  ?"eslint-import-resolver-typescript": // 添加 ts 语法支持  eslint-plugin-import
+  ?"eslint-import-resolver-webpack": // 支持 eslint-plugin-import 读写模块解析
   "@typescript-eslint/eslint-plugin" // 使 eslint 支持 typescript，.eslintrc.js 的 plugins 参数
   "@typescript-eslint/parser" // 使 eslint 支持 typescript ，.eslintrc.js 的 parser 参数
 <!-- "eslint-plugin-redux-saga": // redux-saga 相关规则 -->

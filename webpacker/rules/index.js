@@ -1,7 +1,7 @@
 const {
   javascriptPreRule,
-  javascriptRule,
-  typescriptRule,
+  // javascriptRule,
+  // typescriptRule,
   tsJsRules,
   htmlRule,
   imagesRule,
@@ -19,18 +19,17 @@ const {
   sassRules
 } = require("./styles");
 const { mediaRule } = require("./media");
-const { svgReactComponentRule, svgRule, svgRules } = require("./svg");
+const { svgRule, svgRules } = require("./svg");
 // export * from './svg';
 
 module.exports = {
-  typescriptRule,
   javascriptPreRule,
-  javascriptRule,
+  // javascriptRule,
+  // typescriptRule,
   tsJsRules,
-  // htmlRule,
+  htmlRule,
   imagesRule,
   fontsRule,
-  svgReactComponentRule,
   svgRule,
   svgRules,
   mediaRule,

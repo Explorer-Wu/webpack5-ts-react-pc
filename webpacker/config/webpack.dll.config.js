@@ -13,7 +13,7 @@ module.exports = {
   name: "reactvendors",
   //要打包的模块的数组
   entry: {
-    reactvendors: { 
+    reactvendors: {
       import: [
         // "@babel/polyfill", core-js@3 之后弃用了 @babel/polyfill
         "react",
@@ -28,7 +28,7 @@ module.exports = {
         // "antd",
         // 'common/js/format',
         // 'popup',
-      ], 
+      ],
       runtime: 'runtime'
     },
   },
@@ -53,7 +53,7 @@ module.exports = {
       rules.fontsRule,
       rules.mixCssLessRules,
       rules.mixCssSassRules,
-      ...rules.svgRules,
+      rules.svgRule,
     ]),
   },
   optimization: dllOptimiz,

@@ -1,11 +1,11 @@
 const httpProxyTarget = {
   port: 3681, // 80
-  protocol: 'http',
+  protocol: "http"
 };
 
 const httpsProxyTarget = {
   port: 3683, // 443
-  protocol: 'https',
+  protocol: "https"
 };
 
 module.exports = {
@@ -32,16 +32,16 @@ module.exports = {
           "^/auth": "/auth"
         }
       }
-    },
+    }
   },
   build: {
     // 开启依赖分析
     bundleAnalyzerReport: true,
     // 开启Gzip
-    productionGzip: true,
+    productionGzip: true
   },
   // 开启多进程
   useWorkerPool: true,
   // 是否使用CDN
-  useCDN: false,
+  useCDN: false
 };

@@ -7,7 +7,7 @@ import { Button } from "antd";
 // // import PureTablePaging from "@/components/TablePaginations/PureTablePaging";
 // import PureTable from "@@components/TablePaginations/PureTable";
 
-const TableList: React.FC<any> = (props) => {
+const TableList: React.FC<any> = (props: any, context?: any) => {
   // const {initPropsData, initStatesVal, getTableDataFn, delArticleFn} = ArticleTablesRule();
 //   const ArticleTablePaging = TablePagingHOC(
 //     PureTable,

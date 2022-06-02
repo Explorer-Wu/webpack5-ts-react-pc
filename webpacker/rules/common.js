@@ -1,60 +1,59 @@
-const { tsLoader, babelLoader, eslintLoader, tsJsThreadLoader } = require('./useLoaderRules');
+const { tsLoader, babelLoader, tsJsThreadLoader } = require("./useLoaderRules");
 const { resolve } = require("../utils");
-const { useWorkerPool } = require('../env');
+const { useWorkerPool } = require("../env");
 /**
  * @see https://webpack.js.org/guides/typescript/#loader
  */
 exports.typescriptRule = {
-  test: /\.tsx?$/,
-  use: ["babel-loader", tsLoader],
-  exclude: /\/node_modules\//,
-  include: [
-    resolve("./src"),
-    resolve("./libs"),
-    resolve("./tests"),
-  ]
+  test: /\.(ts|tsx)$/,
+  use: [useWorkerPool && tsJsThreadLoader, "babel-loader", tsLoader],
+  exclude: /\/node_modules\//
+  // include: [
+  //   resolve("./src"),
+  //   resolve("./libs"),
+  //   resolve("./tests"),
+  // ]
 };
 /**
  * @see https://webpack.js.org/loaders/babel-loader
  */
 exports.javascriptRule = {
   test: /\.(js|jsx)$/,
-  use: [babelLoader],
+  use: [useWorkerPool && tsJsThreadLoader, babelLoader],
   //启用debug 用于故障排查。默认 false
   // debug: true,
-  exclude: /\/node_modules\//,
-  include: [
-    resolve("./src"),
-    resolve("./libs"),
-    resolve("./tests"),
-  ],
+  exclude: /\/node_modules\//
+  // include: [
+  //   resolve("./src"),
+  //   resolve("./libs"),
+  //   resolve("./tests"),
+  // ],
 };
 
 exports.javascriptPreRule = {
   test: /\.(js|jsx)$/,
   enforce: "pre",
-  use: [eslintLoader, "source-map-loader"],
+  use: ["source-map-loader"],
   //启用debug 用于故障排查。默认 false
   // debug: true,
-  exclude: /\/node_modules\//,
-  include: [
-    resolve("./src"),
-    resolve("./libs"),
-    resolve("./tests"),
-  ],
+  exclude: /\/node_modules\//
+  // include: [
+  //   resolve("./src"),
+  //   resolve("./libs"),
+  //   resolve("./tests"),
+  // ],
 };
 
 exports.tsJsRules = {
-  test: /\.(js|mjs|jsx|ts|tsx)$/,
-  use: [useWorkerPool && tsJsThreadLoader, babelLoader, tsLoader],
-  exclude: /\/node_modules\//,
-  include: [
-    resolve("./src"),
-    resolve("./libs"),
-    resolve("./tests"),
-  ]
+  test: /\.(js|jsx|ts|tsx)$/,
+  use: [useWorkerPool && tsJsThreadLoader, "babel-loader", tsLoader],
+  exclude: /\/node_modules\//
+  // include: [
+  //   resolve("./src"),
+  //   resolve("./libs"),
+  //   resolve("./tests"),
+  // ]
 };
-
 
 /**
  * @see https://webpack.js.org/loaders/html-loader
@@ -62,8 +61,9 @@ exports.tsJsRules = {
 exports.htmlRule = {
   test: /\.(html)$/,
   use: {
-    loader: 'html-loader',
-  },
+    loader: "html-loader"
+  }
+  // exclude: /\/node_modules\//
 };
 
 /**
@@ -71,10 +71,11 @@ exports.htmlRule = {
  */
 exports.imagesRule = {
   test: /\.(?:ico|gif|png|jpe?g|webp)$/i,
-  type: 'asset/resource',
+  type: "asset/resource",
   generator: {
-    filename: 'static/images/[hash][ext][query]'
-  }
+    filename: "static/images/[hash][ext][query]"
+  },
+  exclude: /\/node_modules\//
 };
 // options: {
 //   limit: 10000,
@@ -83,5 +84,6 @@ exports.imagesRule = {
 
 exports.fontsRule = {
   test: /\.(woff(2)?|eot|ttf|otf|)(\?.*)?$/,
-  type: 'asset/inline',
+  type: "asset/inline",
+  exclude: /\/node_modules\//
 };
