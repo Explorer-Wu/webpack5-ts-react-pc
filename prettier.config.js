@@ -8,8 +8,7 @@ module.exports = {
   printWidth: 100, // 每行代码长度（默认80）
   singleQuote: false, // 使用单引号（默认false）
   // 在ES5中有效的结尾逗号（对象，数组等）
-  // trailingComma: "es5", "all",
-  trailingComma: "all", // 多行使用拖尾逗号（默认none）
+  trailingComma: "all", // 多行使用拖尾逗号（默认none）| "es5" | "all"
   // 仅在语法可能出现错误的时候才会添加分号
   semi: true, // 声明结尾使用分号(默认true)
   //箭头函数, 只有一个参数的是否带圆括号（默认avoid）; "always" 是需要带圆括号

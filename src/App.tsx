@@ -28,7 +28,7 @@ const App: React.FC<any> = () => {
         {/* <Route path="/*" element={<Navigate to="/" replace />} /> */}
       </Routes>
     </BrowserRouter>
-  )
+  );
 };
 
 export default App;

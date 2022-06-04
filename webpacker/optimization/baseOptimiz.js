@@ -8,7 +8,7 @@ exports.baseOptimiz = {
     // minSize: 30 * 1024, // 模块超过30k自动被抽离成公共模块
     minSize: {
       javascript: 30 * 1024, // js模块超过30k自动被抽离成公共模块
-      webassembly: 50 * 1024, // webassembly模块超过50k自动被抽离成公共模块
+      webassembly: 50 * 1024 // webassembly模块超过50k自动被抽离成公共模块
     },
     minRemainingSize: 0, // webpack5新属性，防止0尺寸的chunk
     minChunks: 1, // 最小公用模块次数，默认为1。模块最少被引用>=1次，才会拆分
@@ -26,7 +26,7 @@ exports.baseOptimiz = {
         // 模块缓存规则，设置为false，默认缓存组将禁用
         minChunks: 2, // 模块被引用>=2次，拆分至vendors公共模块
         priority: -20, // 优先级， 该配置项是设置处理的优先级，数值越大越优先处理
-        reuseExistingChunk: true, // 是否复用存在的chunk，默认使用已有的模块，
+        reuseExistingChunk: true // 是否复用存在的chunk，默认使用已有的模块，
       },
       defaultVendors: {
         // 匹配规则
@@ -34,7 +34,7 @@ exports.baseOptimiz = {
         chunks: "initial",
         // 权重，权重越大优先级越高 当模块匹配到多个缓存组中，最终根据权重决定要打包进哪个缓存组
         priority: 1,
-        idHint: 'vendors',
+        idHint: "vendors",
         // name: "vendor",
         reuseExistingChunk: false,
         enforce: true
@@ -46,25 +46,25 @@ exports.baseOptimiz = {
       // },
       manifest: {
         name: "asset-manifest",
-        chunks: "initial",
+        chunks: "initial"
       },
       styles: {
         name: "styles",
         test: /\.((c|le|sa|sc)ss)$/i,
         chunks: "all", // merge all the css chunk to one file
-        enforce: true,
-      },
-    },
+        enforce: true
+      }
+    }
   },
   // runtimeChunk 默认为false,runtime相关的代码(各个模块之间的引用和加载的逻辑)内嵌入每个entry
   // ‘single’: 会生成一个唯一单独的runtime.js文件，就是manifest
   // { name: 'runtime', }：自定义runtime文件的name
   // multiple：和true一致。
   // 最小化 entry chunk, 为运行时代码创建一个额外的 chunk，减少 entry chunk 体积，提高性能。
-  runtimeChunk: true, // 对于每个entry会生成runtime~${entrypoint.name}的文件
-  
+  runtimeChunk: true // 对于每个entry会生成runtime~${entrypoint.name}的文件
+
   // emitOnErrors默认为true,在编译出错时是否生成资源，使用 optimization.emitOnErrors 来跳过生成阶段(emitting phase)。这可以确保没有生成出错误资源。而 stats 中所有 assets 中的 emitted 标记都是 false
-  emitOnErrors: true,
+  // emitOnErrors: true,
 
   // concatenateModules 告知 webpack 去寻找模块类型中的片段，哪些是可以安全地被合并到单一模块中。这取决于 optimization.providedExports 和 optimization.usedExports。
   //“作用域提升(scope hoisting)”, 仅适用于由 webpack 直接处理的 ES6 模块。在使用转译器(transpiler)时，你需要禁用对模块的处理（例如 Babel 中的 modules 选项）。

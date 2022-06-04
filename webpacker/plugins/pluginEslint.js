@@ -8,7 +8,8 @@ const { resolve } = require("../utils");
  */
 const config = {
   context: resolve("./src"),
-  extensions: ["js", "jsx", "ts", "tsx"], // 指定需要检查的扩展名
+  fix: true, /* 自动帮助修复 */
+  extensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'react'], // 指定需要检查的扩展名
   threads: useWorkerPool, // 以线程池方式运行 lint 。线程池大小是自动的，除非你指定一个数值
   emitError: true, // 发送发现的错误
   emitWarning: true, // 发送发现的警告

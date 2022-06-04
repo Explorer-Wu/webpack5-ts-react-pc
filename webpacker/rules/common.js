@@ -32,8 +32,13 @@ exports.javascriptRule = {
 
 exports.javascriptPreRule = {
   test: /\.(js|jsx)$/,
+  /**
+   *  pre:优先执行
+   *  post:延后执行
+   *  不设置enforce则顺序执行
+   */
   enforce: "pre",
-  use: ["source-map-loader"],
+  use: ["source-map-loader", babelLoader],
   //启用debug 用于故障排查。默认 false
   // debug: true,
   exclude: /\/node_modules\//

@@ -9,6 +9,7 @@
     "unit": "jest --config tests/unit/jest.config.js --coverage",
     "e2e": "node tests/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
+    "tsclint": "tsc --noEmit",
     "lint": "eslint --fix --ext .js --ext .jsx --ext .ts --ext .tsx src/",
     "commit": "npm run lint && git add . && cz",
     "mockserver": "nodemon ./server_mock/server.js"

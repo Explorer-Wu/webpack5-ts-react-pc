@@ -53,20 +53,20 @@ module.exports = {
     },
     rules: utils.arrFilterEmpty([
       // Disable require.ensure as it's not a standard language feature.
-      {
-        parser: {
-          amd: false, // 禁用 AMD
-          commonjs: false, // 禁用 CommonJS
-          system: false, // 禁用 SystemJS
-          harmony: false, // 禁用 ES2015 Harmony import/export
-          requireInclude: false, // 禁用 require.include
-          requireEnsure: false, // 禁用 require.ensure
-          requireContext: false, // 禁用 require.context
-          browserify: false, // 禁用特殊处理的 browserify bundle
-          requireJs: false, // 禁用 requirejs.*
-          node: false // 禁用 __dirname, __filename, module, require.extensions, require.main, 等。
-        }
-      },
+      // {
+      //   parser: {
+      //     amd: false, // 禁用 AMD
+      //     commonjs: false, // 禁用 CommonJS
+      //     system: false, // 禁用 SystemJS
+      //     harmony: false, // 禁用 ES2015 Harmony import/export
+      //     requireInclude: false, // 禁用 require.include
+      //     requireEnsure: false, // 禁用 require.ensure
+      //     requireContext: false, // 禁用 require.context
+      //     browserify: false, // 禁用特殊处理的 browserify bundle
+      //     requireJs: false, // 禁用 requirejs.*
+      //     node: false // 禁用 __dirname, __filename, module, require.extensions, require.main, 等。
+      //   }
+      // },
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
       rules.javascriptPreRule,

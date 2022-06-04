@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Tag } from 'antd';
+import React, { useEffect, useState } from "react";
+import { Card, Tag } from "antd";
 
 const Home: React.FC<any> = () => {
-  const [count, setCount] = useState(0);
+	const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    const Timer = setInterval(() => {
-      setCount(prev => prev + 1);
-    }, 1000);
+	useEffect(() => {
+		const Timer = setInterval(() => {
+			setCount(prev => prev + 1);
+		}, 1000);
 
-    return () => clearInterval(Timer);
-  }, []);
+		return () => clearInterval(Timer);
+	}, []);
 
-  return (
-    <Card title="HomePage">
-      mounted start <Tag color="cyan">count：{count}</Tag> unmounted clear
-    </Card>
-  );
+	return (
+		<Card title="HomePage">
+			mounted start <Tag color="cyan">count：{count}</Tag> unmounted clear
+		</Card>
+	);
 };
 
 export default Home;

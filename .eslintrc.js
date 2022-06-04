@@ -8,7 +8,8 @@ module.exports = {
   env: {
     node: true,
     browser: true,
-    jest: true,
+    // jest: true,
+    // commonjs: true,
     es6: true
   },
 
@@ -22,7 +23,7 @@ module.exports = {
   parserOptions: {
     project: path.resolve(__dirname, "./tsconfig.json"),
     // tsconfigRootDir: __dirname,
-    ecmaVersion: ESNext, // Allows for the parsing of modern ECMAScript features
+    ecmaVersion: "latest", // Allows for the parsing of modern ECMAScript features
     sourceType: "module", // Allows for the use of imports
     ecmaFeatures: {
       jsx: true // Allows for the parsing of JSX
@@ -34,6 +35,7 @@ module.exports = {
 
   // 继承的规则 [扩展]
   extends: [
+    "eslint/recommended",
     // Uses the recommended rules from the @typescript-eslint/eslint-plugin
     "plugin:@typescript-eslint/recommended",
     // "plugin:prettier/recommended",
@@ -41,6 +43,8 @@ module.exports = {
     // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
     // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
     "prettier", // === 'prettier/@typescript-eslint' + 'prettier/react'
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:jsx-control-statements/recommended"
   ],
 
@@ -60,11 +64,8 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/ban-ts-comment": "off",
-
-    // "@typescript-eslint/explicit-module-boundary-types": "off",
     // "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/no-var-requires": "off",
-    // "@typescript-eslint/no-explicit-any": "off",
     // "@typescript-eslint/interface-name-prefix": "off",
     // "@typescript-eslint/explicit-member-accessibility": "off",
     // "@typescript-eslint/no-triple-slash-reference": "off",
@@ -74,6 +75,10 @@ module.exports = {
     //   "error",
     //   { path: "always", types: "never", lib: "never" }
     // ],
+     // 优先使用 interface 而不是 type
+     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+     '@typescript-eslint/no-explicit-any': 'off',
+     '@typescript-eslint/explicit-module-boundary-types': 'off',
 
     "import/no-dynamic-require": "off",
     "import/order": 0,
@@ -98,11 +103,17 @@ module.exports = {
         extensions: [".jsx", ".tsx"]
       }
     ], // also want to use with ".tsx"
-    "react/prop-types": "off", // Is this incompatible with TS props type?
-    // "react/jsx-no-undef": [2, { allowGlobals: true }],
-    "react-hooks/rules-of-hooks": "error",
-    // "jsx-control-statements/jsx-use-if-tag": "off",
-
+    "react/prop-types": "off", // "warn", // Is this incompatible with TS props type?
+    "react/display-name": "off",
+    "react/jsx-no-undef": "error", // [2, { allowGlobals: true }],
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react/jsx-key": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error", // "warn",
+    
+    "jsx-control-statements/jsx-use-if-tag": "off",
     "prettier/prettier": ["error", prettierConfig],
     // "global-require": 0,
     "no-debugger": isProd ? "warn" : "off",

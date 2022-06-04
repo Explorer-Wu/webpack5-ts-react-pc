@@ -18,7 +18,7 @@ export default function MainLayout(props: any, context?: any): React.ReactElemen
     setCollapsed(bool);
   };
   console.log("lay-router:", props);
-  
+
   const routeElement = useRoutes(routes);
 
   return (
