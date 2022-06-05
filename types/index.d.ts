@@ -37,3 +37,53 @@ declare interface PromiseFn<T = any, R = T> {
 
 // 定义 State 结构类型
 // export type StoreState = number;
+
+declare function useNavigate(): NavigateFunction;
+
+interface NavigateFunction {
+  (
+    to: To,
+    options?: { replace?: boolean; state?: any }
+  ): void;
+  (delta: number): void;
+}
+
+declare function useNavigationType(): NavigationType;
+
+type NavigationType = "POP" | "PUSH" | "REPLACE";
+
+declare function useLocation(): Location;
+
+interface Location extends Path {
+  state: unknown;
+  key: Key;
+}
+
+declare function useMatch<ParamKey extends string = string>(
+  pattern: PathPattern | string
+): PathMatch<ParamKey> | null;
+
+declare function useHref(to: To): string;
+
+declare function useLinkClickHandler<
+  E extends Element = HTMLAnchorElement
+>(
+  to: To,
+  options?: {
+    target?: React.HTMLAttributeAnchorTarget;
+    replace?: boolean;
+    state?: any;
+  }
+): (event: React.MouseEvent<E, MouseEvent>) => void;
+
+declare function useOutlet(): React.ReactElement | null;
+
+declare function useOutletContext<
+  Context = unknown
+>(): Context;
+
+declare function useParams<
+  K extends string = string
+>(): Readonly<Params<K>>;
+
+declare function useResolvedPath(to: To): Path;

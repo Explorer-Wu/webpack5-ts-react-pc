@@ -1,87 +1,79 @@
 {
-  // 自动修复eslint的错误
-  "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "useBuiltIns": "entry", // browserslist环境不支持的所有垫片都导入.  "usage", // 按需加载 
-        // 如果 Babel 加载模块时已经转换了 ESM，则会导致 Tree Shaking 失效；最新版本的Babel自动关闭了 ESM 转换插件
-        // 'commonjs' // 强制将ESM转换为CommonJS，tree shaking失效
-        // "auto", // 也可以使用默认配置，也就是 auto，这样 babel-loader 会自动关闭 ESM 转换
-        // false, 强制关闭转换插件,对ES6的模块文件不做转化，以便使用tree shaking、sideEffects等
-        "modules": false,  
-        // 开启浏览器兼容 polyfills，会根据browserslist配置
-        "targets": {
-          "browsers": [
-            ">1%",
-            "last 2 versions",
-            "not ie < 10"
-          ]
-        },
-        // normal mode 转换而来的ES5代码更加符合ECMAScript 6 的语义，而 loose mode 转换而来的代码更加简单，更像是人写的
-        "loose": false, // loose mode 的优点在于兼容旧引擎，可能会更加快,缺点在于如果需要将转换之后的代码重新转换为 native ES6 代码，可能会遇到问题
-        "debug": true,
-        // 引入 core-js@3 库
-        "corejs": {
-          "version": 3,
-          "proposals": true
-        }
-      }
-    ],
-    ["@babel/preset-react"],
-    ["@babel/preset-typescript"]
-  ],
-  "plugins": [
-    "@babel/plugin-syntax-dynamic-import",
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-proposal-export-namespace-from",
-    // "@babel/plugin-proposal-throw-expressions",
-    "@babel/plugin-transform-async-to-generator",
-    "@babel/plugin-transform-arrow-functions",
-    [
-      "@babel/plugin-transform-runtime",
-      {
-        "corejs": false, // 解决 helper 函数重复引入
-        "regenerator": true,
-        // "useESModules": false
-      }
-    ],
-    //只需从 antd 引入模块即可，无需单独引入样式. babel-plugin-import 会帮助你加载 JS 和 CSS
-    [
-      "import",
-      {
-        "libraryName": "antd",
-        "libraryDirectory": "es", // default: lib
-        "style": true // "css" // `style: true` 会加载 less 文件
-      },
-      "antd"
-    ],
-    [
-      "styled-jsx/babel",
-      {
-        "plugins": [
-          "styled-jsx-plugin-sass"
-        ]
-      }
-    ],
-    // ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    [
-      "@babel/plugin-proposal-object-rest-spread",
-      {
-        "useBuiltIns": true
-      }
-    ],
-    "jsx-control-statements",
-    "@babel/plugin-transform-react-inline-elements"
-    // Applies the react-refresh Babel plugin on non-production modes only
-    // mode !== "production" && "react-refresh/babel",
-  ],
-  "env": {
-    "development": {
-      "plugins": [
-        "react-refresh/babel"
-      ]
-    }
-  },
-  "ignore": []
+	// 自动修复eslint的错误
+	"presets": [
+		[
+			"@babel/preset-env",
+			{
+				"useBuiltIns": "entry", // browserslist环境不支持的所有垫片都导入.  "usage", // 按需加载
+				// 如果 Babel 加载模块时已经转换了 ESM，则会导致 Tree Shaking 失效；最新版本的Babel自动关闭了 ESM 转换插件
+				// 'commonjs' // 强制将ESM转换为CommonJS，tree shaking失效
+				// "auto", // 也可以使用默认配置，也就是 auto，这样 babel-loader 会自动关闭 ESM 转换
+				// false, 强制关闭转换插件,对ES6的模块文件不做转化，以便使用tree shaking、sideEffects等
+				"modules": false,
+				// 开启浏览器兼容 polyfills，会根据browserslist配置
+				"targets": {
+					"browsers": [">1%", "last 2 versions", "not ie < 10"]
+				},
+				// normal mode 转换而来的ES5代码更加符合ECMAScript 6 的语义，而 loose mode 转换而来的代码更加简单，更像是人写的
+				"loose": false, // loose mode 的优点在于兼容旧引擎，可能会更加快,缺点在于如果需要将转换之后的代码重新转换为 native ES6 代码，可能会遇到问题
+				"debug": true,
+				// 引入 core-js@3 库
+				"corejs": {
+					"version": 3,
+					"proposals": true
+				}
+			}
+		],
+		["@babel/preset-react"],
+		["@babel/preset-typescript"]
+	],
+	"plugins": [
+		"@babel/plugin-syntax-dynamic-import",
+		"@babel/plugin-proposal-class-properties",
+		"@babel/plugin-proposal-export-namespace-from",
+		// "@babel/plugin-proposal-throw-expressions",
+		"@babel/plugin-transform-async-to-generator",
+		"@babel/plugin-transform-arrow-functions",
+		[
+			"@babel/plugin-transform-runtime",
+			{
+				"corejs": false, // 解决 helper 函数重复引入
+				"regenerator": true
+				// "useESModules": false
+			}
+		],
+		//只需从 antd 引入模块即可，无需单独引入样式. babel-plugin-import 会帮助你加载 JS 和 CSS
+		[
+			"import",
+			{
+				"libraryName": "antd",
+				"libraryDirectory": "es", // default: lib
+				"style": true // "css" // `style: true` 会加载 less 文件
+			},
+			"antd"
+		],
+		[
+			"styled-jsx/babel",
+			{
+				"plugins": ["styled-jsx-plugin-sass"]
+			}
+		],
+		// ["@babel/plugin-proposal-decorators", { "legacy": true }],
+		[
+			"@babel/plugin-proposal-object-rest-spread",
+			{
+				"useBuiltIns": true
+			}
+		],
+		"jsx-control-statements",
+		"@babel/plugin-transform-react-inline-elements"
+		// Applies the react-refresh Babel plugin on non-production modes only
+		// mode !== "production" && "react-refresh/babel",
+	],
+	"env": {
+		"development": {
+			"plugins": ["react-refresh/babel"]
+		}
+	},
+	"ignore": []
 }

@@ -1,5 +1,21 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom"; // , useHref, useLinkClickHandler
 
-const HistoryNav = useNavigate();
+export default function HistoryRule() {
+	// const { replace, state, target, to } = props;
+	const HistoryNav = useNavigate();
+	let Location = useLocation();
 
-export default HistoryNav;
+	// let HrefTo = useHref(to);
+	// let LinkNav = useLinkClickHandler(to, {
+	// 	replace,
+	// 	state,
+	// 	target,
+	// });
+
+	return {
+		HistoryNav,
+		Location,
+		// HrefTo,
+		// LinkNav,
+	};
+}
